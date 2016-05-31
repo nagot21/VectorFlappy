@@ -41,6 +41,7 @@ public class VFView extends SurfaceView implements Runnable {
 
     private void draw() {
         if(ourHolder.getSurface().isValid()) {
+
             canvas = ourHolder.lockCanvas();
 
             canvas.drawColor(Color.argb(255,0,0,0));
