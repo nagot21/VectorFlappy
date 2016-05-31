@@ -23,23 +23,47 @@ public class PlayerShip {
     private final int MAX_SPEED = 20;
 
     /*
-    No construtor damos as cordenadas iniciais da nave, seu speed inicial e seu sprite
+    No construtor damos as cordenadas iniciais da nave, seu speed inicial e seu sprite REESCREVER...
      */
 
-    public PlayerShip(Context context) {
+    public PlayerShip(Context context, int screenX, int screenY) {
         x = 50;
         y = 50;
         speed = 1;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
         boosting = false;
+        maxY = screenY - bitmap.getHeight();
+        minY = 0;
     }
 
     /*
-    Adicionamos +1 a variável x
+    Recomentar...
      */
 
     public void update() {
-        x++;
+        if (boosting) {
+            speed += 2;
+        } else {
+            speed -= 5;
+        }
+
+        if (speed > MAX_SPEED) {
+            speed = MAX_SPEED;
+        }
+
+        if (speed < MIN_SPEED) {
+            speed = MIN_SPEED;
+        }
+
+        y -= speed + GRAVITY;
+
+        if (y < minY) {
+            y = minY;
+        }
+
+        if (y > maxY) {
+            y = maxY;
+        }
     }
 
     // Retornamos o valor da variável bitmap

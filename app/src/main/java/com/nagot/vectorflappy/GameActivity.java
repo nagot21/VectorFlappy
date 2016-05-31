@@ -1,7 +1,9 @@
 package com.nagot.vectorflappy;
 
 import android.app.Activity;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 
 /*
 Esta atividade controla o que será mostrado no game. Não existe um layout mostrando esta activity. Ela
@@ -13,13 +15,16 @@ public class GameActivity extends Activity {
     private VFView gameView;
 
     /*
-    No onCreate instanciamos o objeto gameView e o chamamos no setContentView
+    No onCreate instanciamos o objeto gameView e o chamamos no setContentView. RECOMENTAR...
      */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gameView = new VFView(this);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        gameView = new VFView(this, size.x, size.y);
         setContentView(gameView);
     }
 

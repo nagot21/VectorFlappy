@@ -27,14 +27,14 @@ public class VFView extends SurfaceView implements Runnable {
     /*
     Neste construtor criamos um SurfaceHolder ourHolder para travar nossa canvas quando for desenha-la.
     Criamos também um objeto paint para desenhar na tela.
-    Por fim, instanciamos nossa nave passando como contexto esta atividade.
+    Por fim, instanciamos nossa nave passando como contexto esta atividade. RECOMENTAR...
      */
 
-    public VFView(Context context) {
+    public VFView(Context context, int x, int y) {
         super(context);
         ourHolder = getHolder();
         paint = new Paint();
-        player = new PlayerShip(context);
+        player = new PlayerShip(context, x, y);
     }
 
     /*
