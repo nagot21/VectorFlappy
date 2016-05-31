@@ -20,6 +20,7 @@ public class VFView extends SurfaceView implements Runnable {
     volatile boolean playing;
     Thread gameThread = null;
     private PlayerShip player;
+    public EnemyShip enemy1, enemy2, enemy3;
     private Paint paint;
     private Canvas canvas;
     private SurfaceHolder ourHolder;
@@ -35,6 +36,9 @@ public class VFView extends SurfaceView implements Runnable {
         ourHolder = getHolder();
         paint = new Paint();
         player = new PlayerShip(context, x, y);
+        enemy1 = new EnemyShip(context, x, y);
+        enemy2 = new EnemyShip(context, x, y);
+        enemy3 = new EnemyShip(context, x, y);
     }
 
     /*
@@ -50,10 +54,13 @@ public class VFView extends SurfaceView implements Runnable {
         }
     }
 
-    // Chama o método update() da classe PlayerShip que adiciona + 1 para a variáve x toda vez que executado.
+    // Chama o método update() da classe PlayerShip que adiciona + 1 para a variáve x toda vez que executado. REVISAR...
 
     private void update() {
         player.update();
+        enemy1.update(player.getSpeed());
+        enemy2.update(player.getSpeed());
+        enemy3.update(player.getSpeed());
     }
 
     /*
@@ -77,6 +84,24 @@ public class VFView extends SurfaceView implements Runnable {
                     player.getBitmap(),
                     player.getX(),
                     player.getY(),
+                    paint);
+
+            canvas.drawBitmap(
+                    enemy1.getBitmap(),
+                    enemy1.getX(),
+                    enemy1.getY(),
+                    paint);
+
+            canvas.drawBitmap(
+                    enemy2.getBitmap(),
+                    enemy2.getX(),
+                    enemy2.getY(),
+                    paint);
+
+            canvas.drawBitmap(
+                    enemy3.getBitmap(),
+                    enemy3.getX(),
+                    enemy3.getY(),
                     paint);
 
             ourHolder.unlockCanvasAndPost(canvas);
