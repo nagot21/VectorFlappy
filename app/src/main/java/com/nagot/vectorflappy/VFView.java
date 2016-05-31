@@ -7,6 +7,9 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.ArrayAdapter;
+
+import java.util.ArrayList;
 
 /**
  * Created by Nagot on 31/05/2016.
@@ -21,6 +24,7 @@ public class VFView extends SurfaceView implements Runnable {
     Thread gameThread = null;
     private PlayerShip player;
     public EnemyShip enemy1, enemy2, enemy3;
+    public ArrayList<SpaceDust> dustList = new ArrayList<>();
     private Paint paint;
     private Canvas canvas;
     private SurfaceHolder ourHolder;
@@ -39,6 +43,13 @@ public class VFView extends SurfaceView implements Runnable {
         enemy1 = new EnemyShip(context, x, y);
         enemy2 = new EnemyShip(context, x, y);
         enemy3 = new EnemyShip(context, x, y);
+
+        int numSpecs = 40;
+
+        for (int i = 0; i < numSpecs; i++) {
+            SpaceDust spec = new SpaceDust(x, y);
+            dustList.add(spec);
+        }
     }
 
     /*
@@ -61,6 +72,10 @@ public class VFView extends SurfaceView implements Runnable {
         enemy1.update(player.getSpeed());
         enemy2.update(player.getSpeed());
         enemy3.update(player.getSpeed());
+
+        for (SpaceDust sd : dustList) {
+            sd.update(player.getSpeed());
+        }
     }
 
     /*
