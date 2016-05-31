@@ -93,12 +93,6 @@ public class VFView extends SurfaceView implements Runnable {
 
             canvas = ourHolder.lockCanvas();
 
-            paint.setColor(Color.argb(255, 255, 255, 255));
-
-            for (SpaceDust sd : dustList) {
-                canvas.drawPoint(sd.getX(), sd.getY(), paint);
-            }
-
             canvas.drawColor(Color.argb(255, 0, 0, 0));
 
             canvas.drawBitmap(
@@ -124,6 +118,12 @@ public class VFView extends SurfaceView implements Runnable {
                     enemy3.getX(),
                     enemy3.getY(),
                     paint);
+
+            paint.setColor(Color.argb(255, 255, 255, 255));
+
+            for (SpaceDust sd : dustList) {
+                canvas.drawPoint(sd.getX(), sd.getY(), paint);
+            }
 
             ourHolder.unlockCanvasAndPost(canvas);
         }
