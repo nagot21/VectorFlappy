@@ -43,4 +43,16 @@ public class EnemyShip {
     public int getY() {
         return y;
     }
+
+    public void update(int playerSpeed) {
+        x -= playerSpeed;
+        x -= speed;
+
+        if (x < minX - bitmap.getWidth()){
+            Random generator = new Random();
+            speed = generator.nextInt(10) + 10;
+            x = maxX;
+            y = generator.nextInt(maxY) - bitmap.getHeight();
+        }
+    }
 }
