@@ -23,7 +23,9 @@ public class PlayerShip {
     private final int MAX_SPEED = 20;
 
     /*
-    No construtor damos as cordenadas iniciais da nave, seu speed inicial e seu sprite REESCREVER...
+    No construtor damos as cordenadas iniciais da nave, seu speed inicial e seu sprite.
+    Repare que ele herda da primeira classe, a GameActivity, as coordenadas de X e Y da tela
+    do dispositivo
      */
 
     public PlayerShip(Context context, int screenX, int screenY) {
@@ -32,12 +34,13 @@ public class PlayerShip {
         speed = 1;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
         boosting = false;
+        // O valor abaixo determina o máximo que o eixo Y pode chegar baseado nas dimensões do dispositivo
         maxY = screenY - bitmap.getHeight();
         minY = 0;
     }
 
     /*
-    Recomentar...
+    No método update() especificamos os parametros da nave, como seu boost, etc
      */
 
     public void update() {
@@ -90,9 +93,13 @@ public class PlayerShip {
         return y;
     }
 
+    // Seta o valor da variável boosting = true
+
     public void setBoosting() {
         boosting = true;
     }
+
+    // Seta o valor da variável boosting = false
 
     public void stopBoosting() {
         boosting = false;

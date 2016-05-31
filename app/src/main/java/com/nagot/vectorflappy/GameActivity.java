@@ -15,15 +15,26 @@ public class GameActivity extends Activity {
     private VFView gameView;
 
     /*
-    No onCreate instanciamos o objeto gameView e o chamamos no setContentView. RECOMENTAR...
+    No onCreate instanciamos o objeto gameView e o chamamos no setContentView.
      */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /*
+         Na linha abaixo utilizamos a classe Display para pegar as dimensões da tela do smartphone.
+         O display.getSize retorna as cordenadas x e y da tela e, para ser guardada precisa de um
+         objeto do tipo Point. É justamente por isto que estamos instanciando um.
+          */
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
+
+        /*
+        Ao criarmos o objeto gameView, passamos além de seu contexto as variáveis da posição x e y
+        obtidas através do método display.getSize.
+         */
         gameView = new VFView(this, size.x, size.y);
         setContentView(gameView);
     }

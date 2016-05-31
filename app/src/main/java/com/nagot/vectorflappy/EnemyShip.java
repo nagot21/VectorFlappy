@@ -9,6 +9,10 @@ import java.util.Random;
 /**
  * Created by Nagot on 31/05/2016.
  */
+
+/*
+Esta classe é responsável por definir o objeto EnemyShip
+ */
 public class EnemyShip {
     private Bitmap bitmap;
     private int x, y;
@@ -18,6 +22,12 @@ public class EnemyShip {
     private int maxY;
     private int minY;
 
+     /*
+    No construtor damos as cordenadas iniciais da nave inimiga.
+    Repare que ele herda da primeira classe, a GameActivity, as coordenadas de X e Y da tela
+    do dispositivo
+     */
+
     public EnemyShip(Context context, int screenX, int screenY) {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy);
         maxX = screenX;
@@ -25,28 +35,58 @@ public class EnemyShip {
         minX = 0;
         minY = 0;
 
+        /*
+        Repare no trecho abaixo que o valor do speed da nave é gerado inicialmente de
+        forma aleatória através da classe Random
+         */
+
         Random generator = new Random();
         speed = generator.nextInt(6) + 10;
 
+        /*
+        Aqui dizemos que o valor inicial de x igual ao tamanho da tela em seu eixo
+        X. Ou seja, a nave virá, neste caso, da direita para esqueda.
+         */
         x = screenX;
+
+        /*
+        Sua posição no eixo Y será o cálculo aletório do seu tamanho máximo no eixo
+        Y menos o tamanho do objeto bitmap
+         */
         y = generator.nextInt(maxY) - bitmap.getHeight();
     }
+
+    // Retornamos o valor da variável bitmap
 
     public Bitmap getBitmap(){
         return bitmap;
     }
 
+    // Retornamos o valor da variável speed
+
     public int getX(){
         return x;
     }
+
+    // Retornamos o valor da variável x
 
     public int getY() {
         return y;
     }
 
+    /*
+    O método recebe como parametro a velocidade da nave do jogador. Com base nisso é feito um cálculo
+    de quão veloz a nave inimiga será.
+     */
+
     public void update(int playerSpeed) {
         x -= playerSpeed;
         x -= speed;
+
+        /*
+        O trecho abaixo são as velocidades aleatórias que a nave inimiga terá juntamente com sua
+        posição randomica no eixo Y caso X seja menor que minX menos a altura da imagem bitmap
+         */
 
         if (x < minX - bitmap.getWidth()){
             Random generator = new Random();

@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 
@@ -24,6 +23,9 @@ public class VFView extends SurfaceView implements Runnable {
     Thread gameThread = null;
     private PlayerShip player;
     public EnemyShip enemy1, enemy2, enemy3;
+
+    //Array abaixo foi criado para armazenar os diversos objetos SpaceDust
+
     public ArrayList<SpaceDust> dustList = new ArrayList<>();
     private Paint paint;
     private Canvas canvas;
@@ -32,7 +34,11 @@ public class VFView extends SurfaceView implements Runnable {
     /*
     Neste construtor criamos um SurfaceHolder ourHolder para travar nossa canvas quando for desenha-la.
     Criamos também um objeto paint para desenhar na tela.
-    Por fim, instanciamos nossa nave passando como contexto esta atividade. RECOMENTAR...
+    Repare que os argumentos recebidos pelo construtor são além de seu contexto, os valores da dimensão do
+    smartphone obtidas na classe GameActivity.
+
+    Como se pode ver, são passados aos objetos player, enemy* e spec também as cordenadas, para que se possa
+    posicionar de maneira correta os objetos na tela
      */
 
     public VFView(Context context, int x, int y) {
@@ -45,6 +51,8 @@ public class VFView extends SurfaceView implements Runnable {
         enemy3 = new EnemyShip(context, x, y);
 
         int numSpecs = 40;
+
+    // Na linha abaixo são criados 40 objetos SpaceDust
 
         for (int i = 0; i < numSpecs; i++) {
             SpaceDust spec = new SpaceDust(x, y);
@@ -65,13 +73,21 @@ public class VFView extends SurfaceView implements Runnable {
         }
     }
 
-    // Chama o método update() da classe PlayerShip que adiciona + 1 para a variáve x toda vez que executado. REVISAR...
+    /*
+     Chama o método update() da classe PlayerShip, EnemyShip e SpaceDust. Estes métodos irão ditar
+     os parametros de posição do objeto na tela.
+      */
 
     private void update() {
         player.update();
         enemy1.update(player.getSpeed());
         enemy2.update(player.getSpeed());
         enemy3.update(player.getSpeed());
+
+        /*
+        O enchanced FOR criado abaixo é utilizado pois com ele fica mais fácil percorer uma coleção
+        de itens. O que ele está fazendo é dar um update para cada objeto no array
+         */
 
         for (SpaceDust sd : dustList) {
             sd.update(player.getSpeed());
@@ -84,6 +100,11 @@ public class VFView extends SurfaceView implements Runnable {
     Chamamos o objeto canvas.drawColor e atribuimos uma cor a ele juntamente com seu alfa.
     Por fim, chamamos o canvas.drawBitmap especificando a imagem .png pelo método player.getBitmap(),
     pegando a posição x por player.getX(), de y por player.getY() e, por fim, desenhamos chamando paint.
+    Fazemos o mesmo com as naves inimigas.
+    Por fim, fazemos um procedimento diferente com os objetos armazenados em dustList. Ao invés de usar
+    um bitmap, setamos a cor que queremos utilizar de fundo por intermédio do método paint.setColor()
+    e criamos o nosso desenho através do método canvas.drawPoint()
+
     Por último, destravamos o canvas por intermédio de nossa variável ourHolder
 
      */
