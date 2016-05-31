@@ -15,6 +15,12 @@ public class PlayerShip {
     private Bitmap bitmap;
     private int x, y;
     private int speed = 0;
+    private boolean boosting;
+    private final int GRAVITY = -12;
+    private int maxY;
+    private int minY;
+    private final int MIN_SPEED = 1;
+    private final int MAX_SPEED = 20;
 
     /*
     No construtor damos as cordenadas iniciais da nave, seu speed inicial e seu sprite
@@ -25,31 +31,32 @@ public class PlayerShip {
         y = 50;
         speed = 1;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
+        boosting = false;
     }
 
     /*
     Adicionamos +1 a variável x
      */
 
-    public void update(){
+    public void update() {
         x++;
     }
 
     // Retornamos o valor da variável bitmap
 
-    public Bitmap getBitmap(){
+    public Bitmap getBitmap() {
         return bitmap;
     }
 
     // Retornamos o valor da variável speed
 
-    public int getSpeed(){
+    public int getSpeed() {
         return speed;
     }
 
     // Retornamos o valor da variável x
 
-    public int getX(){
+    public int getX() {
         return x;
     }
 
@@ -57,5 +64,13 @@ public class PlayerShip {
 
     public int getY() {
         return y;
+    }
+
+    public void setBoosting() {
+        boosting = true;
+    }
+
+    public void stopBoosting() {
+        boosting = false;
     }
 }

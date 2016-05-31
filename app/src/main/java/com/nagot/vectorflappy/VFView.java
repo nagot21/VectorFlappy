@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -66,11 +67,11 @@ public class VFView extends SurfaceView implements Runnable {
      */
 
     private void draw() {
-        if(ourHolder.getSurface().isValid()) {
+        if (ourHolder.getSurface().isValid()) {
 
             canvas = ourHolder.lockCanvas();
 
-            canvas.drawColor(Color.argb(255,0,0,0));
+            canvas.drawColor(Color.argb(255, 0, 0, 0));
 
             canvas.drawBitmap(
                     player.getBitmap(),
@@ -118,6 +119,18 @@ public class VFView extends SurfaceView implements Runnable {
         gameThread.start();
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_UP:
+                player.stopBoosting();
+                break;
+            case MotionEvent.ACTION_DOWN:
+                player.setBoosting();
+                break;
+        }
+        return true;
+    }
 }
 
 
