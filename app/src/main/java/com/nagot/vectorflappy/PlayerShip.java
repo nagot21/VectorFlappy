@@ -3,6 +3,7 @@ package com.nagot.vectorflappy;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
 /**
  * Created by Nagot on 31/05/2016.
@@ -21,11 +22,12 @@ public class PlayerShip {
     private int minY;
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 20;
+    private Rect hitBox;
 
     /*
     No construtor damos as cordenadas iniciais da nave, seu speed inicial e seu sprite.
     Repare que ele herda da primeira classe, a GameActivity, as coordenadas de X e Y da tela
-    do dispositivo
+    do dispositivo REESCREVER...
      */
 
     public PlayerShip(Context context, int screenX, int screenY) {
@@ -37,10 +39,11 @@ public class PlayerShip {
         // O valor abaixo determina o máximo que o eixo Y pode chegar baseado nas dimensões do dispositivo
         maxY = screenY - bitmap.getHeight();
         minY = 0;
+        hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
     }
 
     /*
-    No método update() especificamos os parametros da nave, como seu boost, etc
+    No método update() especificamos os parametros da nave, como seu boost, etc. REESCREVER
      */
 
     public void update() {
@@ -67,6 +70,11 @@ public class PlayerShip {
         if (y > maxY) {
             y = maxY;
         }
+
+        hitBox.left = x;
+        hitBox.top = y;
+        hitBox.right = x + bitmap.getWidth();
+        hitBox.bottom = y + bitmap.getHeight();
     }
 
     // Retornamos o valor da variável bitmap
@@ -91,6 +99,10 @@ public class PlayerShip {
 
     public int getY() {
         return y;
+    }
+
+    public Rect getHitBox() {
+        return hitBox;
     }
 
     // Seta o valor da variável boosting = true

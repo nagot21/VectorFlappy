@@ -3,6 +3,7 @@ package com.nagot.vectorflappy;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
 import java.util.Random;
 
@@ -21,11 +22,12 @@ public class EnemyShip {
     private int minX;
     private int maxY;
     private int minY;
+    private Rect hitBox;
 
      /*
     No construtor damos as cordenadas iniciais da nave inimiga.
     Repare que ele herda da primeira classe, a GameActivity, as coordenadas de X e Y da tela
-    do dispositivo
+    do dispositivo REESCREVER...
      */
 
     public EnemyShip(Context context, int screenX, int screenY) {
@@ -54,6 +56,8 @@ public class EnemyShip {
         Y menos o tamanho do objeto bitmap
          */
         y = generator.nextInt(maxY) - bitmap.getHeight();
+
+        hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
     }
 
     // Retornamos o valor da variável bitmap
@@ -74,9 +78,13 @@ public class EnemyShip {
         return y;
     }
 
+    public Rect getHitBox() {
+        return hitBox;
+    }
+
     /*
     O método recebe como parametro a velocidade da nave do jogador. Com base nisso é feito um cálculo
-    de quão veloz a nave inimiga será.
+    de quão veloz a nave inimiga será. REESCREVER...
      */
 
     public void update(int playerSpeed) {
@@ -94,5 +102,10 @@ public class EnemyShip {
             x = maxX;
             y = generator.nextInt(maxY) - bitmap.getHeight();
         }
+
+        hitBox.left = x;
+        hitBox.top = y;
+        hitBox.right = x + bitmap.getWidth();
+        hitBox.bottom = y + bitmap.getHeight();
     }
 }
