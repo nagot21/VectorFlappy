@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -75,10 +76,22 @@ public class VFView extends SurfaceView implements Runnable {
 
     /*
      Chama o método update() da classe PlayerShip, EnemyShip e SpaceDust. Estes métodos irão ditar
-     os parametros de posição do objeto na tela.
+     os parametros de posição do objeto na tela. REESCREVER...
       */
 
     private void update() {
+        if (Rect.intersects(player.getHitBox(), enemy1.getHitBox())){
+            enemy1.setX(-200);
+        }
+
+        if (Rect.intersects(player.getHitBox(), enemy2.getHitBox())){
+            enemy2.setX(-200);
+        }
+
+        if (Rect.intersects(player.getHitBox(), enemy3.getHitBox())){
+            enemy3.setX(-200);
+        }
+
         player.update();
         enemy1.update(player.getSpeed());
         enemy2.update(player.getSpeed());
@@ -115,6 +128,36 @@ public class VFView extends SurfaceView implements Runnable {
             canvas = ourHolder.lockCanvas();
 
             canvas.drawColor(Color.argb(255, 0, 0, 0));
+
+            // Código abaixo é para fins de debug
+
+            paint.setColor(Color.argb(255,255,255,255));
+
+            canvas.drawRect(player.getHitBox().left,
+                    player.getHitBox().top,
+                    player.getHitBox().right,
+                    player.getHitBox().bottom,
+                    paint);
+
+            canvas.drawRect(enemy1.getHitBox().left,
+                    enemy1.getHitBox().top,
+                    enemy1.getHitBox().right,
+                    enemy1.getHitBox().bottom,
+                    paint);
+
+            canvas.drawRect(enemy2.getHitBox().left,
+                    enemy2.getHitBox().top,
+                    enemy2.getHitBox().right,
+                    enemy2.getHitBox().bottom,
+                    paint);
+
+            canvas.drawRect(enemy3.getHitBox().left,
+                    enemy3.getHitBox().top,
+                    enemy3.getHitBox().right,
+                    enemy3.getHitBox().bottom,
+                    paint);
+
+            // Fim do bloco de teste
 
             canvas.drawBitmap(
                     player.getBitmap(),

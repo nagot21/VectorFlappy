@@ -82,6 +82,10 @@ public class EnemyShip {
         return hitBox;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
     /*
     O método recebe como parametro a velocidade da nave do jogador. Com base nisso é feito um cálculo
     de quão veloz a nave inimiga será. REESCREVER...
