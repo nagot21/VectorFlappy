@@ -76,10 +76,15 @@ public class VFView extends SurfaceView implements Runnable {
 
     /*
      Chama o método update() da classe PlayerShip, EnemyShip e SpaceDust. Estes métodos irão ditar
-     os parametros de posição do objeto na tela. REESCREVER...
+     os parametros de posição do objeto na tela e também sem comportamento quando colidirem
       */
 
     private void update() {
+
+        /*
+        Os 3 bloco de IF's abaixo fazem o teste de colisão dos objetos. Caso eles colidam, a nave
+        inimiga terá seu X mudado para -200. Isto é, será retirada automáticamente da tela.
+         */
         if (Rect.intersects(player.getHitBox(), enemy1.getHitBox())){
             enemy1.setX(-200);
         }
@@ -129,7 +134,7 @@ public class VFView extends SurfaceView implements Runnable {
 
             canvas.drawColor(Color.argb(255, 0, 0, 0));
 
-            // Código abaixo é para fins de debug
+            // Código abaixo é para fins de debug. Ele irá criar um retangulo branco atrás do bitmap
 
             paint.setColor(Color.argb(255,255,255,255));
 

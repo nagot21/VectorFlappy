@@ -27,7 +27,8 @@ public class EnemyShip {
      /*
     No construtor damos as cordenadas iniciais da nave inimiga.
     Repare que ele herda da primeira classe, a GameActivity, as coordenadas de X e Y da tela
-    do dispositivo REESCREVER...
+    do dispositivo. Perceba também que ela inicializa uma variável chamada hitBox, que irá determinar
+    o tamanho do nosso objeto para realizar o teste de colisão.
      */
 
     public EnemyShip(Context context, int screenX, int screenY) {
@@ -78,9 +79,13 @@ public class EnemyShip {
         return y;
     }
 
+    // Retorna o valor da variável hitBox
+
     public Rect getHitBox() {
         return hitBox;
     }
+
+    // Seta o valor da variável hitBox
 
     public void setX(int x) {
         this.x = x;
@@ -88,7 +93,8 @@ public class EnemyShip {
 
     /*
     O método recebe como parametro a velocidade da nave do jogador. Com base nisso é feito um cálculo
-    de quão veloz a nave inimiga será. REESCREVER...
+    de quão veloz a nave inimiga será. Perceba também que ela inicializa uma variável chamada hitBox,
+    que irá determinar o tamanho do nosso objeto para realizar o teste de colisão.
      */
 
     public void update(int playerSpeed) {
@@ -106,6 +112,11 @@ public class EnemyShip {
             x = maxX;
             y = generator.nextInt(maxY) - bitmap.getHeight();
         }
+
+        /*
+        Abaixo, será passado o parametro de onde o objeto se encontra na tela para a variável
+        hitBox
+         */
 
         hitBox.left = x;
         hitBox.top = y;

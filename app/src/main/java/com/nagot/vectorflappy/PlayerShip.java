@@ -22,12 +22,13 @@ public class PlayerShip {
     private int minY;
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 20;
-    private Rect hitBox;
+    private Rect hitBox; // Esta variável é a responsável pelo teste de colisão
 
     /*
     No construtor damos as cordenadas iniciais da nave, seu speed inicial e seu sprite.
     Repare que ele herda da primeira classe, a GameActivity, as coordenadas de X e Y da tela
-    do dispositivo REESCREVER...
+    do dispositivo. Perceba também que ela inicializa uma variável chamada hitBox, que irá determinar
+    o tamanho do nosso objeto para realizar o teste de colisão.
      */
 
     public PlayerShip(Context context, int screenX, int screenY) {
@@ -43,7 +44,7 @@ public class PlayerShip {
     }
 
     /*
-    No método update() especificamos os parametros da nave, como seu boost, etc. REESCREVER
+    No método update() especificamos os parametros da nave, como seu boost, hitBox, etc.
      */
 
     public void update() {
@@ -71,6 +72,10 @@ public class PlayerShip {
             y = maxY;
         }
 
+        /*
+        Abaixo, será passado o parametro de onde o objeto se encontra na tela para a variável
+        hitBox
+         */
         hitBox.left = x;
         hitBox.top = y;
         hitBox.right = x + bitmap.getWidth();
@@ -100,6 +105,8 @@ public class PlayerShip {
     public int getY() {
         return y;
     }
+
+    // Retorna o valor da variável hitBox
 
     public Rect getHitBox() {
         return hitBox;
