@@ -270,15 +270,28 @@ public class VFView extends SurfaceView implements Runnable {
             /*
              Aqui criamos o HUD do game.
               */
+            if (!gameEnded) {
+                paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
+                paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
+                paint.setTextSize(25); // Tamanho do texto
 
-            paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
-            paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
-            paint.setTextSize(25); // Tamanho do texto
-            canvas.drawText("Fastest: " + fastestTime + "s", 10, 20, paint); // Aqui temos 4 parâmetros. O primeiro é o texto, seguido da coordenada X, Y, comando para escrever
-            canvas.drawText("Time: " + timeTaken + "s", screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
-            canvas.drawText("Distance: " + distanceRemaining / 1000 + " KM", screenX / 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
-            canvas.drawText("Shield: " + player.getShieldStrenght(), 10, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
-            canvas.drawText("Speed: " + player.getSpeed() * 60 + " MPS", (screenX / 3) * 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
+                canvas.drawText("Fastest: " + fastestTime + "s", 10, 20, paint); // Aqui temos 4 parâmetros. O primeiro é o texto, seguido da coordenada X, Y, comando para escrever
+                canvas.drawText("Time: " + timeTaken + "s", screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
+                canvas.drawText("Distance: " + distanceRemaining / 1000 + " KM", screenX / 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
+                canvas.drawText("Shield: " + player.getShieldStrenght(), 10, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
+                canvas.drawText("Speed: " + player.getSpeed() * 60 + " MPS", (screenX / 3) * 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
+            } else {
+                paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                //paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
+                paint.setTextSize(80); // Tamanho do texto
+                canvas.drawText("Game Over", screenX / 2, 100, paint);
+                paint.setTextSize(25);
+                canvas.drawText("Fastest: " + fastestTime + "s", screenX / 2, 160, paint);
+                canvas.drawText("Time: " + timeTaken + "s", screenX / 2, 200, paint);
+                canvas.drawText("Distance remaining: " +distanceRemaining/1000 + " KM", screenX / 2, 240, paint);
+                paint.setTextSize(80); // Tamanho do texto
+                canvas.drawText("Tap to replay!", screenX / 2, 350, paint);
+            }
 
             ourHolder.unlockCanvasAndPost(canvas);
         }
