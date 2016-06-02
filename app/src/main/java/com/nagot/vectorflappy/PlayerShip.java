@@ -22,6 +22,7 @@ public class PlayerShip {
     private int minY;
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 20;
+    private int shieldStrenght; // Responsável pelo shield da nave
     private Rect hitBox; // Esta variável é a responsável pelo teste de colisão
 
     /*
@@ -41,6 +42,7 @@ public class PlayerShip {
         maxY = screenY - bitmap.getHeight();
         minY = 0;
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
+        shieldStrenght = 2;
     }
 
     /*
@@ -116,6 +118,12 @@ public class PlayerShip {
 
     public void setBoosting() {
         boosting = true;
+    }
+
+    // Retorna o valor da variável shieldStrenght
+
+    public int getShieldStrenght() {
+        return shieldStrenght;
     }
 
     // Seta o valor da variável boosting = false

@@ -32,6 +32,12 @@ public class VFView extends SurfaceView implements Runnable {
     private Canvas canvas;
     private SurfaceHolder ourHolder;
 
+    // Variáveis criadas para mostrar os valores no HUD
+
+    private float distanceRemaining;
+    private long timeTaken, timeStarted, fastestTime;
+    private int screenX, screenY;
+
     /*
     Neste construtor criamos um SurfaceHolder ourHolder para travar nossa canvas quando for desenha-la.
     Criamos também um objeto paint para desenhar na tela.
@@ -50,6 +56,8 @@ public class VFView extends SurfaceView implements Runnable {
         enemy1 = new EnemyShip(context, x, y);
         enemy2 = new EnemyShip(context, x, y);
         enemy3 = new EnemyShip(context, x, y);
+        screenX = x;
+        screenY = y;
 
         int numSpecs = 40;
 
@@ -115,13 +123,17 @@ public class VFView extends SurfaceView implements Runnable {
     /*
     Este método desenha os elementos na tela. Ele checa se o SurfaceHolder é válido. Se sim,
     Ele irá travar o canvas para que possamos desenhar nele.
+
     Chamamos o objeto canvas.drawColor e atribuimos uma cor a ele juntamente com seu alfa.
     Por fim, chamamos o canvas.drawBitmap especificando a imagem .png pelo método player.getBitmap(),
     pegando a posição x por player.getX(), de y por player.getY() e, por fim, desenhamos chamando paint.
     Fazemos o mesmo com as naves inimigas.
-    Por fim, fazemos um procedimento diferente com os objetos armazenados em dustList. Ao invés de usar
+
+    Em seguida, fazemos um procedimento diferente com os objetos armazenados em dustList. Ao invés de usar
     um bitmap, setamos a cor que queremos utilizar de fundo por intermédio do método paint.setColor()
-    e criamos o nosso desenho através do método canvas.drawPoint()
+    e criamos o nosso desenho através do método canvas.drawPoint().
+
+    Por fim, desenhamos na tela o HUD do game.
 
     Por último, destravamos o canvas por intermédio de nossa variável ourHolder
 
@@ -193,6 +205,19 @@ public class VFView extends SurfaceView implements Runnable {
             for (SpaceDust sd : dustList) {
                 canvas.drawPoint(sd.getX(), sd.getY(), paint);
             }
+
+            /*
+             Aqui criamos o HUD do game.
+              */
+
+            paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
+            paint.setColor(Color.argb(255,255,255,255)); // Dizemos que a cor do texto será branca e sem alpha
+            paint.setTextSize(25); // Tamanho do texto
+            canvas.drawText("Fastest: " + fastestTime + "s", 10, 20, paint); // Aqui temos 4 parâmetros. O primeiro é o texto, seguido da coordenada X, Y, comando para escrever
+            canvas.drawText("Time: " + timeTaken + "s", screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
+            canvas.drawText("Distance: " + distanceRemaining / 1000 + " KM", screenX / 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
+            canvas.drawText("Shield: " + player.getShieldStrenght(), 10, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
+            canvas.drawText("Speed: " + player.getSpeed() * 60 + " MPS", (screenX / 3) * 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
 
             ourHolder.unlockCanvasAndPost(canvas);
         }
