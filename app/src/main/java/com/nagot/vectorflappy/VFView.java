@@ -341,6 +341,9 @@ public class VFView extends SurfaceView implements Runnable {
                 break;
             case MotionEvent.ACTION_DOWN:
                 player.setBoosting();
+                if (gameEnded) {
+                    startGame();
+                }
                 break;
         }
         return true;
