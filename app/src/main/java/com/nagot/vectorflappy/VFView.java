@@ -1,6 +1,7 @@
 package com.nagot.vectorflappy;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
@@ -54,6 +55,11 @@ public class VFView extends SurfaceView implements Runnable {
     int destroyed = -1;
     int win = -1;
 
+    // Variáveis para persistir o high score
+
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
+
     /*
     Neste construtor criamos um SurfaceHolder ourHolder para travar nossa canvas quando for desenha-la.
     Criamos também um objeto paint para desenhar na tela.
@@ -83,16 +89,16 @@ public class VFView extends SurfaceView implements Runnable {
             AssetFileDescriptor descriptor;
 
             descriptor = assetManager.openFd("start.ogg");
-            start = soundPool.load(descriptor,0);
+            start = soundPool.load(descriptor, 0);
 
             descriptor = assetManager.openFd("win.ogg");
-            win = soundPool.load(descriptor,0);
+            win = soundPool.load(descriptor, 0);
 
             descriptor = assetManager.openFd("bump.ogg");
-            bump = soundPool.load(descriptor,0);
+            bump = soundPool.load(descriptor, 0);
 
             descriptor = assetManager.openFd("destroyed.ogg");
-            destroyed = soundPool.load(descriptor,0);
+            destroyed = soundPool.load(descriptor, 0);
         } catch (IOException e) {
             Log.e("error", "failed to load sound file or file is missing");
         }
@@ -101,6 +107,21 @@ public class VFView extends SurfaceView implements Runnable {
         paint = new Paint();
         screenX = x;
         screenY = y;
+
+        /*
+         Na linha abaixo, o parâmetro pega as referência de um arquivo chamado HighScores. Caso ele
+         não exista será criado
+          */
+
+        prefs = context.getSharedPreferences("HighScores", context.MODE_PRIVATE);
+
+        // Inicializa o editor
+
+        editor = prefs.edit();
+
+        // Carrega o valor do arquivo HighScores. Caso não tenha nenhum valor, irá colocar o default de 1000000
+
+        fastestTime = prefs.getLong("FastestTime", 1000000);
 
         startGame();
     }
@@ -222,6 +243,8 @@ public class VFView extends SurfaceView implements Runnable {
         if (distanceRemaining < 0) {
             soundPool.play(win, 1, 1, 0, 0, 1); // Se o jogador finalizar o game tocará a a música win
             if (timeTaken < fastestTime) {
+                editor.putLong("fastestTime", timeTaken); // Coloca o novo valor no buffer
+                editor.commit(); // Joga o novo valor no arquivo
                 fastestTime = timeTaken;
             }
             distanceRemaining = 0;
@@ -336,7 +359,7 @@ public class VFView extends SurfaceView implements Runnable {
                 paint.setTextSize(25);
                 canvas.drawText("Fastest: " + fastestTime + "s", screenX / 2, 160, paint);
                 canvas.drawText("Time: " + timeTaken + "s", screenX / 2, 200, paint);
-                canvas.drawText("Distance remaining: " +distanceRemaining/1000 + " KM", screenX / 2, 240, paint);
+                canvas.drawText("Distance remaining: " + distanceRemaining / 1000 + " KM", screenX / 2, 240, paint);
                 paint.setTextSize(80); // Tamanho do texto
                 canvas.drawText("Tap to replay!", screenX / 2, 350, paint);
             }
