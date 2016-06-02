@@ -38,6 +38,7 @@ public class VFView extends SurfaceView implements Runnable {
     private long timeTaken, timeStarted, fastestTime;
     private int screenX, screenY;
     private Context context;
+    private boolean gameEnded;
 
     /*
     Neste construtor criamos um SurfaceHolder ourHolder para travar nossa canvas quando for desenha-la.
@@ -104,6 +105,8 @@ public class VFView extends SurfaceView implements Runnable {
         distanceRemaining = 10000; // Quanto teremos de percorrer para finalizar o game
         timeTaken = 0; // O tempo que levamos finalizar
         timeStarted = System.currentTimeMillis(); // Age com um cronometro para armazenar o relógio
+
+        gameEnded = false; // Variável checa se o game finalizou ou não
     }
 
     private void update() {
@@ -134,7 +137,7 @@ public class VFView extends SurfaceView implements Runnable {
         if (hitDetected) {
             player.reduceShieldStrenght();
             if (player.getShieldStrenght() < 0) {
-                //game over
+                gameEnded = true;
             }
         }
 
@@ -150,6 +153,31 @@ public class VFView extends SurfaceView implements Runnable {
 
         for (SpaceDust sd : dustList) {
             sd.update(player.getSpeed());
+        }
+
+        /*
+        Checa se o game finalizou. Senão, retira valor da variável distanceRemaining baseado na
+        speed do jogador.
+
+        Retira também tempo do cronometro
+         */
+
+        if (!gameEnded) {
+            distanceRemaining -= player.getSpeed();
+            timeTaken = System.currentTimeMillis() - timeStarted;
+        }
+
+        /*
+        Caso o tempo que o jogador demorou para finalizar o game seja menor que o fastestTime, a
+        variável é atualizada e gameEnded setado como true
+         */
+
+        if (distanceRemaining < 0) {
+            if (timeTaken < fastestTime) {
+                fastestTime = timeTaken;
+            }
+            distanceRemaining = 0;
+            gameEnded = true;
         }
     }
 
