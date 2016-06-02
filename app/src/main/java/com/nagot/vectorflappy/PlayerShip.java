@@ -126,6 +126,12 @@ public class PlayerShip {
         return shieldStrenght;
     }
 
+    // Reduz o valor da variável shieldStrenght
+
+    public void reduceShieldStrenght() {
+        shieldStrenght --;
+    }
+
     // Seta o valor da variável boosting = false
 
     public void stopBoosting() {

@@ -37,6 +37,7 @@ public class VFView extends SurfaceView implements Runnable {
     private float distanceRemaining;
     private long timeTaken, timeStarted, fastestTime;
     private int screenX, screenY;
+    private Context context;
 
     /*
     Neste construtor criamos um SurfaceHolder ourHolder para travar nossa canvas quando for desenha-la.
@@ -44,29 +45,20 @@ public class VFView extends SurfaceView implements Runnable {
     Repare que os argumentos recebidos pelo construtor são além de seu contexto, os valores da dimensão do
     smartphone obtidas na classe GameActivity.
 
-    Como se pode ver, são passados aos objetos player, enemy* e spec também as cordenadas, para que se possa
-    posicionar de maneira correta os objetos na tela
+    Como se pode ver, logo após a variável screenY é chamado o método startGame(). Nele são inicializados
+    os objetos player, enemy*, spec e também as cordenadas, para que se possa posicionar de maneira correta
+    os objetos na tela.
      */
 
     public VFView(Context context, int x, int y) {
         super(context);
+        this.context = context;
         ourHolder = getHolder();
         paint = new Paint();
-        player = new PlayerShip(context, x, y);
-        enemy1 = new EnemyShip(context, x, y);
-        enemy2 = new EnemyShip(context, x, y);
-        enemy3 = new EnemyShip(context, x, y);
         screenX = x;
         screenY = y;
 
-        int numSpecs = 40;
-
-    // Na linha abaixo são criados 40 objetos SpaceDust
-
-        for (int i = 0; i < numSpecs; i++) {
-            SpaceDust spec = new SpaceDust(x, y);
-            dustList.add(spec);
-        }
+        startGame();
     }
 
     /*
@@ -87,22 +79,63 @@ public class VFView extends SurfaceView implements Runnable {
      os parametros de posição do objeto na tela e também sem comportamento quando colidirem
       */
 
+    /*
+    Este método ira agir quase como o construtor. Porém, ele será chamado quando o game for recomeçar
+    para não termos que resetá-lo toda vez que quisermos jogar novamente.
+    Note que foi trocado x e y por screenX e screenY. Isso ocorre pois os valores de x e y estão no
+    construtor, impossibilitando assim de acessá-los.
+     */
+
+    private void startGame() {
+        player = new PlayerShip(context, screenX, screenY);
+        enemy1 = new EnemyShip(context, screenX, screenY);
+        enemy2 = new EnemyShip(context, screenX, screenY);
+        enemy3 = new EnemyShip(context, screenX, screenY);
+
+        int numSpecs = 40;
+
+        // Na linha abaixo são criados 40 objetos SpaceDust
+
+        for (int i = 0; i < numSpecs; i++) {
+            SpaceDust spec = new SpaceDust(screenX, screenY);
+            dustList.add(spec);
+        }
+
+        distanceRemaining = 10000; // Quanto teremos de percorrer para finalizar o game
+        timeTaken = 0; // O tempo que levamos finalizar
+        timeStarted = System.currentTimeMillis(); // Age com um cronometro para armazenar o relógio
+    }
+
     private void update() {
 
         /*
         Os 3 bloco de IF's abaixo fazem o teste de colisão dos objetos. Caso eles colidam, a nave
         inimiga terá seu X mudado para -200. Isto é, será retirada automáticamente da tela.
          */
-        if (Rect.intersects(player.getHitBox(), enemy1.getHitBox())){
+        boolean hitDetected = false; // Variável criada para ver se o jogador foi atingido
+
+        if (Rect.intersects(player.getHitBox(), enemy1.getHitBox())) {
+            hitDetected = true; // Caso atingido, a variável ganha o valor true
             enemy1.setX(-200);
         }
 
-        if (Rect.intersects(player.getHitBox(), enemy2.getHitBox())){
+        if (Rect.intersects(player.getHitBox(), enemy2.getHitBox())) {
+            hitDetected = true; // Caso atingido, a variável ganha o valor true
             enemy2.setX(-200);
         }
 
-        if (Rect.intersects(player.getHitBox(), enemy3.getHitBox())){
+        if (Rect.intersects(player.getHitBox(), enemy3.getHitBox())) {
+            hitDetected = true; // Caso atingido, a variável ganha o valor true
             enemy3.setX(-200);
+        }
+
+        // Caso o valor de getShieldStrenght seja menor que zero o game finaliza
+
+        if (hitDetected) {
+            player.reduceShieldStrenght();
+            if (player.getShieldStrenght() < 0) {
+                //game over
+            }
         }
 
         player.update();
@@ -148,7 +181,7 @@ public class VFView extends SurfaceView implements Runnable {
 
             // Código abaixo é para fins de debug. Ele irá criar um retangulo branco atrás do bitmap
 
-            paint.setColor(Color.argb(255,255,255,255));
+            paint.setColor(Color.argb(255, 255, 255, 255));
 
             canvas.drawRect(player.getHitBox().left,
                     player.getHitBox().top,
@@ -211,7 +244,7 @@ public class VFView extends SurfaceView implements Runnable {
               */
 
             paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
-            paint.setColor(Color.argb(255,255,255,255)); // Dizemos que a cor do texto será branca e sem alpha
+            paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
             paint.setTextSize(25); // Tamanho do texto
             canvas.drawText("Fastest: " + fastestTime + "s", 10, 20, paint); // Aqui temos 4 parâmetros. O primeiro é o texto, seguido da coordenada X, Y, comando para escrever
             canvas.drawText("Time: " + timeTaken + "s", screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
