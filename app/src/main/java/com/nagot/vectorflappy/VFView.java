@@ -1,14 +1,20 @@
 package com.nagot.vectorflappy;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -40,6 +46,14 @@ public class VFView extends SurfaceView implements Runnable {
     private Context context;
     private boolean gameEnded;
 
+    // Variáveis para colocar som no game
+
+    private SoundPool soundPool;
+    int start = -1;
+    int bump = -1;
+    int destroyed = -1;
+    int win = -1;
+
     /*
     Neste construtor criamos um SurfaceHolder ourHolder para travar nossa canvas quando for desenha-la.
     Criamos também um objeto paint para desenhar na tela.
@@ -49,11 +63,40 @@ public class VFView extends SurfaceView implements Runnable {
     Como se pode ver, logo após a variável screenY é chamado o método startGame(). Nele são inicializados
     os objetos player, enemy*, spec e também as cordenadas, para que se possa posicionar de maneira correta
     os objetos na tela.
+
+    Por fim, instanciamos o objeto SoundPool para colocar a trilha sonora do game
      */
 
     public VFView(Context context, int x, int y) {
         super(context);
         this.context = context;
+
+        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0); // Instancia o objeto
+
+        /*
+        Para o podermos especificar os arquivos que serão utilizados, precisamos colocá-los em um
+        try/catch para que o erro seja tratado caso o arquivo não seja encontrado
+         */
+
+        try {
+            AssetManager assetManager = context.getAssets();
+            AssetFileDescriptor descriptor;
+
+            descriptor = assetManager.openFd("start.ogg");
+            start = soundPool.load(descriptor,0);
+
+            descriptor = assetManager.openFd("win.ogg");
+            win = soundPool.load(descriptor,0);
+
+            descriptor = assetManager.openFd("bump.ogg");
+            bump = soundPool.load(descriptor,0);
+
+            descriptor = assetManager.openFd("destroyed.ogg");
+            destroyed = soundPool.load(descriptor,0);
+        } catch (IOException e) {
+            Log.e("error", "failed to load sound file or file is missing");
+        }
+
         ourHolder = getHolder();
         paint = new Paint();
         screenX = x;
@@ -107,6 +150,8 @@ public class VFView extends SurfaceView implements Runnable {
         timeStarted = System.currentTimeMillis(); // Age com um cronometro para armazenar o relógio
 
         gameEnded = false; // Variável checa se o game finalizou ou não
+
+        soundPool.play(start, 1, 1, 0, 0, 1);
     }
 
     private void update() {
@@ -135,8 +180,10 @@ public class VFView extends SurfaceView implements Runnable {
         // Caso o valor de getShieldStrenght seja menor que zero o game finaliza
 
         if (hitDetected) {
+            soundPool.play(bump, 1, 1, 0, 0, 1); // Se a nave bater, será tocado o som de bump
             player.reduceShieldStrenght();
             if (player.getShieldStrenght() < 0) {
+                soundPool.play(destroyed, 1, 1, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
                 gameEnded = true;
             }
         }
@@ -173,6 +220,7 @@ public class VFView extends SurfaceView implements Runnable {
          */
 
         if (distanceRemaining < 0) {
+            soundPool.play(win, 1, 1, 0, 0, 1); // Se o jogador finalizar o game tocará a a música win
             if (timeTaken < fastestTime) {
                 fastestTime = timeTaken;
             }
