@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+// Begin improvements
+
 /*
 Classe de entrada do Game. Quando inicializar, será chamado o método
 onCreate() da activity
