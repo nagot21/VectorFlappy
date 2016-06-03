@@ -1,12 +1,17 @@
 package com.nagot.vectorflappy;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 // Begin improvements
@@ -51,7 +56,18 @@ public class MainActivity extends Activity {
                 finish();
             }
         });
+
+        // Cria um movimento do background através da classe ObjectAnimator
+
+        ObjectAnimator backgroundAnimation =
+                ObjectAnimator.ofFloat(findViewById(R.id.backgroundImageView), "x", 40, -40);
+        backgroundAnimation.setDuration(5000);
+        backgroundAnimation.setRepeatCount(ValueAnimator.INFINITE);
+        backgroundAnimation.setRepeatMode(ValueAnimator.REVERSE);
+        backgroundAnimation.start();
+
     }
+
 
     // Caso o jogador aperte o botão back do smartphone o game será finalizado
 
