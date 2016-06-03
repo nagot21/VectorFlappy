@@ -400,8 +400,8 @@ public class VFView extends SurfaceView implements Runnable {
                 paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
                 paint.setTextSize(25); // Tamanho do texto
 
-                canvas.drawText("Fastest: " + fastestTime + "s", 10, 20, paint); // Aqui temos 4 parâmetros. O primeiro é o texto, seguido da coordenada X, Y, comando para escrever
-                canvas.drawText("Time: " + timeTaken + "s", screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
+                canvas.drawText("Fastest: " + formatTime(fastestTime) + "s", 10, 20, paint); // Aqui temos 4 parâmetros. O primeiro é o texto, seguido da coordenada X, Y, comando para escrever
+                canvas.drawText("Time: " + formatTime(timeTaken) + "s", screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
                 canvas.drawText("Distance: " + distanceRemaining / 1000 + " KM", screenX / 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
                 canvas.drawText("Shield: " + player.getShieldStrenght(), 10, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
                 canvas.drawText("Speed: " + player.getSpeed() * 60 + " MPS", (screenX / 3) * 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
@@ -411,8 +411,8 @@ public class VFView extends SurfaceView implements Runnable {
                 paint.setTextSize(80); // Tamanho do texto
                 canvas.drawText("Game Over", screenX / 2, 100, paint);
                 paint.setTextSize(25);
-                canvas.drawText("Fastest: " + fastestTime + "s", screenX / 2, 160, paint);
-                canvas.drawText("Time: " + timeTaken + "s", screenX / 2, 200, paint);
+                canvas.drawText("Fastest: " + formatTime(fastestTime) + "s", screenX / 2, 160, paint);
+                canvas.drawText("Time: " + formatTime(timeTaken) + "s", screenX / 2, 200, paint);
                 canvas.drawText("Distance remaining: " + distanceRemaining / 1000 + " KM", screenX / 2, 240, paint);
                 paint.setTextSize(80); // Tamanho do texto
                 canvas.drawText("Tap to replay!", screenX / 2, 350, paint);
@@ -420,6 +420,22 @@ public class VFView extends SurfaceView implements Runnable {
 
             ourHolder.unlockCanvasAndPost(canvas);
         }
+    }
+
+    // Formata o tempo da variável timeTaken para ser legível por humanos
+
+    private String formatTime(long time) {
+        long seconds = (time) / 1000;
+        long thousandths = (time) - (seconds * 1000);
+        String strThousandths = "" + thousandths;
+        if (thousandths < 100) {
+            strThousandths = "0" + thousandths;
+        }
+        if (thousandths < 10) {
+            strThousandths = "0" + strThousandths;
+        }
+        String stringTime = "" + seconds + "." + strThousandths;
+        return stringTime;
     }
 
     /*
