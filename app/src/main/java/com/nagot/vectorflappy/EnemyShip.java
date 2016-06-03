@@ -34,8 +34,9 @@ public class EnemyShip {
      */
 
     public EnemyShip(Context context, int screenX, int screenY) {
-        Random bitmapGenerator = new Random();
-        int whichBitmap = bitmapGenerator.nextInt(3);
+        //Random bitmapGenerator = new Random();
+        Random generator = new Random();
+        int whichBitmap = generator.nextInt(3);
         switch (whichBitmap){
             case 0:
                 bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy1);
@@ -47,7 +48,11 @@ public class EnemyShip {
                 bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy3);
                 break;
         }
-        //bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy);
+
+        // Método irá modificar o tamanho dos inimigos baseados no tamanho da tela
+
+        scaleBitmap(screenX);
+
         maxX = screenX;
         maxY = screenY;
         minX = 0;
@@ -58,7 +63,7 @@ public class EnemyShip {
         forma aleatória através da classe Random
          */
 
-        Random generator = new Random();
+        //Random generator = new Random();
         speed = generator.nextInt(6) + 10;
 
         /*
@@ -74,6 +79,16 @@ public class EnemyShip {
         y = generator.nextInt(maxY) - bitmap.getHeight();
 
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
+    }
+
+    // Da resize no tamanho do bitmap do inimigo
+
+    public void scaleBitmap(int x) {
+        if (x < 1000) {
+            bitmap =Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 3, bitmap.getHeight() / 3, false);
+        } else if ( x < 1200) {
+            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
+        }
     }
 
     // Retornamos o valor da variável bitmap
