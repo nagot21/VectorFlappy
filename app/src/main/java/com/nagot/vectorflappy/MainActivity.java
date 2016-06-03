@@ -5,14 +5,17 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.IOException;
 
 // Begin improvements
 
@@ -22,10 +25,31 @@ onCreate() da activity
 */
 public class MainActivity extends Activity {
 
+    private MediaPlayer player;
+    Thread gameThread = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Cria um MediaPlayer para tocar a música de abertura.
+
+        try {
+            AssetManager assetManager = this.getAssets();
+            AssetFileDescriptor descriptor;
+
+            descriptor = assetManager.openFd("title.ogg");
+            player = new MediaPlayer();
+            player.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+            player.setVolume(0.1f, 0.1f);
+            player.setLooping(true);
+            player.prepare();
+            player.start();
+
+        } catch (IOException e) {
+            Log.e("error", "failed to load sound file or file is missing");
+        }
 
         // Seta o listener no botão. Ao ser clicado a Activity GameActivity.class será acionada
 
@@ -53,6 +77,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, GameActivity.class);
                 startActivity(i);
+                player.stop();
                 finish();
             }
         });
@@ -74,8 +99,21 @@ public class MainActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            player.stop();
             finish();
         }
         return false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        player.pause();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        player.start();
     }
 }
