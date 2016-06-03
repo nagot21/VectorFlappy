@@ -29,10 +29,25 @@ public class EnemyShip {
     Repare que ele herda da primeira classe, a GameActivity, as coordenadas de X e Y da tela
     do dispositivo. Perceba também que ela inicializa uma variável chamada hitBox, que irá determinar
     o tamanho do nosso objeto para realizar o teste de colisão.
+
+    É criado também um gerador de números random para pegar uma imagem de inimigo aleatória
      */
 
     public EnemyShip(Context context, int screenX, int screenY) {
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy);
+        Random bitmapGenerator = new Random();
+        int whichBitmap = bitmapGenerator.nextInt(3);
+        switch (whichBitmap){
+            case 0:
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy1);
+                break;
+            case 1:
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy2);
+                break;
+            case 2:
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy3);
+                break;
+        }
+        //bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy);
         maxX = screenX;
         maxY = screenY;
         minX = 0;
