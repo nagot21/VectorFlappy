@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.KeyEvent;
 
 /*
 Esta atividade controla o que será mostrado no game. Não existe um layout mostrando esta activity. Ela
@@ -58,5 +59,13 @@ public class GameActivity extends Activity {
     protected void onResume() {
         super.onResume();
         gameView.resume();
+    }
+
+    // Caso o jogador aperte o botão back do smartphone o game será finalizado
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
