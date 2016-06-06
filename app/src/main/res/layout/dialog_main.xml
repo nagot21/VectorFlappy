@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/blackTransparent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Select the difficulty"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blackTransparent">
+
+        <ImageView
+            android:id="@+id/imageEasy"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/easy"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:layout_alignLeft="@+id/imageMedium"
+            android:layout_alignStart="@+id/imageMedium" />
+
+        <Button
+            android:id="@+id/btnEasy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="13dp"
+            android:text="easy"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageHard"
+            android:layout_toEndOf="@+id/imageHard"
+            android:layout_marginLeft="-25dp"/>
+
+        <ImageView
+            android:id="@+id/imageMedium"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/medium"
+            android:layout_below="@+id/imageEasy"
+            android:layout_alignLeft="@+id/imageHard"
+            android:layout_alignStart="@+id/imageHard"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/btnMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="medium"
+            android:layout_below="@+id/btnEasy"
+            android:layout_alignLeft="@+id/btnEasy"
+            android:layout_alignStart="@+id/btnEasy"
+            android:layout_marginTop="8dp"/>
+
+        <ImageView
+            android:id="@+id/imageHard"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/hard"
+            android:layout_marginRight="36dp"
+            android:layout_marginEnd="36dp"
+            android:layout_below="@+id/imageMedium"
+            android:layout_toLeftOf="@+id/btnHard"
+            android:layout_toStartOf="@+id/btnHard"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/btnHard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="hard"
+            android:layout_marginRight="244dp"
+            android:layout_marginEnd="244dp"
+            android:layout_below="@+id/btnMedium"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="6dp"/>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

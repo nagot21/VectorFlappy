@@ -3,17 +3,24 @@ package com.nagot.vectorflappy;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -37,7 +44,7 @@ public class MainActivity extends Activity {
         // Troca a fonte da title screen
 
         final TextView title = (TextView) findViewById(R.id.title);
-        Typeface customFont = Typeface.createFromAsset(getAssets(),"fonts/spaceranger.otf");
+        Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
         title.setTypeface(customFont);
 
         // Cria um MediaPlayer para tocar a música de abertura.
@@ -71,12 +78,12 @@ public class MainActivity extends Activity {
 
         final Button buttonPlay = (Button) findViewById(R.id.buttonPlay);
 
-        Typeface buttonPlayFont = Typeface.createFromAsset(getAssets(),"fonts/spaceranger.otf");
+        Typeface buttonPlayFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
         buttonPlay.setTypeface(buttonPlayFont);
 
         final TextView textFastestTime = (TextView) findViewById(R.id.textHighScore);
 
-        Typeface textFastestTimeFont = Typeface.createFromAsset(getAssets(),"fonts/spaceranger.otf");
+        Typeface textFastestTimeFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
         textFastestTime.setTypeface(textFastestTimeFont);
 
         // Coloca a tag fastestTime no arquivo e lhe atribui o valor de 1000000 caso não tenha valor algum
@@ -90,10 +97,31 @@ public class MainActivity extends Activity {
         buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, GameActivity.class);
+
+
+                /*Intent i = new Intent(MainActivity.this, GameActivity.class);
                 startActivity(i);
                 player.stop();
-                finish();
+                finish();*/
+
+                final Dialog dialog = new Dialog(MainActivity.this);
+
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.setContentView(R.layout.dialog_main);
+
+                if (dialog != null) {
+
+                    Display display = getWindowManager().getDefaultDisplay();
+                    Point size = new Point();
+                    display.getSize(size);
+
+                    int width = size.x / 2;
+                    int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    dialog.getWindow().setLayout(width, height);
+                }
+
+                dialog.show();
             }
         });
 
