@@ -98,12 +98,6 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-
-                /*Intent i = new Intent(MainActivity.this, GameActivity.class);
-                startActivity(i);
-                player.stop();
-                finish();*/
-
                 // Chama a dialog box ao clicar no botao start
 
                 final Dialog dialog = new Dialog(MainActivity.this);
@@ -147,12 +141,23 @@ public class MainActivity extends Activity {
                     display.getSize(size);
 
                     int width = (size.x / 2) + 100;
-                    //int width = ViewGroup.LayoutParams.MATCH_PARENT;
                     int height = ViewGroup.LayoutParams.WRAP_CONTENT;
                     dialog.getWindow().setLayout(width, height);
                 }
 
                 dialog.show();
+
+                // Ao clicar no botao easy inicia o game
+
+                btnEasy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(MainActivity.this, GameActivity.class);
+                        startActivity(i);
+                        player.stop();
+                        finish();
+                    }
+                });
             }
         });
 
