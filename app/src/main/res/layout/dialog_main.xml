@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Choose difficulty"
+        android:text="@string/difficult"
         android:textColor="@color/white"
         android:textSize="30sp" />
 
@@ -36,11 +36,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="2dp"
             android:background="@color/blackTransparent"
-            android:text="easy    "
+            android:paddingEnd="13dp"
+            android:paddingStart="13dp"
+            android:text="@string/easy"
             android:textColor="@color/white"
             android:textSize="25sp" />
 
@@ -65,11 +67,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="2dp"
             android:background="@color/blackTransparent"
-            android:text="medium"
+            android:text="@string/medium"
             android:textColor="@color/white"
             android:textSize="25sp" />
 
@@ -93,11 +95,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="2dp"
             android:background="@color/blackTransparent"
-            android:text="hard    "
+            android:paddingEnd="13dp"
+            android:paddingStart="13dp"
+            android:text="@string/hard"
             android:textColor="@color/white"
             android:textSize="25sp" />
 
