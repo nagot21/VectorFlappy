@@ -104,11 +104,41 @@ public class MainActivity extends Activity {
                 player.stop();
                 finish();*/
 
+                // Chama a dialog box ao clicar no botao start
+
                 final Dialog dialog = new Dialog(MainActivity.this);
 
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
                 dialog.setContentView(R.layout.dialog_main);
+
+                // Seta fonte do título
+
+                final TextView title = (TextView) dialog.findViewById(R.id.dialogTitle);
+
+                Typeface dialogTitle = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
+                title.setTypeface(dialogTitle);
+
+                // Seta a fonte do modo easy
+
+                final Button btnEasy = (Button) dialog.findViewById(R.id.btnEasy);
+
+                Typeface dialogBtnEasy = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
+                btnEasy.setTypeface(dialogBtnEasy);
+
+                // Seta a fonte do modo medium
+
+                final Button btnMedium = (Button) dialog.findViewById(R.id.btnMedium);
+
+                Typeface dialogBtnMedium = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
+                btnMedium.setTypeface(dialogBtnMedium);
+
+                // Seta a fonte do modo hard
+
+                final Button btnHard = (Button) dialog.findViewById(R.id.btnHard);
+
+                Typeface dialogBtnHard = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
+                btnHard.setTypeface(dialogBtnHard);
 
                 if (dialog != null) {
 
@@ -116,7 +146,7 @@ public class MainActivity extends Activity {
                     Point size = new Point();
                     display.getSize(size);
 
-                    int width = size.x / 2;
+                    int width = (size.x / 2) + 100;
                     //int width = ViewGroup.LayoutParams.MATCH_PARENT;
                     int height = ViewGroup.LayoutParams.WRAP_CONTENT;
                     dialog.getWindow().setLayout(width, height);
