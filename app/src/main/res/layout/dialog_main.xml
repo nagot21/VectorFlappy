@@ -4,92 +4,99 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/blackTransparent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="5dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Select the difficulty"
+        android:text="Choose difficulty"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/blackTransparent">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageEasy"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@drawable/easy"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="20dp"
-            android:layout_alignLeft="@+id/imageMedium"
-            android:layout_alignStart="@+id/imageMedium" />
+            android:layout_gravity="center"
+            android:background="@drawable/easy" />
 
         <Button
             android:id="@+id/btnEasy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginTop="13dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/blackTransparent"
             android:text="easy"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/imageHard"
-            android:layout_toEndOf="@+id/imageHard"
-            android:layout_marginLeft="-25dp"/>
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageMedium"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@drawable/medium"
-            android:layout_below="@+id/imageEasy"
-            android:layout_alignLeft="@+id/imageHard"
-            android:layout_alignStart="@+id/imageHard"
-            android:layout_marginTop="20dp"/>
+            android:background="@drawable/medium" />
 
         <Button
             android:id="@+id/btnMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/blackTransparent"
             android:text="medium"
-            android:layout_below="@+id/btnEasy"
-            android:layout_alignLeft="@+id/btnEasy"
-            android:layout_alignStart="@+id/btnEasy"
-            android:layout_marginTop="8dp"/>
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageHard"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="@drawable/hard"
-            android:layout_marginRight="36dp"
-            android:layout_marginEnd="36dp"
-            android:layout_below="@+id/imageMedium"
-            android:layout_toLeftOf="@+id/btnHard"
-            android:layout_toStartOf="@+id/btnHard"
-            android:layout_marginTop="20dp"/>
+            android:background="@drawable/hard" />
 
         <Button
             android:id="@+id/btnHard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/blackTransparent"
             android:text="hard"
-            android:layout_marginRight="244dp"
-            android:layout_marginEnd="244dp"
-            android:layout_below="@+id/btnMedium"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="6dp"/>
+            android:textColor="@color/white"
+            android:textSize="25sp" />
 
-
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

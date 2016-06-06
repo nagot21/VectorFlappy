@@ -117,6 +117,7 @@ public class MainActivity extends Activity {
                     display.getSize(size);
 
                     int width = size.x / 2;
+                    //int width = ViewGroup.LayoutParams.MATCH_PARENT;
                     int height = ViewGroup.LayoutParams.WRAP_CONTENT;
                     dialog.getWindow().setLayout(width, height);
                 }
