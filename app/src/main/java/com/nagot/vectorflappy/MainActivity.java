@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Troca a fonte da title screen
+
+        final TextView title = (TextView) findViewById(R.id.title);
+        Typeface customFont = Typeface.createFromAsset(getAssets(),"fonts/Vectorb.otf");
+        title.setTypeface(customFont);
 
         // Cria um MediaPlayer para tocar a música de abertura.
 

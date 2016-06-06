@@ -24,18 +24,19 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="High Score: 999999"
+        android:text="@string/high_score"
         android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="VECTOR FLAPPY"
+        android:text="@string/app_name"
         android:textColor="@color/white"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        android:layout_below="@+id/textHighScore"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="95dp" />
 
     <Button
         android:id="@+id/buttonPlay"
@@ -44,6 +45,6 @@
         android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp"
-        android:text="Start" />
+        android:text="@string/start" />
 
 </RelativeLayout>
