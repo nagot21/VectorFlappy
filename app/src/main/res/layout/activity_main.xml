@@ -11,11 +11,11 @@
     tools:context="com.nagot.vectorflappy.MainActivity">
 
     <ImageView
+        android:id="@+id/backgroundImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background"
         android:layout_centerInParent="true"
-        android:id="@+id/backgroundImageView"/>
+        android:background="@drawable/background" />
 
     <TextView
         android:id="@+id/textHighScore"
@@ -25,18 +25,20 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="@string/high_score"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="@color/white"
-        android:textSize="50sp"
         android:layout_below="@+id/textHighScore"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="95dp" />
+        android:layout_marginTop="95dp"
+        android:text="@string/app_name"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="70sp" />
 
     <Button
         android:id="@+id/buttonPlay"
@@ -45,6 +47,10 @@
         android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp"
-        android:text="@string/start" />
+        android:background="@color/blackBackground"
+        android:text="@string/start"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
 
 </RelativeLayout>

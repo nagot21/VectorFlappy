@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
         // Troca a fonte da title screen
 
         final TextView title = (TextView) findViewById(R.id.title);
-        Typeface customFont = Typeface.createFromAsset(getAssets(),"fonts/Vectorb.otf");
+        Typeface customFont = Typeface.createFromAsset(getAssets(),"fonts/spaceranger.otf");
         title.setTypeface(customFont);
 
         // Cria um MediaPlayer para tocar a música de abertura.
@@ -67,9 +67,17 @@ public class MainActivity extends Activity {
 
         prefs = getSharedPreferences("HighScores", MODE_PRIVATE);
 
+        // Instancia botão e coloca sua fonte
+
         final Button buttonPlay = (Button) findViewById(R.id.buttonPlay);
 
+        Typeface buttonPlayFont = Typeface.createFromAsset(getAssets(),"fonts/spaceranger.otf");
+        buttonPlay.setTypeface(buttonPlayFont);
+
         final TextView textFastestTime = (TextView) findViewById(R.id.textHighScore);
+
+        Typeface textFastestTimeFont = Typeface.createFromAsset(getAssets(),"fonts/spaceranger.otf");
+        textFastestTime.setTypeface(textFastestTimeFont);
 
         // Coloca a tag fastestTime no arquivo e lhe atribui o valor de 1000000 caso não tenha valor algum
 
