@@ -39,10 +39,12 @@ public class PlayerShip {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
         boosting = false;
         // O valor abaixo determina o máximo que o eixo Y pode chegar baseado nas dimensões do dispositivo
-        maxY = screenY - bitmap.getHeight();
-        minY = 0;
+        //maxY = screenY - bitmap.getHeight();
+        maxY = screenY - bitmap.getHeight() - 150;
+        //minY = 0;
+        minY = 50;
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
-        shieldStrenght = 2;
+        shieldStrenght = 2000;
     }
 
     /*
