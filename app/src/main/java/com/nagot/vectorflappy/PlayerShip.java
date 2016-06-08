@@ -40,7 +40,7 @@ public class PlayerShip {
         boosting = false;
         // O valor abaixo determina o máximo que o eixo Y pode chegar baseado nas dimensões do dispositivo
         //maxY = screenY - bitmap.getHeight();
-        maxY = screenY - bitmap.getHeight() - 150;
+        maxY = screenY - bitmap.getHeight() - 80;
         //minY = 0;
         minY = 50;
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
