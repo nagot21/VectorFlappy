@@ -140,10 +140,35 @@ public class VFView extends SurfaceView implements Runnable {
                     score++;
                 }
             }
-                draw();
-                control();
+
+            if (enemy2.getAux() <= 1) {
+                if (enemy2.isNoHit()) {
+                    score++;
+                }
             }
+
+            if (enemy3.getAux() <= 1) {
+                if (enemy3.isNoHit()) {
+                    score++;
+                }
+            }
+
+            if (enemy4.getAux() <= 1) {
+                if (enemy4.isNoHit()) {
+                    score++;
+                }
+            }
+
+            if (enemy5.getAux() <= 1) {
+                if (enemy5.isNoHit()) {
+                    score++;
+                }
+            }
+
+            draw();
+            control();
         }
+    }
 
     /*
      Chama o método update() da classe PlayerShip, EnemyShip e SpaceDust. Estes métodos irão ditar
@@ -198,23 +223,38 @@ public class VFView extends SurfaceView implements Runnable {
 
         // Caso o jogador passe o inimigo sem bater score ganha +1
 
-        //int aux = 0;
-
-       /*if ((enemy1.getX() < player.getX()) || (enemy2.getX() < player.getX()) || (enemy3.getX() < player.getX()) || (enemy4.getX() < player.getX()) || (enemy5.getX() < player.getX())) {
-            score++;
-            aux = score;
-            score = score * 2 + 1 - aux;
-        } */
-
-        boolean hitDetected = false; // Variável criada para ver se o jogador foi atingido
-        //boolean notHit = false;
-
         if (enemy1.getX() < player.getX()) {
             enemy1.setNoHit(true);
             enemy1.setAux(1);
         }
-        //Log.i("hitboxValue", "EnemyRight: " + enemyX + " PlayerLeft: " + playerX);
 
+        if (enemy2.getX() < player.getX()) {
+            enemy2.setNoHit(true);
+            enemy2.setAux(1);
+        }
+
+        if (enemy3.getX() < player.getX()) {
+            enemy3.setNoHit(true);
+            enemy3.setAux(1);
+        }
+
+        if (screenX > 1000) {
+            if (enemy4.getX() < player.getX()) {
+                enemy4.setNoHit(true);
+                enemy4.setAux(1);
+            }
+        }
+
+        if (screenX > 1200) {
+            if (enemy5.getX() < player.getX()) {
+                enemy5.setNoHit(true);
+                enemy5.setAux(1);
+            }
+        }
+
+        boolean hitDetected = false; // Variável criada para ver se o jogador foi atingido
+
+        // Caso o jogador tenha sido atingido, retira as naves de cena
 
         if (Rect.intersects(player.getHitBox(), enemy1.getHitBox())) {
             hitDetected = true; // Caso atingido, a variável ganha o valor true
@@ -339,7 +379,7 @@ public class VFView extends SurfaceView implements Runnable {
 
             // Código abaixo é para fins de debug. Ele irá criar um retangulo branco atrás do bitmap
 
-            paint.setColor(Color.argb(255, 255, 255, 255));
+           /* paint.setColor(Color.argb(255, 255, 255, 255));
 
             canvas.drawRect(player.getHitBox().left,
                     player.getHitBox().top,
@@ -365,7 +405,7 @@ public class VFView extends SurfaceView implements Runnable {
                     enemy3.getHitBox().bottom,
                     paint);
 
-            // Fim do bloco de teste
+            // Fim do bloco de teste */
 
             canvas.drawBitmap(
                     player.getBitmap(),
@@ -391,7 +431,7 @@ public class VFView extends SurfaceView implements Runnable {
                     enemy3.getY(),
                     paint);
 
-            // Caso a resolução da tela seja maior que 1000 em seu eixo x coloca mais um inimigo
+            /*// Caso a resolução da tela seja maior que 1000 em seu eixo x coloca mais um inimigo
 
             if (screenX > 1000) {
                 canvas.drawBitmap(
@@ -409,7 +449,7 @@ public class VFView extends SurfaceView implements Runnable {
                         enemy5.getX(),
                         enemy5.getY(),
                         paint);
-            }
+            }*/
 
             paint.setColor(Color.argb(255, 255, 255, 255));
 
