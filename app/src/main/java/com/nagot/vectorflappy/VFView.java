@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
@@ -329,7 +330,7 @@ public class VFView extends SurfaceView implements Runnable {
         Retira também tempo do cronometro
          */
 
-        if (!gameEnded) {
+       /* if (!gameEnded) {
             distanceRemaining -= player.getSpeed();
             timeTaken = System.currentTimeMillis() - timeStarted;
         }
@@ -339,7 +340,7 @@ public class VFView extends SurfaceView implements Runnable {
         variável é atualizada e gameEnded setado como true
          */
 
-        if (distanceRemaining < 0) {
+        /*if (distanceRemaining < 0) {
             soundPool.play(win, 1, 1, 0, 0, 1); // Se o jogador finalizar o game tocará a a música win
             if (timeTaken < fastestTime) {
                 editor.putLong("fastestTime", timeTaken); // Coloca o novo valor no buffer
@@ -348,7 +349,7 @@ public class VFView extends SurfaceView implements Runnable {
             }
             distanceRemaining = 0;
             gameEnded = true;
-        }
+        }*/
     }
 
     /*
@@ -431,7 +432,7 @@ public class VFView extends SurfaceView implements Runnable {
                     enemy3.getY(),
                     paint);
 
-            /*// Caso a resolução da tela seja maior que 1000 em seu eixo x coloca mais um inimigo
+            // Caso a resolução da tela seja maior que 1000 em seu eixo x coloca mais um inimigo
 
             if (screenX > 1000) {
                 canvas.drawBitmap(
@@ -449,7 +450,7 @@ public class VFView extends SurfaceView implements Runnable {
                         enemy5.getX(),
                         enemy5.getY(),
                         paint);
-            }*/
+            }
 
             paint.setColor(Color.argb(255, 255, 255, 255));
 
@@ -463,14 +464,19 @@ public class VFView extends SurfaceView implements Runnable {
             if (!gameEnded) {
                 paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
                 paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
-                paint.setTextSize(25); // Tamanho do texto
+                paint.setTextSize(40); // Tamanho do texto
+                Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
+                paint.setTypeface(font);
 
-                canvas.drawText("Fastest: " + formatTime(fastestTime) + "s", 10, 20, paint); // Aqui temos 4 parâmetros. O primeiro é o texto, seguido da coordenada X, Y, comando para escrever
+                canvas.drawText("Shield: " + player.getShieldStrenght(), 10, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
+                canvas.drawText("Score: " + score, screenX / 2, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
+
+                //canvas.drawText("Fastest: " + formatTime(fastestTime) + "s", 10, 20, paint); // Aqui temos 4 parâmetros. O primeiro é o texto, seguido da coordenada X, Y, comando para escrever
                 //canvas.drawText("Time: " + formatTime(timeTaken) + "s", screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
-                canvas.drawText("Score: " + score, screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
-                canvas.drawText("Distance: " + distanceRemaining / 1000 + " KM", screenX / 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
-                canvas.drawText("Shield: " + player.getShieldStrenght(), 10, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
-                canvas.drawText("Speed: " + player.getSpeed() * 60 + " MPS", (screenX / 3) * 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
+                //canvas.drawText("Score: " + score, screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
+                //canvas.drawText("Distance: " + distanceRemaining / 1000 + " KM", screenX / 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
+                //canvas.drawText("Shield: " + player.getShieldStrenght(), 10, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
+                //canvas.drawText("Speed: " + player.getSpeed() * 60 + " MPS", (screenX / 3) * 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
             } else {
                 paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
                 //paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
