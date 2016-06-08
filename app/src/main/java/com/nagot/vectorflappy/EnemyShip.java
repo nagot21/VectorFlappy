@@ -23,6 +23,8 @@ public class EnemyShip {
     private int maxY;
     private int minY;
     private Rect hitBox;
+    private boolean noHit = false;
+    private int aux = 0;
 
      /*
     No construtor damos as cordenadas iniciais da nave inimiga.
@@ -141,6 +143,8 @@ public class EnemyShip {
             speed = generator.nextInt(10) + 10;
             x = maxX;
             y = generator.nextInt(maxY) - bitmap.getHeight();
+            this.setNoHit(false);
+            this.aux = 0;
         }
 
         /*
@@ -152,5 +156,21 @@ public class EnemyShip {
         hitBox.top = y;
         hitBox.right = x + bitmap.getWidth();
         hitBox.bottom = y + bitmap.getHeight();
+    }
+
+    public boolean isNoHit() {
+        return noHit;
+    }
+
+    public void setNoHit(boolean noHit) {
+        this.noHit = noHit;
+    }
+
+    public int getAux() {
+        return aux;
+    }
+
+    public void setAux(int aux) {
+        this.aux = this.aux + aux;
     }
 }

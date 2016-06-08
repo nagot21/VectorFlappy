@@ -44,6 +44,7 @@ public class VFView extends SurfaceView implements Runnable {
     private float distanceRemaining;
     private long timeTaken, timeStarted, fastestTime;
     private int screenX, screenY;
+    private int score;
     private Context context;
     private boolean gameEnded;
 
@@ -134,10 +135,15 @@ public class VFView extends SurfaceView implements Runnable {
     public void run() {
         while (playing) {
             update();
-            draw();
-            control();
+            if (enemy1.getAux() <= 1) {
+                if (enemy1.isNoHit()) {
+                    score++;
+                }
+            }
+                draw();
+                control();
+            }
         }
-    }
 
     /*
      Chama o método update() da classe PlayerShip, EnemyShip e SpaceDust. Estes métodos irão ditar
@@ -189,7 +195,26 @@ public class VFView extends SurfaceView implements Runnable {
         Os 3 bloco de IF's abaixo fazem o teste de colisão dos objetos. Caso eles colidam, a nave
         inimiga terá seu X mudado para -200. Isto é, será retirada automáticamente da tela.
          */
+
+        // Caso o jogador passe o inimigo sem bater score ganha +1
+
+        //int aux = 0;
+
+       /*if ((enemy1.getX() < player.getX()) || (enemy2.getX() < player.getX()) || (enemy3.getX() < player.getX()) || (enemy4.getX() < player.getX()) || (enemy5.getX() < player.getX())) {
+            score++;
+            aux = score;
+            score = score * 2 + 1 - aux;
+        } */
+
         boolean hitDetected = false; // Variável criada para ver se o jogador foi atingido
+        //boolean notHit = false;
+
+        if (enemy1.getX() < player.getX()) {
+            enemy1.setNoHit(true);
+            enemy1.setAux(1);
+        }
+        //Log.i("hitboxValue", "EnemyRight: " + enemyX + " PlayerLeft: " + playerX);
+
 
         if (Rect.intersects(player.getHitBox(), enemy1.getHitBox())) {
             hitDetected = true; // Caso atingido, a variável ganha o valor true
@@ -401,7 +426,8 @@ public class VFView extends SurfaceView implements Runnable {
                 paint.setTextSize(25); // Tamanho do texto
 
                 canvas.drawText("Fastest: " + formatTime(fastestTime) + "s", 10, 20, paint); // Aqui temos 4 parâmetros. O primeiro é o texto, seguido da coordenada X, Y, comando para escrever
-                canvas.drawText("Time: " + formatTime(timeTaken) + "s", screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
+                //canvas.drawText("Time: " + formatTime(timeTaken) + "s", screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
+                canvas.drawText("Score: " + score, screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
                 canvas.drawText("Distance: " + distanceRemaining / 1000 + " KM", screenX / 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
                 canvas.drawText("Shield: " + player.getShieldStrenght(), 10, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
                 canvas.drawText("Speed: " + player.getSpeed() * 60 + " MPS", (screenX / 3) * 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
@@ -422,7 +448,7 @@ public class VFView extends SurfaceView implements Runnable {
         }
     }
 
-    // Formata o tempo da variável timeTaken para ser legível por humanos
+    // Formata o tempo da variável timeTaken para ser legível por humanos METODO ABAIXO SERA INUTILIZADO
 
     private String formatTime(long time) {
         long seconds = (time) / 1000;
