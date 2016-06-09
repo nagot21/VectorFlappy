@@ -189,6 +189,7 @@ public class VFView extends SurfaceView implements Runnable {
         enemy1 = new EnemyShip(context, screenX, screenY);
         enemy2 = new EnemyShip(context, screenX, screenY);
         enemy3 = new EnemyShip(context, screenX, screenY);
+        score = 0;
 
         if (screenX > 1000) {
             enemy4 = new EnemyShip(context, screenX, screenY);
