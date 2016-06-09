@@ -259,30 +259,30 @@ public class VFView extends SurfaceView implements Runnable {
 
         if (Rect.intersects(player.getHitBox(), enemy1.getHitBox())) {
             hitDetected = true; // Caso atingido, a variável ganha o valor true
-            enemy1.setX(-200);
+            enemy1.setX(-400);
         }
 
         if (Rect.intersects(player.getHitBox(), enemy2.getHitBox())) {
             hitDetected = true; // Caso atingido, a variável ganha o valor true
-            enemy2.setX(-200);
+            enemy2.setX(-400);
         }
 
         if (Rect.intersects(player.getHitBox(), enemy3.getHitBox())) {
             hitDetected = true; // Caso atingido, a variável ganha o valor true
-            enemy3.setX(-200);
+            enemy3.setX(-400);
         }
 
         if (screenX > 1000) {
             if (Rect.intersects(player.getHitBox(), enemy4.getHitBox())) {
                 hitDetected = true; // Caso atingido, a variável ganha o valor true
-                enemy4.setX(-200);
+                enemy4.setX(-400);
             }
         }
 
         if (screenX > 1200) {
             if (Rect.intersects(player.getHitBox(), enemy5.getHitBox())) {
                 hitDetected = true; // Caso atingido, a variável ganha o valor true
-                enemy5.setX(-200);
+                enemy5.setX(-400);
             }
         }
 
