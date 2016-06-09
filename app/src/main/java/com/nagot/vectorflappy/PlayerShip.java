@@ -20,6 +20,7 @@ public class PlayerShip {
     private final int GRAVITY = -12;
     private int maxY;
     private int minY;
+    private int auxSound = 0;
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 20;
     private int shieldStrenght; // Responsável pelo shield da nave
@@ -45,7 +46,7 @@ public class PlayerShip {
         //minY = 0;
         minY = 50;
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
-        shieldStrenght = 2000;
+        shieldStrenght = 2;
     }
 
     /*
@@ -111,6 +112,10 @@ public class PlayerShip {
         return y;
     }
 
+    public int getMaxY(){
+        return maxY;
+    }
+
     // Retorna o valor da variável hitBox
 
     public Rect getHitBox() {
@@ -139,5 +144,13 @@ public class PlayerShip {
 
     public void stopBoosting() {
         boosting = false;
+    }
+
+    public void setAuxSound(int auxSound) {
+        this.auxSound = this.auxSound + auxSound;
+    }
+
+    public int getAuxSound() {
+        return auxSound;
     }
 }

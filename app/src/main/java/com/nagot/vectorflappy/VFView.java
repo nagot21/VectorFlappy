@@ -288,12 +288,28 @@ public class VFView extends SurfaceView implements Runnable {
 
         // Caso o valor de getShieldStrenght seja menor que zero o game finaliza
 
+        if(player.getY() == player.getMaxY()){
+            player.setAuxSound(1); // Esta variável serve de controle para que o som de explosão toque somente uma vez
+            if ((player.getAuxSound() >= 1) && (player.getAuxSound() < 2)) {
+                gameEnded = true;
+                if (gameEnded) {
+                    soundPool.play(destroyed, 1, 1, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
+                }
+            }
+
+        }
+
         if (hitDetected) {
             soundPool.play(bump, 1, 1, 0, 0, 1); // Se a nave bater, será tocado o som de bump
             player.reduceShieldStrenght();
             if (player.getShieldStrenght() < 0) {
-                soundPool.play(destroyed, 1, 1, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
-                gameEnded = true;
+                player.setAuxSound(1); // Esta variável serve de controle para que o som de explosão toque somente uma vez
+                if ((player.getAuxSound() >= 1) && (player.getAuxSound() < 2)) {
+                    gameEnded = true;
+                    if (gameEnded) {
+                        soundPool.play(destroyed, 1, 1, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
+                    }
+                }
             }
         }
 
