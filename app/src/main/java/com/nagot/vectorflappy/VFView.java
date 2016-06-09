@@ -295,6 +295,7 @@ public class VFView extends SurfaceView implements Runnable {
                 gameEnded = true;
                 if (gameEnded) {
                     soundPool.play(destroyed, 1, 1, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
+                    player.setX(-500);
                 }
             }
         }
@@ -310,6 +311,7 @@ public class VFView extends SurfaceView implements Runnable {
                     gameEnded = true;
                     if (gameEnded) {
                         soundPool.play(destroyed, 1, 1, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
+                        player.setX(-500);
                     }
                 }
             }

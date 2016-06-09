@@ -100,6 +100,12 @@ public class PlayerShip {
         return speed;
     }
 
+    // Coloca um valor para variável x
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
     // Retornamos o valor da variável x
 
     public int getX() {
