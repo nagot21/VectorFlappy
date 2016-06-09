@@ -36,10 +36,9 @@ public class EnemyShip {
      */
 
     public EnemyShip(Context context, int screenX, int screenY) {
-        //Random bitmapGenerator = new Random();
         Random generator = new Random();
         int whichBitmap = generator.nextInt(3);
-        switch (whichBitmap){
+        switch (whichBitmap) {
             case 0:
                 bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy1);
                 break;
@@ -58,7 +57,7 @@ public class EnemyShip {
         maxX = screenX;
         maxY = screenY;
         minX = 0;
-        minY = 0;
+        minY = 50;
 
         /*
         Repare no trecho abaixo que o valor do speed da nave é gerado inicialmente de
@@ -76,9 +75,13 @@ public class EnemyShip {
 
         /*
         Sua posição no eixo Y será o cálculo aletório do seu tamanho máximo no eixo
-        Y menos o tamanho do objeto bitmap
+        Y menos o tamanho do objeto bitmap. Caso o valor seja menor que 50, será colocado um
+        valor inicial fixo
          */
-        y = generator.nextInt(maxY) - bitmap.getHeight();
+        y = generator.nextInt(maxY - 50) - bitmap.getHeight();
+        if (y < 50) {
+            y = 250;
+        }
 
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
     }
@@ -87,21 +90,21 @@ public class EnemyShip {
 
     public void scaleBitmap(int x) {
         if (x < 1000) {
-            bitmap =Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 3, bitmap.getHeight() / 3, false);
-        } else if ( x < 1200) {
+            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 3, bitmap.getHeight() / 3, false);
+        } else if (x < 1200) {
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
         }
     }
 
     // Retornamos o valor da variável bitmap
 
-    public Bitmap getBitmap(){
+    public Bitmap getBitmap() {
         return bitmap;
     }
 
     // Retornamos o valor da variável speed
 
-    public int getX(){
+    public int getX() {
         return x;
     }
 
@@ -138,11 +141,14 @@ public class EnemyShip {
         posição randomica no eixo Y caso X seja menor que minX menos a altura da imagem bitmap
          */
 
-        if (x < minX - bitmap.getWidth()){
+        if (x < minX - bitmap.getWidth()) {
             Random generator = new Random();
             speed = generator.nextInt(10) + 10;
             x = maxX;
-            y = generator.nextInt(maxY) - bitmap.getHeight();
+            y = generator.nextInt(maxY - 50) - bitmap.getHeight();
+            if (y < 50) {
+                y = 250;
+            }
             this.setNoHit(false);
             this.aux = 0;
         }
