@@ -86,13 +86,13 @@ public class MainActivity extends Activity {
         Typeface textFastestTimeFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
         textFastestTime.setTypeface(textFastestTimeFont);
 
-        // Coloca a tag fastestTime no arquivo e lhe atribui o valor de 1000000 caso não tenha valor algum
+        // Coloca a tag MaxScore no arquivo e lhe atribui o valor de 20 caso não tenha valor algum
 
-        long fastestTime = prefs.getLong("fastestTime", 1000000);
+        int maxScore = prefs.getInt("MaxScore", 20);
 
         // Muda o valor do text view para o encontrado no arquivo
 
-        textFastestTime.setText("Fastest Time: " + fastestTime);
+        textFastestTime.setText("Max Score: " + maxScore);
 
         buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override

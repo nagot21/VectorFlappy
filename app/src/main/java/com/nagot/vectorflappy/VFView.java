@@ -45,7 +45,7 @@ public class VFView extends SurfaceView implements Runnable {
     private float distanceRemaining;
     private long timeTaken, timeStarted, fastestTime;
     private int screenX, screenY;
-    private int score;
+    private int score, maxScore;
     private Context context;
     private boolean gameEnded;
 
@@ -123,7 +123,8 @@ public class VFView extends SurfaceView implements Runnable {
 
         // Carrega o valor do arquivo HighScores. Caso não tenha nenhum valor, irá colocar o default de 1000000
 
-        fastestTime = prefs.getLong("FastestTime", 1000000);
+        //fastestTime = prefs.getLong("FastestTime", 1000000);
+        maxScore = prefs.getInt("MaxScore", 20);
 
         startGame();
     }
@@ -367,6 +368,13 @@ public class VFView extends SurfaceView implements Runnable {
             distanceRemaining = 0;
             gameEnded = true;
         }*/
+        if (gameEnded) {
+            if (score > maxScore) {
+                editor.putInt("MaxScore", score);
+                editor.commit();
+                maxScore = score;
+            }
+        }
     }
 
     /*
@@ -500,9 +508,11 @@ public class VFView extends SurfaceView implements Runnable {
                 paint.setTextSize(80); // Tamanho do texto
                 canvas.drawText("Game Over", screenX / 2, 100, paint);
                 paint.setTextSize(25);
-                canvas.drawText("Fastest: " + formatTime(fastestTime) + "s", screenX / 2, 160, paint);
-                canvas.drawText("Time: " + formatTime(timeTaken) + "s", screenX / 2, 200, paint);
-                canvas.drawText("Distance remaining: " + distanceRemaining / 1000 + " KM", screenX / 2, 240, paint);
+                canvas.drawText("Score: " + score, screenX / 2, 160, paint);
+                canvas.drawText("Max Score: " + maxScore, screenX / 2, 200, paint);
+                //canvas.drawText("Fastest: " + formatTime(fastestTime) + "s", screenX / 2, 160, paint);
+                //canvas.drawText("Time: " + formatTime(timeTaken) + "s", screenX / 2, 200, paint);
+                //canvas.drawText("Distance remaining: " + distanceRemaining / 1000 + " KM", screenX / 2, 240, paint);
                 paint.setTextSize(80); // Tamanho do texto
                 canvas.drawText("Tap to replay!", screenX / 2, 350, paint);
             }
