@@ -155,6 +155,7 @@ public class MainActivity extends Activity {
                         Intent i = new Intent(MainActivity.this, GameActivity.class);
                         startActivity(i);
                         player.stop();
+                        dialog.dismiss();
                         finish();
                     }
                 });

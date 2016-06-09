@@ -29,6 +29,7 @@ Esta classe desenha todos os elementos na tela e controla alguns outros elemento
 public class VFView extends SurfaceView implements Runnable {
 
     volatile boolean playing;
+    boolean loaded = false;
     Thread gameThread = null;
     private PlayerShip player;
     public EnemyShip enemy1, enemy2, enemy3, enemy4, enemy5;
@@ -214,7 +215,19 @@ public class VFView extends SurfaceView implements Runnable {
 
         gameEnded = false; // Variável checa se o game finalizou ou não
 
-        soundPool.play(start, 1, 1, 0, 0, 1);
+
+
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                loaded = true;
+            }
+        });
+
+        if(loaded) {
+            soundPool.play(start, 1, 1, 0, 0, 1);
+        }
+
     }
 
     private void update() {
