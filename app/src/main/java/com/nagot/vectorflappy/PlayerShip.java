@@ -43,7 +43,6 @@ public class PlayerShip {
         //maxY = screenY - bitmap.getHeight();
         //maxY = screenY - bitmap.getHeight() - 80;
         maxY = screenY - bitmap.getHeight() + 40;
-        //minY = 0;
         minY = 50;
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
         shieldStrenght = 2000;
