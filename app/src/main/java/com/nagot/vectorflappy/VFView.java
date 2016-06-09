@@ -156,15 +156,21 @@ public class VFView extends SurfaceView implements Runnable {
                 }
             }
 
-            if (enemy4.getAux() <= 1) {
-                if (enemy4.isNoHit()) {
-                    score++;
+            if (screenX > 1000) {
+
+                if (enemy4.getAux() <= 1) {
+                    if (enemy4.isNoHit()) {
+                        score++;
+                    }
                 }
             }
 
-            if (enemy5.getAux() <= 1) {
-                if (enemy5.isNoHit()) {
-                    score++;
+            if (screenX > 1200) {
+
+                if (enemy5.getAux() <= 1) {
+                    if (enemy5.isNoHit()) {
+                        score++;
+                    }
                 }
             }
 
@@ -218,7 +224,6 @@ public class VFView extends SurfaceView implements Runnable {
         gameEnded = false; // Variável checa se o game finalizou ou não
 
 
-
         soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
@@ -226,7 +231,7 @@ public class VFView extends SurfaceView implements Runnable {
             }
         });
 
-        if(loaded) {
+        if (loaded) {
             soundPool.play(start, 1, 1, 0, 0, 1);
         }
 
@@ -513,23 +518,38 @@ public class VFView extends SurfaceView implements Runnable {
 
                 canvas.drawText("Shield: " + player.getShieldStrenght(), 10, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
                 canvas.drawText("Score: " + score, screenX / 2, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
-
-                //canvas.drawText("Fastest: " + formatTime(fastestTime) + "s", 10, 20, paint); // Aqui temos 4 parâmetros. O primeiro é o texto, seguido da coordenada X, Y, comando para escrever
-                //canvas.drawText("Time: " + formatTime(timeTaken) + "s", screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
-                //canvas.drawText("Score: " + score, screenX / 2, 20, paint); // Repete o mesmo procedimento mencionado anteriormente
-                //canvas.drawText("Distance: " + distanceRemaining / 1000 + " KM", screenX / 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
-                //canvas.drawText("Shield: " + player.getShieldStrenght(), 10, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
-                //canvas.drawText("Speed: " + player.getSpeed() * 60 + " MPS", (screenX / 3) * 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
             } else {
-                paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                paint.setTextSize(250); // Tamanho do texto
-                canvas.drawText("Game Over", screenX / 2, 300, paint);
-                paint.setTextSize(50);
-                canvas.drawText("Score: " + score, screenX / 2, 480, paint);
-                canvas.drawText("Max Score: " + maxScore, screenX / 2, 540, paint);
-                paint.setTextSize(120); // Tamanho do texto
-                paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
-                canvas.drawText("Tap to replay", screenX / 2, 750, paint);
+                if ((screenX > 2500) && (screenY >= 1600)) {
+                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                    paint.setTextSize(350); // Tamanho do texto
+                    canvas.drawText("Game Over", screenX / 2, 500, paint);
+                    paint.setTextSize(100);
+                    canvas.drawText("Score: " + score, screenX / 2, 700, paint);
+                    canvas.drawText("Max Score: " + maxScore, screenX / 2, 800, paint);
+                    paint.setTextSize(220); // Tamanho do texto
+                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
+                    canvas.drawText("Tap to replay", screenX / 2, 1100, paint);
+                /*} else if((screenX >= 1280) && (screenY >= 800)) {
+                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                    paint.setTextSize(100); // Tamanho do texto
+                    canvas.drawText("Game Over", screenX / 2, 300, paint);
+                    paint.setTextSize(50);
+                    canvas.drawText("Score: " + score, screenX / 2, 480, paint);
+                    canvas.drawText("Max Score: " + maxScore, screenX / 2, 540, paint);
+                    paint.setTextSize(120); // Tamanho do texto
+                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
+                    canvas.drawText("Tap to replay", screenX / 2, 750, paint); */
+                } else {
+                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                    paint.setTextSize(220); // Tamanho do texto
+                    canvas.drawText("Game Over", screenX / 2, 250, paint);
+                    paint.setTextSize(50);
+                    canvas.drawText("Score: " + score, screenX / 2, 430, paint);
+                    canvas.drawText("Max Score: " + maxScore, screenX / 2, 490, paint);
+                    paint.setTextSize(120); // Tamanho do texto
+                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
+                    canvas.drawText("Tap to replay", screenX / 2, 730, paint);
+                }
             }
 
             ourHolder.unlockCanvasAndPost(canvas);
