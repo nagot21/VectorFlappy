@@ -507,17 +507,14 @@ public class VFView extends SurfaceView implements Runnable {
                 //canvas.drawText("Speed: " + player.getSpeed() * 60 + " MPS", (screenX / 3) * 2, screenY - 80, paint); // Repete o mesmo procedimento mencionado anteriormente
             } else {
                 paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                //paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
-                paint.setTextSize(80); // Tamanho do texto
-                canvas.drawText("Game Over", screenX / 2, 100, paint);
-                paint.setTextSize(25);
-                canvas.drawText("Score: " + score, screenX / 2, 160, paint);
-                canvas.drawText("Max Score: " + maxScore, screenX / 2, 200, paint);
-                //canvas.drawText("Fastest: " + formatTime(fastestTime) + "s", screenX / 2, 160, paint);
-                //canvas.drawText("Time: " + formatTime(timeTaken) + "s", screenX / 2, 200, paint);
-                //canvas.drawText("Distance remaining: " + distanceRemaining / 1000 + " KM", screenX / 2, 240, paint);
-                paint.setTextSize(80); // Tamanho do texto
-                canvas.drawText("Tap to replay!", screenX / 2, 350, paint);
+                paint.setTextSize(250); // Tamanho do texto
+                canvas.drawText("Game Over", screenX / 2, 300, paint);
+                paint.setTextSize(50);
+                canvas.drawText("Score: " + score, screenX / 2, 480, paint);
+                canvas.drawText("Max Score: " + maxScore, screenX / 2, 540, paint);
+                paint.setTextSize(120); // Tamanho do texto
+                paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
+                canvas.drawText("Tap to replay", screenX / 2, 750, paint);
             }
 
             ourHolder.unlockCanvasAndPost(canvas);
