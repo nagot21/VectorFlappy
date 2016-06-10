@@ -541,14 +541,14 @@ public class VFView extends SurfaceView implements Runnable {
                     canvas.drawText("Tap to replay", screenX / 2, 750, paint); */
                 } else {
                     paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                    paint.setTextSize(220); // Tamanho do texto
+                    paint.setTextSize(200); // Tamanho do texto
                     canvas.drawText("Game Over", screenX / 2, 250, paint);
                     paint.setTextSize(50);
-                    canvas.drawText("Score: " + score, screenX / 2, 430, paint);
-                    canvas.drawText("Max Score: " + maxScore, screenX / 2, 490, paint);
-                    paint.setTextSize(120); // Tamanho do texto
+                    canvas.drawText("Score: " + score, screenX / 2, 350, paint);
+                    canvas.drawText("Max Score: " + maxScore, screenX / 2, 410, paint);
+                    paint.setTextSize(100); // Tamanho do texto
                     paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
-                    canvas.drawText("Tap to replay", screenX / 2, 730, paint);
+                    canvas.drawText("Tap to replay", screenX / 2, 560, paint);
                 }
             }
 
