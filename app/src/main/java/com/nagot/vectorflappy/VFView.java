@@ -512,14 +512,25 @@ public class VFView extends SurfaceView implements Runnable {
              Aqui criamos o HUD do game.
               */
             if (!gameEnded) {
-                paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
-                paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
-                paint.setTextSize(40); // Tamanho do texto
-                Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
-                paint.setTypeface(font);
+                if (screenX <= 800) {
+                    paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
+                    paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
+                    paint.setTextSize(20); // Tamanho do texto
+                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
+                    paint.setTypeface(font);
 
-                canvas.drawText("Shield: " + player.getShieldStrenght(), 10, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
-                canvas.drawText("Score: " + score, screenX / 2, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
+                    canvas.drawText("Shield: " + player.getShieldStrenght(), 10, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
+                    canvas.drawText("Score: " + score, screenX / 2, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
+                } else {
+                    paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
+                    paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
+                    paint.setTextSize(40); // Tamanho do texto
+                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
+                    paint.setTypeface(font);
+
+                    canvas.drawText("Shield: " + player.getShieldStrenght(), 10, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
+                    canvas.drawText("Score: " + score, screenX / 2, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
+                }
             } else {
                 if ((screenX > 2500) && (screenY >= 1600)) {
                     paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
@@ -541,6 +552,16 @@ public class VFView extends SurfaceView implements Runnable {
                     paint.setTextSize(120); // Tamanho do texto
                     paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
                     canvas.drawText("Tap to replay", screenX / 2, 750, paint); */
+                } else if (screenX <= 800) {
+                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                    paint.setTextSize(100); // Tamanho do texto
+                    canvas.drawText("Game Over", screenX / 2, 125, paint);
+                    paint.setTextSize(25);
+                    canvas.drawText("Score: " + score, screenX / 2, 175, paint);
+                    canvas.drawText("Max Score: " + maxScore, screenX / 2, 205, paint);
+                    paint.setTextSize(50); // Tamanho do texto
+                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
+                    canvas.drawText("Tap to replay", screenX / 2, 280, paint);
                 } else {
                     paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
                     paint.setTextSize(200); // Tamanho do texto
