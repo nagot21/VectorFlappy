@@ -196,6 +196,7 @@ public class VFView extends SurfaceView implements Runnable {
     private void startGame() {
         player = new PlayerShip(context, screenX, screenY);
         enemy1 = new EnemyShip(context, screenX, screenY, difficulty);
+        enemy1.setEnemyOne(context);
         enemy2 = new EnemyShip(context, screenX, screenY, difficulty);
         enemy3 = new EnemyShip(context, screenX, screenY, difficulty);
         score = 0;

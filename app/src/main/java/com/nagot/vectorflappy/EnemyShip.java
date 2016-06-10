@@ -39,14 +39,13 @@ public class EnemyShip {
     public EnemyShip(Context context, int screenX, int screenY, int difficulty) {
         this.difficulty = difficulty;
         Random generator = new Random();
-        int whichBitmap = generator.nextInt(31);
-
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy1);
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy2);
+        int whichBitmap = generator.nextInt(41);
 
         if ((whichBitmap >= 0) && (whichBitmap <= 10)) {
-            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy3);
+            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy2);
         } else if ((whichBitmap > 10) && (whichBitmap <= 20)) {
+            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy3);
+        } else if ((whichBitmap > 20) && (whichBitmap <= 30)) {
             bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy4);
         } else {
             bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy5);
@@ -182,5 +181,11 @@ public class EnemyShip {
 
     public void setAux(int aux) {
         this.aux = this.aux + aux;
+    }
+
+    // enemy1 será sempre escolhido
+
+    public void setEnemyOne(Context context) {
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy1);
     }
 }
