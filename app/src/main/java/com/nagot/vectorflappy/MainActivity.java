@@ -53,8 +53,17 @@ public class MainActivity extends Activity {
         Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
         title.setTypeface(customFont);
 
+        // Instancia botão e coloca sua fonte
+
+        final Button buttonPlay = (Button) findViewById(R.id.buttonPlay);
+        Typeface buttonPlayFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
+        buttonPlay.setTypeface(buttonPlayFont);
+
         if (x <= 800) {
             title.setTextSize(50);
+            title.setY(title.getY() - 20);
+            buttonPlay.setY(buttonPlay.getY() - 40);
+            buttonPlay.setTextSize(20);
         }
 
         // Cria um MediaPlayer para tocar a música de abertura.
@@ -83,13 +92,6 @@ public class MainActivity extends Activity {
         // Checa se o arquivo HighScores existe. Caso não o cria
 
         prefs = getSharedPreferences("HighScores", MODE_PRIVATE);
-
-        // Instancia botão e coloca sua fonte
-
-        final Button buttonPlay = (Button) findViewById(R.id.buttonPlay);
-
-        Typeface buttonPlayFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
-        buttonPlay.setTypeface(buttonPlayFont);
 
         final TextView textFastestTime = (TextView) findViewById(R.id.textHighScore);
 
