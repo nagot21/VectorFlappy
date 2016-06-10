@@ -46,6 +46,8 @@ public class PlayerShip {
         minY = 50;
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
         shieldStrenght = 2000;
+
+        scaleBitmap(screenX);
     }
 
     /*
@@ -85,6 +87,14 @@ public class PlayerShip {
         hitBox.top = y;
         hitBox.right = x + bitmap.getWidth();
         hitBox.bottom = y + bitmap.getHeight();
+    }
+
+    public void scaleBitmap(int x) {
+        if (x < 1000) {
+            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
+        } else if (x < 1200) {
+            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
+        }
     }
 
     // Retornamos o valor da variável bitmap

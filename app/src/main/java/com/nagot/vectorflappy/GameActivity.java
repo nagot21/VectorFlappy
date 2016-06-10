@@ -14,6 +14,7 @@ Esta atividade controla o que será mostrado no game. Não existe um layout most
 public class GameActivity extends Activity {
 
     private VFView gameView;
+    private int difficulty = 1;
 
     /*
     No onCreate instanciamos o objeto gameView e o chamamos no setContentView.
@@ -36,7 +37,7 @@ public class GameActivity extends Activity {
         Ao criarmos o objeto gameView, passamos além de seu contexto as variáveis da posição x e y
         obtidas através do método display.getSize.
          */
-        gameView = new VFView(this, size.x, size.y);
+        gameView = new VFView(this, size.x, size.y, difficulty);
         setContentView(gameView);
     }
 

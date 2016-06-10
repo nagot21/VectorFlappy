@@ -22,6 +22,7 @@ public class EnemyShip {
     private int minX;
     private int maxY;
     private int minY;
+    private int difficulty;
     private Rect hitBox;
     private boolean noHit = false;
     private int aux = 0;
@@ -35,20 +36,22 @@ public class EnemyShip {
     É criado também um gerador de números random para pegar uma imagem de inimigo aleatória
      */
 
-    public EnemyShip(Context context, int screenX, int screenY) {
+    public EnemyShip(Context context, int screenX, int screenY, int difficulty) {
+        this.difficulty = difficulty;
         Random generator = new Random();
-        int whichBitmap = generator.nextInt(3);
-        switch (whichBitmap) {
-            case 0:
-                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy1);
-                break;
-            case 1:
-                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy2);
-                break;
-            case 2:
-                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy3);
-                break;
+        int whichBitmap = generator.nextInt(31);
+
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy1);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy2);
+
+        if ((whichBitmap >= 0) && (whichBitmap <= 10)) {
+            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy3);
+        } else if ((whichBitmap > 10) && (whichBitmap <= 20)) {
+            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy4);
+        } else {
+            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy5);
         }
+
 
         // Método irá modificar o tamanho dos inimigos baseados no tamanho da tela
 
@@ -90,7 +93,7 @@ public class EnemyShip {
 
     public void scaleBitmap(int x) {
         if (x < 1000) {
-            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 3, bitmap.getHeight() / 3, false);
+            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
         } else if (x < 1200) {
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
         }

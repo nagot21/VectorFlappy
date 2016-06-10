@@ -47,6 +47,7 @@ public class VFView extends SurfaceView implements Runnable {
     private long timeTaken, timeStarted, fastestTime;
     private int screenX, screenY;
     private int score, maxScore;
+    private int difficulty;
     private Context context;
     private boolean gameEnded;
 
@@ -76,9 +77,10 @@ public class VFView extends SurfaceView implements Runnable {
     Por fim, instanciamos o objeto SoundPool para colocar a trilha sonora do game
      */
 
-    public VFView(Context context, int x, int y) {
+    public VFView(Context context, int x, int y, int difficulty) {
         super(context);
         this.context = context;
+        this.difficulty = difficulty;
 
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0); // Instancia o objeto
 
@@ -193,19 +195,19 @@ public class VFView extends SurfaceView implements Runnable {
 
     private void startGame() {
         player = new PlayerShip(context, screenX, screenY);
-        enemy1 = new EnemyShip(context, screenX, screenY);
-        enemy2 = new EnemyShip(context, screenX, screenY);
-        enemy3 = new EnemyShip(context, screenX, screenY);
+        enemy1 = new EnemyShip(context, screenX, screenY, difficulty);
+        enemy2 = new EnemyShip(context, screenX, screenY, difficulty);
+        enemy3 = new EnemyShip(context, screenX, screenY, difficulty);
         score = 0;
 
         if (screenX > 1000) {
-            enemy4 = new EnemyShip(context, screenX, screenY);
+            enemy4 = new EnemyShip(context, screenX, screenY, difficulty);
         }
 
         Log.i("screenX", "screenX: " + screenX);
 
         if (screenX > 1200) {
-            enemy5 = new EnemyShip(context, screenX, screenY);
+            enemy5 = new EnemyShip(context, screenX, screenY, difficulty);
         }
 
         int numSpecs = 40;

@@ -34,6 +34,7 @@ onCreate() da activity
 public class MainActivity extends Activity {
 
     private MediaPlayer player;
+    private int x;
     Thread gameThread = null;
 
     @Override
@@ -41,11 +42,20 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        x = size.x;
+
         // Troca a fonte da title screen
 
         final TextView title = (TextView) findViewById(R.id.title);
         Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
         title.setTypeface(customFont);
+
+        if (x <= 800) {
+            title.setTextSize(50);
+        }
 
         // Cria um MediaPlayer para tocar a música de abertura.
 
