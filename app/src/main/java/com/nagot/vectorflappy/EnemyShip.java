@@ -187,5 +187,6 @@ public class EnemyShip {
 
     public void setEnemyOne(Context context) {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy1);
+        scaleBitmap(x);
     }
 }
