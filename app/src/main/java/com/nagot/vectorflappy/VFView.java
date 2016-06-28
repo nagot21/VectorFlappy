@@ -51,7 +51,7 @@ public class VFView extends SurfaceView implements Runnable {
     private int score, maxScore;
     private int difficulty;
     private int auxExplosion = 0;
-    //private int aux = 0;
+    private final int EXPLOSION_FPS = 500;
     private Context context;
     private boolean gameEnded;
 
@@ -464,7 +464,7 @@ public class VFView extends SurfaceView implements Runnable {
 
             if (gameEnded && player.getAuxExplosion() < 1) {
                 int aux = 0;
-                while (aux < 5000) {
+                while (aux < EXPLOSION_FPS) {
                     canvas.drawBitmap(
                             player.getExplosion().get(auxExplosion),
                             player.getX(),
