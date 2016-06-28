@@ -51,7 +51,7 @@ public class VFView extends SurfaceView implements Runnable {
     private int score, maxScore;
     private int difficulty;
     private int auxExplosion = 0;
-    private final int EXPLOSION_FPS = 500;
+    private final int EXPLOSION_FPS = 200;
     private Context context;
     private boolean gameEnded;
 
