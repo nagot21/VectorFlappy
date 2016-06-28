@@ -464,11 +464,13 @@ public class VFView extends SurfaceView implements Runnable {
 
             if (gameEnded && player.getAuxExplosion() < 1) {
                 int aux = 0;
+                int x = player.getX();
+                int y = player.getY();
                 while (aux < EXPLOSION_FPS) {
                     canvas.drawBitmap(
                             player.getExplosion().get(auxExplosion),
-                            player.getX(),
-                            player.getY(),
+                            x,
+                            y,
                             paint);
                     aux++;
                 }
