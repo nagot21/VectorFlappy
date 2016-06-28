@@ -1,0 +1,11 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item android:drawable="@drawable/explosion1" android:duration="200" />
+    <item android:drawable="@drawable/explosion2" android:duration="200" />
+    <item android:drawable="@drawable/explosion3" android:duration="200" />
+    <item android:drawable="@drawable/explosion4" android:duration="200" />
+    <item android:drawable="@drawable/explosion5" android:duration="200" />
+    <item android:drawable="@drawable/explosion6" android:duration="200" />
+    <item android:drawable="@drawable/explosion7" android:duration="200" />
+    <item android:drawable="@drawable/explosion8" android:duration="200" />
+</animation-list>

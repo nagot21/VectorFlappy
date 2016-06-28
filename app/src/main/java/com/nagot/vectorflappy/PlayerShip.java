@@ -1,9 +1,15 @@
 package com.nagot.vectorflappy;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
+
+import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * Created by Nagot on 31/05/2016.
@@ -14,6 +20,7 @@ Esta classe é responsável por definir o objeto Ship
  */
 public class PlayerShip {
     private Bitmap bitmap;
+    private ArrayList<Bitmap> bitmapExplosionArray;
     private int x, y;
     private int speed = 0;
     private boolean boosting;
@@ -21,10 +28,12 @@ public class PlayerShip {
     private int maxY;
     private int minY;
     private int auxSound = 0;
+    private int auxExplosion = 0;
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 20;
     private int shieldStrenght; // Responsável pelo shield da nave
     private Rect hitBox; // Esta variável é a responsável pelo teste de colisão
+    private AnimationDrawable explosion = null;
 
     /*
     No construtor damos as cordenadas iniciais da nave, seu speed inicial e seu sprite.
@@ -45,9 +54,23 @@ public class PlayerShip {
         maxY = screenY - bitmap.getHeight() + 40;
         minY = 50;
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
-        shieldStrenght = 2000;
+        shieldStrenght = 2;
 
         scaleBitmap(screenX);
+
+        bitmapExplosionArray = new ArrayList<Bitmap>();
+        for(int resId : new int[]{
+                R.drawable.explosion1,
+                R.drawable.explosion2,
+                R.drawable.explosion3,
+                R.drawable.explosion4,
+                R.drawable.explosion5,
+                R.drawable.explosion6,
+                R.drawable.explosion7,
+                R.drawable.explosion8
+        }) {
+            bitmapExplosionArray.add(BitmapFactory.decodeResource(context.getResources(),resId));
+        }
     }
 
     /*
@@ -168,5 +191,34 @@ public class PlayerShip {
 
     public int getAuxSound() {
         return auxSound;
+    }
+
+    public int getAuxExplosion() {
+        return auxExplosion;
+    }
+
+    public void setAuxExplosion(int auxExplosion) {
+        this.auxExplosion = auxExplosion;
+    }
+
+    /*public void setExplosion(Context context) {
+        //bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion1);
+        bitmapExplosionArray = new ArrayList<Bitmap>();
+        for(int resId : new int[]{
+                R.drawable.explosion1,
+                R.drawable.explosion2,
+                R.drawable.explosion3,
+                R.drawable.explosion4,
+                R.drawable.explosion5,
+                R.drawable.explosion6,
+                R.drawable.explosion7,
+                R.drawable.explosion8
+        }) {
+            bitmapExplosionArray.add(BitmapFactory.decodeResource(context.getResources(),resId));
+        }
+    }*/
+
+    public ArrayList<Bitmap> getExplosion() {
+        return bitmapExplosionArray;
     }
 }

@@ -9,12 +9,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.ImageView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,6 +50,8 @@ public class VFView extends SurfaceView implements Runnable {
     private int screenX, screenY;
     private int score, maxScore;
     private int difficulty;
+    private int auxExplosion = 0;
+    //private int aux = 0;
     private Context context;
     private boolean gameEnded;
 
@@ -175,7 +179,6 @@ public class VFView extends SurfaceView implements Runnable {
                     }
                 }
             }
-
             draw();
             control();
         }
@@ -200,6 +203,7 @@ public class VFView extends SurfaceView implements Runnable {
         enemy2 = new EnemyShip(context, screenX, screenY, difficulty);
         enemy3 = new EnemyShip(context, screenX, screenY, difficulty);
         score = 0;
+        auxExplosion = 0;
 
         if (screenX > 1000) {
             enemy4 = new EnemyShip(context, screenX, screenY, difficulty);
@@ -335,7 +339,6 @@ public class VFView extends SurfaceView implements Runnable {
                     gameEnded = true;
                     if (gameEnded) {
                         soundPool.play(destroyed, 1, 1, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
-                        player.setX(-500);
                     }
                 }
             }
@@ -459,11 +462,31 @@ public class VFView extends SurfaceView implements Runnable {
 
             // Fim do bloco de teste */
 
-            canvas.drawBitmap(
-                    player.getBitmap(),
-                    player.getX(),
-                    player.getY(),
-                    paint);
+            if (gameEnded && player.getAuxExplosion() < 1) {
+                int aux = 0;
+                while (aux < 5000) {
+                    canvas.drawBitmap(
+                            player.getExplosion().get(auxExplosion),
+                            player.getX(),
+                            player.getY(),
+                            paint);
+                    aux++;
+                }
+                auxExplosion++;
+
+                if (auxExplosion == 7) {
+                    auxExplosion = 0;
+                    player.setX(-500);
+                    player.setAuxExplosion(1);
+                }
+
+            } else {
+                canvas.drawBitmap(
+                        player.getBitmap(),
+                        player.getX(),
+                        player.getY(),
+                        paint);
+            }
 
             canvas.drawBitmap(
                     enemy1.getBitmap(),
