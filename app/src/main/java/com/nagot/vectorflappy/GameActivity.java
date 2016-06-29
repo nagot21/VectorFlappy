@@ -14,7 +14,8 @@ Esta atividade controla o que será mostrado no game. Não existe um layout most
 public class GameActivity extends Activity {
 
     private VFView gameView;
-    private int difficulty = 1;
+    private int difficulty = 0;
+    String auxDifficulty;
 
     /*
     No onCreate instanciamos o objeto gameView e o chamamos no setContentView.
@@ -23,6 +24,12 @@ public class GameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            auxDifficulty = extras.getString("difficulty");
+        }
+
+        difficulty = Integer.parseInt(auxDifficulty);
 
         /*
          Na linha abaixo utilizamos a classe Display para pegar as dimensões da tela do smartphone.

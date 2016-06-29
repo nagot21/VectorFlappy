@@ -23,6 +23,7 @@ public class EnemyShip {
     private int maxY;
     private int minY;
     private int difficulty;
+    private int score;
     private Rect hitBox;
     private boolean noHit = false;
     private int aux = 0;
@@ -66,6 +67,16 @@ public class EnemyShip {
         forma aleatória através da classe Random
          */
 
+        /*switch (difficulty) {
+            case 1:
+                speed = generator.nextInt(6) + 10;
+                break;
+            case 2:
+                speed = generator.nextInt(6) + 12;
+                break;
+            case 3:
+                speed = generator.nextInt(6) + 14;
+        }*/
         //Random generator = new Random();
         speed = generator.nextInt(6) + 10;
 
@@ -146,7 +157,50 @@ public class EnemyShip {
 
         if (x < minX - bitmap.getWidth()) {
             Random generator = new Random();
-            speed = generator.nextInt(10) + 10;
+
+            switch (difficulty) {
+                case 1:
+                    if (score > 0) {
+                        speed = generator.nextInt(10) + 10;
+                    } else if (score > 20) {
+                        speed = generator.nextInt(10) + 15;
+                    } else if (score > 40) {
+                        speed = generator.nextInt(10) + 20;
+                    } else if (score > 60) {
+                        speed = generator.nextInt(10) + 25;
+                    } else {
+                        speed = generator.nextInt(10) + 30;
+                    }
+                    break;
+                case 2:
+                    if (score > 0 && score <= 15) {
+                        speed = generator.nextInt(10) + 10;
+                    } else if (score > 15 && score <= 30) {
+                        speed = generator.nextInt(10) + 15;
+                    } else if (score > 30 && score <= 45) {
+                        speed = generator.nextInt(10) + 20;
+                    } else if (score > 45 && score <= 60) {
+                        speed = generator.nextInt(10) + 25;
+                    } else {
+                        speed = generator.nextInt(10) + 30;
+                    }
+                    break;
+                case 3:
+                    if (score > 0 && score <= 10) {
+                        speed = generator.nextInt(10) + 10;
+                    } else if (score > 10 && score <= 20) {
+                        speed = generator.nextInt(10) + 15;
+                    } else if (score > 20 && score <= 30) {
+                        speed = generator.nextInt(10) + 20;
+                    } else if (score > 30 && score <= 40) {
+                        speed = generator.nextInt(10) + 25;
+                    } else {
+                        speed = generator.nextInt(10) + 30;
+                    }
+                    break;
+            }
+
+            //speed = generator.nextInt(10) + 10;
             x = maxX;
             y = generator.nextInt(maxY - 50) - bitmap.getHeight();
             if (y < 50) {
@@ -188,5 +242,13 @@ public class EnemyShip {
     public void setEnemyOne(Context context) {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy1);
         scaleBitmap(x);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

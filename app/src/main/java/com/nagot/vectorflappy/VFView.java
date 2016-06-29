@@ -347,6 +347,7 @@ public class VFView extends SurfaceView implements Runnable {
 
         player.update();
         enemy1.update(player.getSpeed());
+        enemy1.setScore(score);
         enemy2.update(player.getSpeed());
         enemy3.update(player.getSpeed());
 

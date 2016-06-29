@@ -165,6 +165,31 @@ public class MainActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(MainActivity.this, GameActivity.class);
+                        i.putExtra("difficulty", "1");
+                        startActivity(i);
+                        player.stop();
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+
+                btnMedium.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(MainActivity.this, GameActivity.class);
+                        i.putExtra("difficulty", "2");
+                        startActivity(i);
+                        player.stop();
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+
+                btnHard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(MainActivity.this, GameActivity.class);
+                        i.putExtra("difficulty", "3");
                         startActivity(i);
                         player.stop();
                         dialog.dismiss();
