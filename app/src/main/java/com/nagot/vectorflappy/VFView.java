@@ -51,6 +51,7 @@ public class VFView extends SurfaceView implements Runnable {
     private int score, maxScore;
     private int difficulty;
     private int auxExplosion = 0;
+    private int auxBoost = 0;
     private final int EXPLOSION_FPS = 200;
     private Context context;
     private boolean gameEnded;
@@ -463,6 +464,7 @@ public class VFView extends SurfaceView implements Runnable {
             // Fim do bloco de teste */
 
             if (gameEnded && player.getAuxExplosion() < 1) {
+                player.stopBoosting();
                 int aux = 0;
                 int x = player.getX();
                 int y = player.getY();
@@ -488,6 +490,19 @@ public class VFView extends SurfaceView implements Runnable {
                         player.getX(),
                         player.getY(),
                         paint);
+            }
+
+            if (player.isBoosting()) {
+                canvas.drawBitmap(
+                        player.getBitmapTurbo().get(auxBoost),
+                        player.getX(),
+                        player.getY(),
+                        paint);
+                auxBoost++;
+
+                if (auxBoost > 1) {
+                    auxBoost = 0;
+                }
             }
 
             canvas.drawBitmap(
@@ -665,6 +680,11 @@ public class VFView extends SurfaceView implements Runnable {
                 break;
             case MotionEvent.ACTION_DOWN:
                 player.setBoosting();
+                /*if (player.isBoosting()) {
+                    player.getBitmapTurbo();
+                } else {
+                    player.setBitmap(context);
+                } */
                 if (gameEnded) {
                     startGame();
                 }

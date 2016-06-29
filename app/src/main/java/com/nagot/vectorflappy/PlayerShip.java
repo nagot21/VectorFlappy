@@ -21,6 +21,7 @@ Esta classe é responsável por definir o objeto Ship
 public class PlayerShip {
     private Bitmap bitmap;
     private ArrayList<Bitmap> bitmapExplosionArray;
+    private ArrayList<Bitmap> bitmapTurbo;
     private int x, y;
     private int speed = 0;
     private boolean boosting;
@@ -33,7 +34,6 @@ public class PlayerShip {
     private final int MAX_SPEED = 20;
     private int shieldStrenght; // Responsável pelo shield da nave
     private Rect hitBox; // Esta variável é a responsável pelo teste de colisão
-    private AnimationDrawable explosion = null;
 
     /*
     No construtor damos as cordenadas iniciais da nave, seu speed inicial e seu sprite.
@@ -49,8 +49,6 @@ public class PlayerShip {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
         boosting = false;
         // O valor abaixo determina o máximo que o eixo Y pode chegar baseado nas dimensões do dispositivo
-        //maxY = screenY - bitmap.getHeight();
-        //maxY = screenY - bitmap.getHeight() - 80;
         maxY = screenY - bitmap.getHeight() + 40;
         minY = 50;
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
@@ -70,6 +68,14 @@ public class PlayerShip {
                 R.drawable.explosion8
         }) {
             bitmapExplosionArray.add(BitmapFactory.decodeResource(context.getResources(),resId));
+        }
+
+        bitmapTurbo = new ArrayList<Bitmap>();
+        for(int resId : new int[]{
+                R.drawable.ship_turbo,
+                R.drawable.ship
+        }) {
+            bitmapTurbo.add(BitmapFactory.decodeResource(context.getResources(),resId));
         }
     }
 
@@ -116,7 +122,6 @@ public class PlayerShip {
         if (x < 1000) {
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
         } else if (x < 1200) {
-            //bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 4 * 3, bitmap.getHeight() / 4 * 3, false);
         }
     }
@@ -167,6 +172,12 @@ public class PlayerShip {
         boosting = true;
     }
 
+    // Retorna o valor da variável boosting
+
+    public boolean isBoosting() {
+        return boosting;
+    }
+
     // Retorna o valor da variável shieldStrenght
 
     public int getShieldStrenght() {
@@ -201,24 +212,11 @@ public class PlayerShip {
         this.auxExplosion = auxExplosion;
     }
 
-    /*public void setExplosion(Context context) {
-        //bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion1);
-        bitmapExplosionArray = new ArrayList<Bitmap>();
-        for(int resId : new int[]{
-                R.drawable.explosion1,
-                R.drawable.explosion2,
-                R.drawable.explosion3,
-                R.drawable.explosion4,
-                R.drawable.explosion5,
-                R.drawable.explosion6,
-                R.drawable.explosion7,
-                R.drawable.explosion8
-        }) {
-            bitmapExplosionArray.add(BitmapFactory.decodeResource(context.getResources(),resId));
-        }
-    }*/
-
     public ArrayList<Bitmap> getExplosion() {
         return bitmapExplosionArray;
+    }
+
+    public ArrayList<Bitmap> getBitmapTurbo() {
+        return bitmapTurbo;
     }
 }
