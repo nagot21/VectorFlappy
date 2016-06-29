@@ -34,7 +34,7 @@ public class VFView extends SurfaceView implements Runnable {
     boolean loaded = false;
     Thread gameThread = null;
     private PlayerShip player;
-    public EnemyShip enemy1, enemy2, enemy3, enemy4, enemy5;
+    public EnemyShip enemy1, enemy2, enemy3, enemy4;
 
     //Array abaixo foi criado para armazenar os diversos objetos SpaceDust
 
@@ -86,6 +86,8 @@ public class VFView extends SurfaceView implements Runnable {
         super(context);
         this.context = context;
         this.difficulty = difficulty;
+
+        Log.i("dificuldade", "dificuldade: " + difficulty);
 
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0); // Instancia o objeto
 
@@ -349,12 +351,15 @@ public class VFView extends SurfaceView implements Runnable {
         enemy1.update(player.getSpeed());
         enemy1.setScore(score);
         enemy2.update(player.getSpeed());
+        enemy2.setScore(score);
         enemy3.update(player.getSpeed());
+        enemy3.setScore(score);
 
         // Caso a resolução da tela seja maior que 1000 no eixo x coloca mais um inimigo na tela
 
         if (screenX > 1000) {
             enemy4.update(player.getSpeed());
+            enemy4.setScore(score);
         }
 
         // Caso a resolução da tela seja maior que 1200 no eixo x coloca mais um inimigo na tela

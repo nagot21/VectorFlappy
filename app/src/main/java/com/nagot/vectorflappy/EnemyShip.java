@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
+import android.util.Log;
 
 import java.util.Random;
 
@@ -160,13 +161,13 @@ public class EnemyShip {
 
             switch (difficulty) {
                 case 1:
-                    if (score > 0) {
-                        speed = generator.nextInt(10) + 10;
-                    } else if (score > 20) {
+                    if (score > 0 && score <= 20) {
+                        speed = generator.nextInt(6) + 10;
+                    } else if (score > 20 && score <= 40) {
                         speed = generator.nextInt(10) + 15;
-                    } else if (score > 40) {
+                    } else if (score > 40 && score <= 60) {
                         speed = generator.nextInt(10) + 20;
-                    } else if (score > 60) {
+                    } else if (score > 60 && score <= 80) {
                         speed = generator.nextInt(10) + 25;
                     } else {
                         speed = generator.nextInt(10) + 30;
@@ -174,7 +175,7 @@ public class EnemyShip {
                     break;
                 case 2:
                     if (score > 0 && score <= 15) {
-                        speed = generator.nextInt(10) + 10;
+                        speed = generator.nextInt(6) + 10;
                     } else if (score > 15 && score <= 30) {
                         speed = generator.nextInt(10) + 15;
                     } else if (score > 30 && score <= 45) {
@@ -187,7 +188,7 @@ public class EnemyShip {
                     break;
                 case 3:
                     if (score > 0 && score <= 10) {
-                        speed = generator.nextInt(10) + 10;
+                        speed = generator.nextInt(6) + 10;
                     } else if (score > 10 && score <= 20) {
                         speed = generator.nextInt(10) + 15;
                     } else if (score > 20 && score <= 30) {
