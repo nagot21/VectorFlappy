@@ -171,14 +171,14 @@ public class VFView extends SurfaceView implements Runnable {
                 }
             }
 
-            if (screenX > 1200) {
+            /*if (screenX > 1200) {
 
                 if (enemy5.getAux() <= 1) {
                     if (enemy5.isNoHit()) {
                         score++;
                     }
                 }
-            }
+            }*/
             draw();
             control();
         }
@@ -211,9 +211,9 @@ public class VFView extends SurfaceView implements Runnable {
 
         Log.i("screenX", "screenX: " + screenX);
 
-        if (screenX > 1200) {
+        /*if (screenX > 1200) {
             enemy5 = new EnemyShip(context, screenX, screenY, difficulty);
-        }
+        }*/
 
         int numSpecs = 40;
 
@@ -275,12 +275,12 @@ public class VFView extends SurfaceView implements Runnable {
             }
         }
 
-        if (screenX > 1200) {
+        /*if (screenX > 1200) {
             if (enemy5.getX() < player.getX()) {
                 enemy5.setNoHit(true);
                 enemy5.setAux(1);
             }
-        }
+        }*/
 
         boolean hitDetected = false; // Variável criada para ver se o jogador foi atingido
 
@@ -308,12 +308,12 @@ public class VFView extends SurfaceView implements Runnable {
             }
         }
 
-        if (screenX > 1200) {
+        /*if (screenX > 1200) {
             if (Rect.intersects(player.getHitBox(), enemy5.getHitBox())) {
                 hitDetected = true; // Caso atingido, a variável ganha o valor true
                 enemy5.setX(-400);
             }
-        }
+        }*/
 
         // Caso o valor de getShieldStrenght seja menor que zero o game finaliza
 
@@ -357,9 +357,9 @@ public class VFView extends SurfaceView implements Runnable {
 
         // Caso a resolução da tela seja maior que 1200 no eixo x coloca mais um inimigo na tela
 
-        if (screenX > 1200) {
+        /*if (screenX > 1200) {
             enemy4.update(player.getSpeed());
-        }
+        }*/
 
         /*
         O enchanced FOR criado abaixo é utilizado pois com ele fica mais fácil percorer uma coleção
@@ -520,13 +520,13 @@ public class VFView extends SurfaceView implements Runnable {
 
             // Caso a resolução da tela seja maior que 1200 em seu eixo x coloca mais um inimigo
 
-            if (screenX > 1200) {
+            /*if (screenX > 1200) {
                 canvas.drawBitmap(
                         enemy5.getBitmap(),
                         enemy5.getX(),
                         enemy5.getY(),
                         paint);
-            }
+            }*/
 
             paint.setColor(Color.argb(255, 255, 255, 255));
 
