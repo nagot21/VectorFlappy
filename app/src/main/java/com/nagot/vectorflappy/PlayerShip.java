@@ -25,13 +25,14 @@ public class PlayerShip {
     private int x, y;
     private int speed = 0;
     private boolean boosting;
-    private final int GRAVITY = -12;
+    //private final int GRAVITY = -12;
+    private final int GRAVITY = -16;
     private int maxY;
     private int minY;
     private int auxSound = 0;
     private int auxExplosion = 0;
     private final int MIN_SPEED = 1;
-    private final int MAX_SPEED = 20;
+    private final int MAX_SPEED = 25; // era 20
     private int shieldStrenght; // Responsável pelo shield da nave
     private Rect hitBox; // Esta variável é a responsável pelo teste de colisão
 
@@ -85,7 +86,8 @@ public class PlayerShip {
 
     public void update() {
         if (boosting) {
-            speed += 2;
+            //speed += 2;
+            speed += 5;
         } else {
             speed -= 5;
         }
