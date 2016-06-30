@@ -125,33 +125,34 @@ public class MainActivity extends Activity {
 
                 dialog.setContentView(R.layout.dialog_main);
 
+                // Seta fonte para o dialog
+
+                Typeface dialogFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
+
                 // Seta fonte do título
 
                 final TextView title = (TextView) dialog.findViewById(R.id.dialogTitle);
-
-                Typeface dialogTitle = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
-                title.setTypeface(dialogTitle);
+                title.setTypeface(dialogFont);
 
                 // Seta a fonte do modo easy
 
                 final Button btnEasy = (Button) dialog.findViewById(R.id.btnEasy);
-
-                Typeface dialogBtnEasy = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
-                btnEasy.setTypeface(dialogBtnEasy);
+                btnEasy.setTypeface(dialogFont);
 
                 // Seta a fonte do modo medium
 
                 final Button btnMedium = (Button) dialog.findViewById(R.id.btnMedium);
-
-                Typeface dialogBtnMedium = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
-                btnMedium.setTypeface(dialogBtnMedium);
+                btnMedium.setTypeface(dialogFont);
 
                 // Seta a fonte do modo hard
 
                 final Button btnHard = (Button) dialog.findViewById(R.id.btnHard);
+                btnHard.setTypeface(dialogFont);
 
-                Typeface dialogBtnHard = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
-                btnHard.setTypeface(dialogBtnHard);
+                // Seta fonte do botão back e o estancia
+
+                final Button btnback = (Button) dialog.findViewById(R.id.btnBackMain);
+                btnback.setTypeface(dialogFont);
 
                 if (dialog != null) {
 
@@ -201,6 +202,13 @@ public class MainActivity extends Activity {
                         player.stop();
                         dialog.dismiss();
                         finish();
+                    }
+                });
+
+                btnback.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
             }
