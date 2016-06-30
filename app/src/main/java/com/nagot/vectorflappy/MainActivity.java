@@ -229,15 +229,26 @@ public class MainActivity extends Activity {
                 final TextView creditTitle = (TextView) dialog.findViewById(R.id.dialogCreditTitle);
                 creditTitle.setTypeface(dialogFont);
 
+                // Seta subtítulo
+
+                final TextView subTitle = (TextView) dialog.findViewById(R.id.dialogTapToInfo);
+                //subTitle.setTypeface(dialogFont);
+
                 // Seta fonte do botão de créditos nagot
 
                 final Button nagotButton = (Button) dialog.findViewById(R.id.btnNagot);
-                nagotButton.setTypeface(dialogFont);
+                //nagotButton.setTypeface(dialogFont);
 
                 // Seta fonte do botão de créditos da autora dos sprites
 
                 final Button spritesButton = (Button) dialog.findViewById(R.id.btnSprites);
-                spritesButton.setTypeface(dialogFont);
+                //spritesButton.setTypeface(dialogFont);
+
+                // Seta fonte do botão back e o instancia
+
+                final Button backButton = (Button) dialog.findViewById(R.id.btnBack);
+                backButton.setTypeface(dialogFont);
+
 
                 if (dialog != null) {
 
@@ -274,6 +285,12 @@ public class MainActivity extends Activity {
                     }
                 });
 
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
 
             }
         });

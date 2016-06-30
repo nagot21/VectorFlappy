@@ -23,8 +23,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/tap"
+        android:textAllCaps="true"
         android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:textSize="12sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,8 +53,9 @@
             android:paddingEnd="13dp"
             android:paddingStart="13dp"
             android:text="@string/nagotCredits"
+            android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -68,9 +70,9 @@
             android:id="@+id/imageEnemy"
             android:layout_width="55dp"
             android:layout_height="35dp"
-            android:background="@drawable/enemy1"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="40dp"
+            android:layout_marginStart="40dp"
+            android:background="@drawable/enemy1" />
 
         <Button
             android:id="@+id/btnSprites"
@@ -80,14 +82,18 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="2dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginRight="35dp"
             android:background="@color/blackTransparent"
             android:text="@string/spritesCredits"
+            android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -95,6 +101,6 @@
         android:background="@color/blackTransparent"
         android:text="@string/back"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="25sp" />
 
 </LinearLayout>
