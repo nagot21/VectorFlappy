@@ -55,6 +55,8 @@ public class VFView extends SurfaceView implements Runnable {
     private final int EXPLOSION_FPS = 200;
     private Context context;
     private boolean gameEnded;
+    private boolean isReady = false;
+    private boolean isFirst;
 
     // Variáveis para colocar som no game
 
@@ -136,6 +138,8 @@ public class VFView extends SurfaceView implements Runnable {
         //fastestTime = prefs.getLong("FastestTime", 1000000);
         maxScore = prefs.getInt("MaxScore", 20);
 
+        isFirst = true;
+
         startGame();
     }
 
@@ -200,6 +204,7 @@ public class VFView extends SurfaceView implements Runnable {
      */
 
     private void startGame() {
+        isReady = false;
         player = new PlayerShip(context, screenX, screenY);
         enemy1 = new EnemyShip(context, screenX, screenY, difficulty);
         enemy1.setEnemyOne(context);
@@ -245,6 +250,9 @@ public class VFView extends SurfaceView implements Runnable {
             soundPool.play(start, 1, 1, 0, 0, 1);
         }
 
+        if (!isFirst) {
+            player.setYDefault(50);
+        }
     }
 
     private void update() {
@@ -347,19 +355,27 @@ public class VFView extends SurfaceView implements Runnable {
             }
         }
 
-        player.update();
-        enemy1.update(player.getSpeed());
-        enemy1.setScore(score);
-        enemy2.update(player.getSpeed());
-        enemy2.setScore(score);
-        enemy3.update(player.getSpeed());
-        enemy3.setScore(score);
+        if (gameEnded) {
+            isFirst = false;
+        }
 
-        // Caso a resolução da tela seja maior que 1000 no eixo x coloca mais um inimigo na tela
+        if (!isReady && isFirst) {
+            player.setY(2);
+        } else {
+            player.update();
+            enemy1.update(player.getSpeed());
+            enemy1.setScore(score);
+            enemy2.update(player.getSpeed());
+            enemy2.setScore(score);
+            enemy3.update(player.getSpeed());
+            enemy3.setScore(score);
 
-        if (screenX > 1000) {
-            enemy4.update(player.getSpeed());
-            enemy4.setScore(score);
+            // Caso a resolução da tela seja maior que 1000 no eixo x coloca mais um inimigo na tela
+
+            if (screenX > 1000) {
+                enemy4.update(player.getSpeed());
+                enemy4.setScore(score);
+            }
         }
 
         // Caso a resolução da tela seja maior que 1200 no eixo x coloca mais um inimigo na tela
@@ -558,7 +574,17 @@ public class VFView extends SurfaceView implements Runnable {
             /*
              Aqui criamos o HUD do game.
               */
-            if (!gameEnded) {
+
+            // HUD avisando que o game está para começar
+
+            if (!isReady && isFirst) {
+                paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                paint.setTextSize(100); // Tamanho do texto
+                Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
+                paint.setTypeface(font);
+                paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
+                canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, 300, paint);
+            } else if (!gameEnded) {
                 if (screenX <= 800) {
                     paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
                     paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
@@ -587,7 +613,7 @@ public class VFView extends SurfaceView implements Runnable {
                     canvas.drawText("Score: " + score, screenX / 2, 700, paint);
                     canvas.drawText("Max Score: " + maxScore, screenX / 2, 800, paint);
                     paint.setTextSize(220); // Tamanho do texto
-                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
+                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
                     canvas.drawText("Tap to replay", screenX / 2, 1100, paint);
                 /*} else if((screenX >= 1280) && (screenY >= 800)) {
                     paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
@@ -621,7 +647,6 @@ public class VFView extends SurfaceView implements Runnable {
                     canvas.drawText("Tap to replay", screenX / 2, 560, paint);
                 }
             }
-
             ourHolder.unlockCanvasAndPost(canvas);
         }
     }
@@ -685,6 +710,7 @@ public class VFView extends SurfaceView implements Runnable {
                 player.stopBoosting();
                 break;
             case MotionEvent.ACTION_DOWN:
+                isReady = true;
                 player.setBoosting();
                 /*if (player.isBoosting()) {
                     player.getBitmapTurbo();

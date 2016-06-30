@@ -153,6 +153,16 @@ public class PlayerShip {
         return x;
     }
 
+    // Coloca um valor para variável x
+
+    public void setY(int y) {
+        this.y = maxY / y;
+    }
+
+    public void setYDefault(int y) {
+        this.y = y;
+    }
+
     // Retornamos o valor da variável y
 
     public int getY() {
