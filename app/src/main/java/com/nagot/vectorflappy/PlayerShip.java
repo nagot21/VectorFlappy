@@ -45,7 +45,8 @@ public class PlayerShip {
 
     public PlayerShip(Context context, int screenX, int screenY) {
         x = 50;
-        y = 50;
+        //y = 50;
+        y = screenY / 2;
         speed = 1;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
         boosting = false;
