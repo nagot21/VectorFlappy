@@ -245,7 +245,7 @@ public class MainActivity extends Activity {
                     Point size = new Point();
                     display.getSize(size);
 
-                    int width = (size.x / 2) + 100;
+                    int width = (size.x / 2) + 300;
                     int height = ViewGroup.LayoutParams.WRAP_CONTENT;
                     dialog.getWindow().setLayout(width, height);
                 }
