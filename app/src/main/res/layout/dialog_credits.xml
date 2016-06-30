@@ -15,7 +15,16 @@
         android:gravity="center"
         android:text="@string/credits"
         android:textColor="@color/white"
-        android:textSize="30sp" />
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/dialogTapToInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/tap"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +35,7 @@
 
         <ImageView
             android:id="@+id/imageShip"
-            android:layout_width="35dp"
+            android:layout_width="45dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
             android:background="@drawable/ship" />
@@ -36,8 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="2dp"
             android:background="@color/blackTransparent"
             android:paddingEnd="13dp"
@@ -57,17 +66,19 @@
 
         <ImageView
             android:id="@+id/imageEnemy"
-            android:layout_width="35dp"
+            android:layout_width="55dp"
             android:layout_height="35dp"
-            android:background="@drawable/enemy1" />
+            android:background="@drawable/enemy1"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"/>
 
         <Button
             android:id="@+id/btnSprites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="2dp"
             android:background="@color/blackTransparent"
             android:text="@string/spritesCredits"
@@ -75,5 +86,15 @@
             android:textSize="18sp" />
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@color/blackTransparent"
+        android:text="@string/back"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
 </LinearLayout>

@@ -7,6 +7,8 @@
     <string name="medium">medium</string>
     <string name="hard">hard</string>
     <string name="difficult">Choose difficulty</string>
-    <string name="nagotCredits">ian Nagot (developer)</string>
+    <string name="back">Back</string>
+    <string name="tap">- Tap on names for more info -</string>
+    <string name="nagotCredits">ian Nagot - developer</string>
     <string name="spritesCredits">Cartoon vector designed by Rosapuchalt - Freepik.com</string>
 </resources>
