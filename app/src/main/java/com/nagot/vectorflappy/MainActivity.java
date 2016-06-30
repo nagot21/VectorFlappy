@@ -59,6 +59,12 @@ public class MainActivity extends Activity {
         Typeface buttonPlayFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
         buttonPlay.setTypeface(buttonPlayFont);
 
+        // Instancia botão de créditos e sua fonte
+
+        final Button buttonCredits = (Button) findViewById(R.id.buttonCredits);
+        Typeface buttonCreditsFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
+        buttonCredits.setTypeface(buttonCreditsFont);
+
         if (x <= 800) {
             title.setTextSize(50);
             title.setY(title.getY() - 20);
