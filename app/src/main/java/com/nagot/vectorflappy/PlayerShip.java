@@ -45,8 +45,7 @@ public class PlayerShip {
 
     public PlayerShip(Context context, int screenX, int screenY) {
         x = 50;
-        //y = 50;
-        y = screenY / 2;
+        y = 50;
         speed = 1;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
         boosting = false;
@@ -151,16 +150,6 @@ public class PlayerShip {
 
     public int getX() {
         return x;
-    }
-
-    // Coloca um valor para variável x
-
-    public void setY(int y) {
-        this.y = maxY / y;
-    }
-
-    public void setYDefault(int y) {
-        this.y = y;
     }
 
     // Retornamos o valor da variável y

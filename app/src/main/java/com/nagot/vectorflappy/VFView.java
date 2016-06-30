@@ -249,10 +249,6 @@ public class VFView extends SurfaceView implements Runnable {
         if (loaded) {
             soundPool.play(start, 1, 1, 0, 0, 1);
         }
-
-        if (!isFirst) {
-            player.setYDefault(50);
-        }
     }
 
     private void update() {
@@ -360,7 +356,7 @@ public class VFView extends SurfaceView implements Runnable {
         }
 
         if (!isReady && isFirst) {
-            player.setY(2);
+            player.getY();
         } else {
             player.update();
             enemy1.update(player.getSpeed());
@@ -583,7 +579,7 @@ public class VFView extends SurfaceView implements Runnable {
                 Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
                 paint.setTypeface(font);
                 paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
-                canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, 300, paint);
+                canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
             } else if (!gameEnded) {
                 if (screenX <= 800) {
                     paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
