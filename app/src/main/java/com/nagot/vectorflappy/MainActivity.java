@@ -205,6 +205,35 @@ public class MainActivity extends Activity {
             }
         });
 
+        // Faz com que apareça um dialog box com os créditos
+
+        buttonCredits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Chama a dialog box ao clicar no botao start
+
+                final Dialog dialog = new Dialog(MainActivity.this);
+
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.setContentView(R.layout.dialog_credits);
+
+                if (dialog != null) {
+
+                    Display display = getWindowManager().getDefaultDisplay();
+                    Point size = new Point();
+                    display.getSize(size);
+
+                    int width = (size.x / 2) + 100;
+                    int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    dialog.getWindow().setLayout(width, height);
+                }
+
+                dialog.show();
+            }
+        });
+
         // Cria um movimento do background através da classe ObjectAnimator
 
         ObjectAnimator backgroundAnimation =
