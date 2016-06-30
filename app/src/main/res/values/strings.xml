@@ -2,6 +2,7 @@
     <string name="app_name">Vector Flappy</string>
     <string name="high_score">High Score: 999999</string>
     <string name="start">start</string>
+    <string name="credits">Credits</string>
     <string name="easy">easy</string>
     <string name="medium">medium</string>
     <string name="hard">hard</string>
