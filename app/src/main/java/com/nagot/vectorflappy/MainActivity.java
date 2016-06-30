@@ -11,6 +11,7 @@ import android.content.res.AssetManager;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -219,6 +220,25 @@ public class MainActivity extends Activity {
 
                 dialog.setContentView(R.layout.dialog_credits);
 
+                // Seta fonte do título do dialog box
+
+                Typeface dialogFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
+
+                // Seta título
+
+                final TextView creditTitle = (TextView) dialog.findViewById(R.id.dialogCreditTitle);
+                creditTitle.setTypeface(dialogFont);
+
+                // Seta fonte do botão de créditos nagot
+
+                final Button nagotButton = (Button) dialog.findViewById(R.id.btnNagot);
+                nagotButton.setTypeface(dialogFont);
+
+                // Seta fonte do botão de créditos da autora dos sprites
+
+                final Button spritesButton = (Button) dialog.findViewById(R.id.btnSprites);
+                spritesButton.setTypeface(dialogFont);
+
                 if (dialog != null) {
 
                     Display display = getWindowManager().getDefaultDisplay();
@@ -231,6 +251,30 @@ public class MainActivity extends Activity {
                 }
 
                 dialog.show();
+
+                // Ao clicar no botão nagot, vai para o linkedin
+
+                nagotButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent nagotLinkedin = new Intent(Intent.ACTION_VIEW);
+                        nagotLinkedin.setData(Uri.parse("https://uk.linkedin.com/in/inagot"));
+                        startActivity(nagotLinkedin);
+                    }
+                });
+
+                // Ao clicar no botão sprite, vai para o link provido pela artista
+
+                spritesButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent spritesSite = new Intent(Intent.ACTION_VIEW);
+                        spritesSite.setData(Uri.parse("http://www.freepik.com/free-photos-vectors/cartoon"));
+                        startActivity(spritesSite);
+                    }
+                });
+
+
             }
         });
 
