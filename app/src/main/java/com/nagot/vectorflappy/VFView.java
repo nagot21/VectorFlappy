@@ -604,37 +604,30 @@ public class VFView extends SurfaceView implements Runnable {
                 }
             } else {
                 if ((screenX > 2500) && (screenY >= 1600)) {
-                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                    paint.setTextSize(350); // Tamanho do texto
-                    canvas.drawText("Game Over", screenX / 2, 500, paint);
-                    paint.setTextSize(100);
-                    canvas.drawText("Score: " + score, screenX / 2, 700, paint);
-                    canvas.drawText("Max Score: " + maxScore, screenX / 2, 800, paint);
-                    paint.setTextSize(220); // Tamanho do texto
-                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
-                    canvas.drawText("Tap to replay", screenX / 2, 1100, paint);
-                /*} else if((screenX >= 1280) && (screenY >= 800)) {
-                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                    paint.setTextSize(100); // Tamanho do texto
-                    canvas.drawText("Game Over", screenX / 2, 300, paint);
-                    paint.setTextSize(50);
-                    canvas.drawText("Score: " + score, screenX / 2, 480, paint);
-                    canvas.drawText("Max Score: " + maxScore, screenX / 2, 540, paint);
-                    paint.setTextSize(120); // Tamanho do texto
-                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
-                    canvas.drawText("Tap to replay", screenX / 2, 750, paint); */
+                    if (player.getX() == -500) {
+                        paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                        paint.setTextSize(350); // Tamanho do texto
+                        canvas.drawText("Game Over", screenX / 2, 500, paint);
+                        paint.setTextSize(100);
+                        canvas.drawText("Score: " + score, screenX / 2, 700, paint);
+                        canvas.drawText("Max Score: " + maxScore, screenX / 2, 800, paint);
+                        paint.setTextSize(220); // Tamanho do texto
+                        paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
+                        canvas.drawText("Tap to replay", screenX / 2, 1100, paint);
+                    }
                 } else if (screenX <= 800) {
-                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                    paint.setTextSize(100); // Tamanho do texto
-                    canvas.drawText("Game Over", screenX / 2, 125, paint);
-                    paint.setTextSize(25);
-                    canvas.drawText("Score: " + score, screenX / 2, 175, paint);
-                    canvas.drawText("Max Score: " + maxScore, screenX / 2, 205, paint);
-                    paint.setTextSize(50); // Tamanho do texto
-                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
-                    canvas.drawText("Tap to replay", screenX / 2, 280, paint);
+                    if (player.getX() == -500) {
+                        paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                        paint.setTextSize(100); // Tamanho do texto
+                        canvas.drawText("Game Over", screenX / 2, 125, paint);
+                        paint.setTextSize(25);
+                        canvas.drawText("Score: " + score, screenX / 2, 175, paint);
+                        canvas.drawText("Max Score: " + maxScore, screenX / 2, 205, paint);
+                        paint.setTextSize(50); // Tamanho do texto
+                        paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
+                        canvas.drawText("Tap to replay", screenX / 2, 280, paint);
+                    }
                 } else {
-                    //if (player.getX() == -500 && auxReplay > REPLAY) {
                     if (player.getX() == -500) {
                         paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
                         paint.setTextSize(200); // Tamanho do texto
