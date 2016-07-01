@@ -203,7 +203,7 @@ public class EnemyShip {
 
             //speed = generator.nextInt(10) + 10;
             x = maxX;
-            y = generator.nextInt(maxY - 50) - bitmap.getHeight();
+            y = generator.nextInt(maxY - 100) - bitmap.getHeight();
             if (y < 50) {
                 y = 250;
             }
