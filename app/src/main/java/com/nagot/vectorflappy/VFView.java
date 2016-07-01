@@ -113,6 +113,7 @@ public class VFView extends SurfaceView implements Runnable {
 
             descriptor = assetManager.openFd("destroyed.ogg");
             destroyed = soundPool.load(descriptor, 0);
+
         } catch (IOException e) {
             Log.e("error", "failed to load sound file or file is missing");
         }
@@ -247,7 +248,7 @@ public class VFView extends SurfaceView implements Runnable {
         });
 
         if (loaded) {
-            soundPool.play(start, 1, 1, 0, 0, 1);
+            soundPool.play(start, 0.1f, 0.1f, 0, 0, 1);
         }
     }
 
@@ -329,7 +330,7 @@ public class VFView extends SurfaceView implements Runnable {
             if ((player.getAuxSound() >= 1) && (player.getAuxSound() < 2)) {
                 gameEnded = true;
                 if (gameEnded) {
-                    soundPool.play(destroyed, 1, 1, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
+                    soundPool.play(destroyed, 0.1f, 0.1f, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
                     player.setX(-500);
                 }
             }
@@ -337,7 +338,7 @@ public class VFView extends SurfaceView implements Runnable {
 
         if (hitDetected) {
             if (player.getAuxSound() < 1) { // Usa a variável de controle. Caso seja menor que 1 ira tocar o som de colisao
-                soundPool.play(bump, 1, 1, 0, 0, 1); // Se a nave bater, será tocado o som de bump
+                soundPool.play(bump, 0.1f, 0.1f, 0, 0, 1); // Se a nave bater, será tocado o som de bump
                 player.reduceShieldStrenght();
             }
             if (player.getShieldStrenght() < 0) {
@@ -345,7 +346,7 @@ public class VFView extends SurfaceView implements Runnable {
                 if ((player.getAuxSound() >= 1) && (player.getAuxSound() < 2)) {
                     gameEnded = true;
                     if (gameEnded) {
-                        soundPool.play(destroyed, 1, 1, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
+                        soundPool.play(destroyed, 0.1f, 0.1f, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
                     }
                 }
             }
