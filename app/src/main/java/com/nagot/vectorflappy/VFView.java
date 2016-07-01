@@ -633,15 +633,18 @@ public class VFView extends SurfaceView implements Runnable {
                     paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
                     canvas.drawText("Tap to replay", screenX / 2, 280, paint);
                 } else {
-                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                    paint.setTextSize(200); // Tamanho do texto
-                    canvas.drawText("Game Over", screenX / 2, 250, paint);
-                    paint.setTextSize(50);
-                    canvas.drawText("Score: " + score, screenX / 2, 350, paint);
-                    canvas.drawText("Max Score: " + maxScore, screenX / 2, 410, paint);
-                    paint.setTextSize(100); // Tamanho do texto
-                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
-                    canvas.drawText("Tap to replay", screenX / 2, 560, paint);
+                    //if (player.getX() == -500 && auxReplay > REPLAY) {
+                    if (player.getX() == -500) {
+                        paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                        paint.setTextSize(200); // Tamanho do texto
+                        canvas.drawText("Game Over", screenX / 2, 250, paint);
+                        paint.setTextSize(50);
+                        canvas.drawText("Score: " + score, screenX / 2, 350, paint);
+                        canvas.drawText("Max Score: " + maxScore, screenX / 2, 410, paint);
+                        paint.setTextSize(100); // Tamanho do texto
+                        paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        canvas.drawText("Tap to replay", screenX / 2, 560, paint);
+                    }
                 }
             }
             ourHolder.unlockCanvasAndPost(canvas);
@@ -702,6 +705,7 @@ public class VFView extends SurfaceView implements Runnable {
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
+        //int aux = 0;
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
                 player.stopBoosting();
@@ -714,7 +718,7 @@ public class VFView extends SurfaceView implements Runnable {
                 } else {
                     player.setBitmap(context);
                 } */
-                if (gameEnded) {
+                if (gameEnded && player.getX() == -500) {
                     startGame();
                 }
                 break;
