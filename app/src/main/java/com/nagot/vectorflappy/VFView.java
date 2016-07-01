@@ -64,6 +64,7 @@ public class VFView extends SurfaceView implements Runnable {
     int start = -1;
     int bump = -1;
     int destroyed = -1;
+    int destroyedStreamId = 0;
     int win = -1;
 
     // Variáveis para persistir o high score
@@ -330,7 +331,7 @@ public class VFView extends SurfaceView implements Runnable {
             if ((player.getAuxSound() >= 1) && (player.getAuxSound() < 2)) {
                 gameEnded = true;
                 if (gameEnded) {
-                    soundPool.play(destroyed, 0.1f, 0.1f, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
+                    destroyedStreamId = soundPool.play(destroyed, 0.1f, 0.1f, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
                     player.setX(-500);
                 }
             }
@@ -346,7 +347,7 @@ public class VFView extends SurfaceView implements Runnable {
                 if ((player.getAuxSound() >= 1) && (player.getAuxSound() < 2)) {
                     gameEnded = true;
                     if (gameEnded) {
-                        soundPool.play(destroyed, 0.1f, 0.1f, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
+                        destroyedStreamId = soundPool.play(destroyed, 0.1f, 0.1f, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
                     }
                 }
             }
@@ -705,7 +706,6 @@ public class VFView extends SurfaceView implements Runnable {
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
-        //int aux = 0;
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
                 player.stopBoosting();
@@ -719,6 +719,7 @@ public class VFView extends SurfaceView implements Runnable {
                     player.setBitmap(context);
                 } */
                 if (gameEnded && player.getX() == -500) {
+                    soundPool.stop(destroyedStreamId);
                     startGame();
                 }
                 break;
