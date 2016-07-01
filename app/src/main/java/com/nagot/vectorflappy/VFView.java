@@ -142,6 +142,15 @@ public class VFView extends SurfaceView implements Runnable {
 
         isFirst = true;
 
+        // Na linha abaixo são criados 40 objetos SpaceDust
+
+        int numSpecs = 40;
+
+        for (int i = 0; i < numSpecs; i++) {
+            SpaceDust spec = new SpaceDust(screenX, screenY);
+            dustList.add(spec);
+        }
+
         startGame();
     }
 
@@ -225,14 +234,14 @@ public class VFView extends SurfaceView implements Runnable {
             enemy5 = new EnemyShip(context, screenX, screenY, difficulty);
         }*/
 
-        int numSpecs = 40;
+        //int numSpecs = 40;
 
         // Na linha abaixo são criados 40 objetos SpaceDust
 
-        for (int i = 0; i < numSpecs; i++) {
+       /* for (int i = 0; i < numSpecs; i++) {
             SpaceDust spec = new SpaceDust(screenX, screenY);
             dustList.add(spec);
-        }
+        } */
 
         distanceRemaining = 10000; // Quanto teremos de percorrer para finalizar o game
         timeTaken = 0; // O tempo que levamos finalizar
