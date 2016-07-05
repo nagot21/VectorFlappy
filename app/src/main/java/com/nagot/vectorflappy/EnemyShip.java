@@ -41,9 +41,10 @@ public class EnemyShip {
     public EnemyShip(Context context, int screenX, int screenY, int difficulty) {
         this.difficulty = difficulty;
         Random generator = new Random();
-        int whichBitmap = generator.nextInt(41);
+        //int whichBitmap = generator.nextInt(41);
+        int whichBitmap = generator.nextInt(2);
 
-        if ((whichBitmap >= 0) && (whichBitmap <= 10)) {
+        /*if ((whichBitmap >= 0) && (whichBitmap <= 10)) {
             bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy2);
         } else if ((whichBitmap > 10) && (whichBitmap <= 20)) {
             bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy3);
@@ -51,8 +52,16 @@ public class EnemyShip {
             bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy4);
         } else {
             bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy5);
-        }
+        }*/
 
+        switch (whichBitmap){
+            case 0:
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy4);
+                break;
+            case 1:
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy5);
+                break;
+        }
 
         // Método irá modificar o tamanho dos inimigos baseados no tamanho da tela
 
@@ -242,6 +251,16 @@ public class EnemyShip {
 
     public void setEnemyOne(Context context) {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy1);
+        scaleBitmap(x);
+    }
+
+    public void setEnemyTwo(Context context) {
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy2);
+        scaleBitmap(x);
+    }
+
+    public void setEnemyThree(Context context) {
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy3);
         scaleBitmap(x);
     }
 
