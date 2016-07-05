@@ -1,6 +1,7 @@
 package com.nagot.vectorflappy;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -74,6 +75,8 @@ public class GameActivity extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent i = new Intent(GameActivity.this, MainActivity.class);
+        startActivity(i);
         finish();
     }
 }
