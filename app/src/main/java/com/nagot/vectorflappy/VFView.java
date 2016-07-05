@@ -635,6 +635,9 @@ public class VFView extends SurfaceView implements Runnable {
                         paint.setTextSize(50); // Tamanho do texto
                         paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
                         canvas.drawText("Tap to replay", screenX / 2, 280, paint);
+                        paint.setTextSize(30); // Tamanho do texto
+                        paint.setColor(Color.argb(255, 255, 140, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        canvas.drawText("Press back to title screen", screenX / 2, 350, paint);
                     }
                 } else {
                     if (player.getX() == -500) {
@@ -647,6 +650,9 @@ public class VFView extends SurfaceView implements Runnable {
                         paint.setTextSize(100); // Tamanho do texto
                         paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarela e sem alpha
                         canvas.drawText("Tap to replay", screenX / 2, 560, paint);
+                        paint.setTextSize(80); // Tamanho do texto
+                        paint.setColor(Color.argb(255, 255, 140, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        canvas.drawText("Press back to title screen", screenX / 2, 760, paint);
                     }
                 }
             }
