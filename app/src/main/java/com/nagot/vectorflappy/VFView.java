@@ -596,6 +596,13 @@ public class VFView extends SurfaceView implements Runnable {
                     paint.setTypeface(font);
                     paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
                     canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
+                } else if (screenX == 1280) {
+                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                    paint.setTextSize(85); // Tamanho do texto
+                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
+                    paint.setTypeface(font);
+                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
+                    canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
                 } else {
                     paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
                     paint.setTextSize(100); // Tamanho do texto
@@ -639,6 +646,21 @@ public class VFView extends SurfaceView implements Runnable {
                         paint.setTextSize(200); // Tamanho do texto
                         paint.setColor(Color.argb(255, 255, 140, 0)); // Dizemos que a cor do texto será amarela e sem alpha
                         canvas.drawText("Press back to title screen", screenX / 2, 1400, paint);
+                    }
+                } else if (screenX == 1280) {
+                    if (player.getX() == -500) {
+                        paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                        paint.setTextSize(180); // Tamanho do texto
+                        canvas.drawText("Game Over", screenX / 2, 220, paint);
+                        paint.setTextSize(40);
+                        canvas.drawText("Score: " + score, screenX / 2, 300, paint);
+                        canvas.drawText("Max Score: " + maxScore, screenX / 2, 360, paint);
+                        paint.setTextSize(80); // Tamanho do texto
+                        paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        canvas.drawText("Tap to replay", screenX / 2, 460, paint);
+                        paint.setTextSize(60); // Tamanho do texto
+                        paint.setColor(Color.argb(255, 255, 140, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        canvas.drawText("Press back to title screen", screenX / 2, 560, paint);
                     }
                 } else if (screenX <= 800) {
                     if (player.getX() == -500) {
