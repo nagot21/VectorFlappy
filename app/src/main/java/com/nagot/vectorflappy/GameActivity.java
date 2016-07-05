@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.KeyEvent;
 
 /*
 Esta atividade controla o que será mostrado no game. Não existe um layout mostrando esta activity. Ela
@@ -77,6 +76,7 @@ public class GameActivity extends Activity {
         super.onBackPressed();
         Intent i = new Intent(GameActivity.this, MainActivity.class);
         startActivity(i);
+        gameView.stopExplosionSoundPool();
         finish();
     }
 }
