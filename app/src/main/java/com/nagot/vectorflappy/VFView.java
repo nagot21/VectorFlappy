@@ -585,12 +585,21 @@ public class VFView extends SurfaceView implements Runnable {
             // HUD avisando que o game está para começar
 
             if (!isReady && isFirst) {
-                paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                paint.setTextSize(100); // Tamanho do texto
-                Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
-                paint.setTypeface(font);
-                paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
-                canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
+                if (screenX <= 800) {
+                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                    paint.setTextSize(50); // Tamanho do texto
+                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
+                    paint.setTypeface(font);
+                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
+                    canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
+                } else {
+                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                    paint.setTextSize(100); // Tamanho do texto
+                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
+                    paint.setTypeface(font);
+                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
+                    canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
+                }
             } else if (!gameEnded) {
                 if (screenX <= 800) {
                     paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
