@@ -82,7 +82,7 @@ public class MainActivity extends Activity {
             descriptor = assetManager.openFd("title.ogg");
             player = new MediaPlayer();
             player.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-            player.setVolume(0.1f, 0.1f);
+            player.setVolume(0.3f, 0.3f);
             player.setLooping(true);
             player.prepare();
             player.start();
