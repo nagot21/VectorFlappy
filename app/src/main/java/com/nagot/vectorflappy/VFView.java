@@ -782,6 +782,10 @@ public class VFView extends SurfaceView implements Runnable {
     public void stopExplosionSoundPool() {
         soundPool.stop(destroyedStreamId);
     }
+
+    public boolean isGameEnded() {
+        return gameEnded;
+    }
 }
 
 

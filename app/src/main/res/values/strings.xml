@@ -11,4 +11,5 @@
     <string name="tap">- Tap on names for more info -</string>
     <string name="nagotCredits">ian Nagot - developer</string>
     <string name="spritesCredits">Cartoon vector designed by Rosapuchalt - Freepik.com</string>
+    <string name="get_out">Press back button again to exit the application</string>
 </resources>

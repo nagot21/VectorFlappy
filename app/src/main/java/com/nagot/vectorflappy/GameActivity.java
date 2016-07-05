@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.Gravity;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /*
 Esta atividade controla o que será mostrado no game. Não existe um layout mostrando esta activity. Ela
@@ -15,7 +19,8 @@ public class GameActivity extends Activity {
 
     private VFView gameView;
     private int difficulty = 0;
-    String auxDifficulty;
+    private String auxDifficulty;
+    private boolean gettingOut = false;
 
     /*
     No onCreate instanciamos o objeto gameView e o chamamos no setContentView.
@@ -54,7 +59,7 @@ public class GameActivity extends Activity {
      */
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         gameView.pause();
     }
@@ -73,10 +78,27 @@ public class GameActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Intent i = new Intent(GameActivity.this, MainActivity.class);
-        startActivity(i);
-        gameView.stopExplosionSoundPool();
-        finish();
+        if (gameView.isGameEnded()) {
+            Intent i = new Intent(GameActivity.this, MainActivity.class);
+            startActivity(i);
+            gameView.stopExplosionSoundPool();
+            finish();
+        } else if (gettingOut) {
+            super.onBackPressed();
+            finish();
+        } else {
+            gettingOut = true;
+            Toast toast = Toast.makeText(getBaseContext(), getText(R.string.get_out), Toast.LENGTH_SHORT);
+            toastFormat(toast);
+        }
+    }
+
+    public void toastFormat(Toast toast) {
+        LinearLayout layout = (LinearLayout) toast.getView();
+        if (layout.getChildCount() > 0) {
+            TextView tv = (TextView) layout.getChildAt(0);
+            tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        }
+        toast.show();
     }
 }
