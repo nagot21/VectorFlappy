@@ -13,6 +13,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -53,6 +54,7 @@ public class VFView extends SurfaceView implements Runnable {
     private int auxExplosion = 0;
     private int auxBoost = 0;
     private final int EXPLOSION_FPS = 200;
+    private final float VOLUME = 0.3f;
     private Context context;
     private boolean gameEnded;
     private boolean isReady = false;
@@ -260,7 +262,7 @@ public class VFView extends SurfaceView implements Runnable {
         });
 
         if (loaded) {
-            soundPool.play(start, 0.1f, 0.1f, 0, 0, 1);
+            soundPool.play(start, VOLUME, VOLUME, 0, 0, 1);
         }
     }
 
@@ -342,7 +344,7 @@ public class VFView extends SurfaceView implements Runnable {
             if ((player.getAuxSound() >= 1) && (player.getAuxSound() < 2)) {
                 gameEnded = true;
                 if (gameEnded) {
-                    destroyedStreamId = soundPool.play(destroyed, 0.1f, 0.1f, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
+                    destroyedStreamId = soundPool.play(destroyed, VOLUME, VOLUME, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
                     player.setX(-500);
                 }
             }
@@ -350,7 +352,7 @@ public class VFView extends SurfaceView implements Runnable {
 
         if (hitDetected) {
             if (player.getAuxSound() < 1) { // Usa a variável de controle. Caso seja menor que 1 ira tocar o som de colisao
-                soundPool.play(bump, 0.1f, 0.1f, 0, 0, 1); // Se a nave bater, será tocado o som de bump
+                soundPool.play(bump, VOLUME, VOLUME, 0, 0, 1); // Se a nave bater, será tocado o som de bump
                 player.reduceShieldStrenght();
             }
             if (player.getShieldStrenght() < 0) {
@@ -358,7 +360,7 @@ public class VFView extends SurfaceView implements Runnable {
                 if ((player.getAuxSound() >= 1) && (player.getAuxSound() < 2)) {
                     gameEnded = true;
                     if (gameEnded) {
-                        destroyedStreamId = soundPool.play(destroyed, 0.1f, 0.1f, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
+                        destroyedStreamId = soundPool.play(destroyed, VOLUME, VOLUME, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
                     }
                 }
             }
@@ -741,12 +743,22 @@ public class VFView extends SurfaceView implements Runnable {
                     player.setBitmap(context);
                 } */
                 if (gameEnded && player.getX() == -500) {
-                    soundPool.stop(destroyedStreamId);
+                    stopExplosionSoundPool();
                     startGame();
                 }
                 break;
         }
         return true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        soundPool.stop(destroyedStreamId);
+        return false;
+    }
+
+    public void stopExplosionSoundPool() {
+        soundPool.stop(destroyedStreamId);
     }
 }
 
