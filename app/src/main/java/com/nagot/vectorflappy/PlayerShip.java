@@ -23,6 +23,7 @@ public class PlayerShip {
     private ArrayList<Bitmap> bitmapExplosionArray;
     private ArrayList<Bitmap> bitmapTurbo;
     private int x, y;
+    private int auxScreenX;
     private int speed = 0;
     private boolean boosting;
     //private final int GRAVITY = -12;
@@ -46,6 +47,7 @@ public class PlayerShip {
     public PlayerShip(Context context, int screenX, int screenY) {
         x = 50;
         y = 50;
+        auxScreenX = screenX;
         speed = 1;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
         boosting = false;
@@ -55,10 +57,10 @@ public class PlayerShip {
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
         shieldStrenght = 2;
 
-        scaleBitmap(screenX);
+        //scaleBitmap(screenX);
 
         bitmapExplosionArray = new ArrayList<Bitmap>();
-        for(int resId : new int[]{
+        for (int resId : new int[]{
                 R.drawable.explosion1,
                 R.drawable.explosion2,
                 R.drawable.explosion3,
@@ -68,16 +70,18 @@ public class PlayerShip {
                 R.drawable.explosion7,
                 R.drawable.explosion8
         }) {
-            bitmapExplosionArray.add(BitmapFactory.decodeResource(context.getResources(),resId));
+            bitmapExplosionArray.add(BitmapFactory.decodeResource(context.getResources(), resId));
         }
 
         bitmapTurbo = new ArrayList<Bitmap>();
-        for(int resId : new int[]{
+        for (int resId : new int[]{
                 R.drawable.ship_turbo,
                 R.drawable.ship
         }) {
-            bitmapTurbo.add(BitmapFactory.decodeResource(context.getResources(),resId));
+            bitmapTurbo.add(BitmapFactory.decodeResource(context.getResources(), resId));
         }
+
+        scaleBitmap(screenX);
     }
 
     /*
@@ -121,10 +125,24 @@ public class PlayerShip {
     }
 
     public void scaleBitmap(int x) {
+        Bitmap auxBitmapOne, auxBitmapTwo;
         if (x < 1000) {
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
+            auxBitmapOne = bitmapTurbo.get(0);
+            auxBitmapOne = Bitmap.createScaledBitmap(auxBitmapOne, auxBitmapOne.getWidth() / 2, auxBitmapOne.getHeight() / 2, false);
+            bitmapTurbo.add(0, auxBitmapOne);
+            auxBitmapTwo = bitmapTurbo.get(1);
+            auxBitmapTwo = Bitmap.createScaledBitmap(auxBitmapTwo, auxBitmapTwo.getWidth() / 2, auxBitmapTwo.getHeight() / 2, false);
+            bitmapTurbo.add(1, auxBitmapTwo);
+
         } else if (x < 1200) {
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 4 * 3, bitmap.getHeight() / 4 * 3, false);
+            auxBitmapOne = bitmapTurbo.get(0);
+            auxBitmapOne = Bitmap.createScaledBitmap(auxBitmapOne, auxBitmapOne.getWidth() / 4 * 3, auxBitmapOne.getHeight() / 4 * 3, false);
+            bitmapTurbo.add(0, auxBitmapOne);
+            auxBitmapTwo = bitmapTurbo.get(1);
+            auxBitmapTwo = Bitmap.createScaledBitmap(auxBitmapTwo, auxBitmapTwo.getWidth() / 4 * 3, auxBitmapTwo.getHeight() / 4 * 3, false);
+            bitmapTurbo.add(1, auxBitmapTwo);
         }
     }
 
@@ -158,7 +176,7 @@ public class PlayerShip {
         return y;
     }
 
-    public int getMaxY(){
+    public int getMaxY() {
         return maxY;
     }
 
@@ -189,7 +207,7 @@ public class PlayerShip {
     // Reduz o valor da variável shieldStrenght
 
     public void reduceShieldStrenght() {
-        shieldStrenght --;
+        shieldStrenght--;
     }
 
     // Seta o valor da variável boosting = false
