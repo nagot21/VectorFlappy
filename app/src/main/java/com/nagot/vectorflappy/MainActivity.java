@@ -15,57 +15,46 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.IOException;
 
-// Begin improvements
-
 /*
-Classe de entrada do Game. Quando inicializar, será chamado o método
-onCreate() da activity
+Entry point of the game
 */
 public class MainActivity extends Activity {
 
     private MediaPlayer player;
     private int x;
-    Thread gameThread = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         x = size.x;
 
-        // Troca a fonte da title screen
+        // Change app font
+        final Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
 
+        // Instantiate widgets
         final TextView title = (TextView) findViewById(R.id.title);
-        Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
         title.setTypeface(customFont);
 
-        // Instancia botão e coloca sua fonte
-
         final Button buttonPlay = (Button) findViewById(R.id.buttonPlay);
-        Typeface buttonPlayFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
-        buttonPlay.setTypeface(buttonPlayFont);
-
-        // Instancia botão de créditos e sua fonte
+        buttonPlay.setTypeface(customFont);
 
         final Button buttonCredits = (Button) findViewById(R.id.buttonCredits);
-        Typeface buttonCreditsFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
-        buttonCredits.setTypeface(buttonCreditsFont);
+        buttonCredits.setTypeface(customFont);
 
+        // If device x axis <= 800 resize widgets size and position
         if (x <= 800) {
             title.setTextSize(50);
             title.setY(title.getY() - 20);
@@ -73,12 +62,10 @@ public class MainActivity extends Activity {
             buttonPlay.setTextSize(20);
         }
 
-        // Cria um MediaPlayer para tocar a música de abertura.
-
+        // Creates a MediaPlayer to play the title bgm
         try {
             AssetManager assetManager = this.getAssets();
             AssetFileDescriptor descriptor;
-
             descriptor = assetManager.openFd("title.ogg");
             player = new MediaPlayer();
             player.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
@@ -91,68 +78,47 @@ public class MainActivity extends Activity {
             Log.e("error", "failed to load sound file or file is missing");
         }
 
-        // Seta o listener no botão. Ao ser clicado a Activity GameActivity.class será acionada
+        // Check if the HighScores files exist. If not creates it.
+        // Also put the tag MaxScore in the file and in case it has no value attributes the value 20
 
         SharedPreferences prefs;
-        SharedPreferences.Editor editor;
-
-        // Checa se o arquivo HighScores existe. Caso não o cria
-
         prefs = getSharedPreferences("HighScores", MODE_PRIVATE);
-
         final TextView textFastestTime = (TextView) findViewById(R.id.textHighScore);
-
-        Typeface textFastestTimeFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
-        textFastestTime.setTypeface(textFastestTimeFont);
-
-        // Coloca a tag MaxScore no arquivo e lhe atribui o valor de 20 caso não tenha valor algum
-
+        textFastestTime.setTypeface(customFont);
         int maxScore = prefs.getInt("MaxScore", 20);
 
-        // Muda o valor do text view para o encontrado no arquivo
+        // Change the value of the textView
 
         textFastestTime.setText("Max Score: " + maxScore);
+
+        // Set buttons listeners
 
         buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // Chama a dialog box ao clicar no botao start
+                // Creates a Dialog Box when start button is clicked
 
                 final Dialog dialog = new Dialog(MainActivity.this);
-
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
                 dialog.setContentView(R.layout.dialog_main);
 
-                // Seta fonte para o dialog
-
-                Typeface dialogFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
-
-                // Seta fonte do título
+                // Instantiate widgets
 
                 final TextView title = (TextView) dialog.findViewById(R.id.dialogTitle);
-                title.setTypeface(dialogFont);
-
-                // Seta a fonte do modo easy
+                title.setTypeface(customFont);
 
                 final Button btnEasy = (Button) dialog.findViewById(R.id.btnEasy);
-                btnEasy.setTypeface(dialogFont);
-
-                // Seta a fonte do modo medium
+                btnEasy.setTypeface(customFont);
 
                 final Button btnMedium = (Button) dialog.findViewById(R.id.btnMedium);
-                btnMedium.setTypeface(dialogFont);
-
-                // Seta a fonte do modo hard
+                btnMedium.setTypeface(customFont);
 
                 final Button btnHard = (Button) dialog.findViewById(R.id.btnHard);
-                btnHard.setTypeface(dialogFont);
-
-                // Seta fonte do botão back e o estancia
+                btnHard.setTypeface(customFont);
 
                 final Button btnback = (Button) dialog.findViewById(R.id.btnBackMain);
-                btnback.setTypeface(dialogFont);
+                btnback.setTypeface(customFont);
 
                 if (dialog != null) {
 
@@ -167,7 +133,7 @@ public class MainActivity extends Activity {
 
                 dialog.show();
 
-                // Ao clicar no botao easy inicia o game
+                // Tap the button and initialize the game
 
                 btnEasy.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -214,49 +180,26 @@ public class MainActivity extends Activity {
             }
         });
 
-        // Faz com que apareça um dialog box com os créditos
+        // credits button Dialog Box
 
         buttonCredits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // Chama a dialog box ao clicar no botao start
-
                 final Dialog dialog = new Dialog(MainActivity.this);
-
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
                 dialog.setContentView(R.layout.dialog_credits);
 
-                // Seta fonte do título do dialog box
-
-                Typeface dialogFont = Typeface.createFromAsset(getAssets(), "fonts/spaceranger.otf");
-
-                // Seta título
+                // Instantiate widgets
 
                 final TextView creditTitle = (TextView) dialog.findViewById(R.id.dialogCreditTitle);
-                creditTitle.setTypeface(dialogFont);
-
-                // Seta subtítulo
-
-                final TextView subTitle = (TextView) dialog.findViewById(R.id.dialogTapToInfo);
-                //subTitle.setTypeface(dialogFont);
-
-                // Seta fonte do botão de créditos nagot
+                creditTitle.setTypeface(customFont);
 
                 final Button nagotButton = (Button) dialog.findViewById(R.id.btnNagot);
-                //nagotButton.setTypeface(dialogFont);
-
-                // Seta fonte do botão de créditos da autora dos sprites
-
                 final Button spritesButton = (Button) dialog.findViewById(R.id.btnSprites);
-                //spritesButton.setTypeface(dialogFont);
-
-                // Seta fonte do botão back e o instancia
 
                 final Button backButton = (Button) dialog.findViewById(R.id.btnBack);
-                backButton.setTypeface(dialogFont);
-
+                backButton.setTypeface(customFont);
 
                 if (dialog != null) {
 
@@ -271,7 +214,7 @@ public class MainActivity extends Activity {
 
                 dialog.show();
 
-                // Ao clicar no botão nagot, vai para o linkedin
+                // Click the button nagot to go to linkedin
 
                 nagotButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -282,7 +225,7 @@ public class MainActivity extends Activity {
                     }
                 });
 
-                // Ao clicar no botão sprite, vai para o link provido pela artista
+                // Click the button sprite to go to the artist provided link
 
                 spritesButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -299,23 +242,17 @@ public class MainActivity extends Activity {
                         dialog.dismiss();
                     }
                 });
-
             }
         });
 
-        // Cria um movimento do background através da classe ObjectAnimator
+        // Creates a background movement using ObjectAnimator
 
-        ObjectAnimator backgroundAnimation =
-                ObjectAnimator.ofFloat(findViewById(R.id.backgroundImageView), "x", 40, -40);
+        ObjectAnimator backgroundAnimation = ObjectAnimator.ofFloat(findViewById(R.id.backgroundImageView), "x", 40, -40);
         backgroundAnimation.setDuration(5000);
         backgroundAnimation.setRepeatCount(ValueAnimator.INFINITE);
         backgroundAnimation.setRepeatMode(ValueAnimator.REVERSE);
         backgroundAnimation.start();
-
     }
-
-
-    // Caso o jogador aperte o botão back do smartphone o game será finalizado
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
