@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.util.Log;
-
 import java.util.Random;
 
 /**
@@ -13,8 +11,9 @@ import java.util.Random;
  */
 
 /*
-Esta classe é responsável por definir o objeto EnemyShip
+Class responsible for EnemyShip object
  */
+
 public class EnemyShip {
     private Bitmap bitmap;
     private int x, y;
@@ -30,29 +29,15 @@ public class EnemyShip {
     private int aux = 0;
 
      /*
-    No construtor damos as cordenadas iniciais da nave inimiga.
-    Repare que ele herda da primeira classe, a GameActivity, as coordenadas de X e Y da tela
-    do dispositivo. Perceba também que ela inicializa uma variável chamada hitBox, que irá determinar
-    o tamanho do nosso objeto para realizar o teste de colisão.
-
-    É criado também um gerador de números random para pegar uma imagem de inimigo aleatória
+    In the constructor we pass a context, x and y coordinates and the difficulty of the game
      */
 
     public EnemyShip(Context context, int screenX, int screenY, int difficulty) {
         this.difficulty = difficulty;
         Random generator = new Random();
-        //int whichBitmap = generator.nextInt(41);
         int whichBitmap = generator.nextInt(2);
 
-        /*if ((whichBitmap >= 0) && (whichBitmap <= 10)) {
-            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy2);
-        } else if ((whichBitmap > 10) && (whichBitmap <= 20)) {
-            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy3);
-        } else if ((whichBitmap > 20) && (whichBitmap <= 30)) {
-            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy4);
-        } else {
-            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy5);
-        }*/
+        // This switch will choose one random bitmap
 
         switch (whichBitmap){
             case 0:
@@ -63,7 +48,7 @@ public class EnemyShip {
                 break;
         }
 
-        // Método irá modificar o tamanho dos inimigos baseados no tamanho da tela
+        // scaleBitmap will decrease bitmap size to smaller screens
 
         scaleBitmap(screenX);
 
@@ -72,98 +57,70 @@ public class EnemyShip {
         minX = 0;
         minY = 50;
 
-        /*
-        Repare no trecho abaixo que o valor do speed da nave é gerado inicialmente de
-        forma aleatória através da classe Random
-         */
+        // Set the initial speed of the enemy
 
-        /*switch (difficulty) {
-            case 1:
-                speed = generator.nextInt(6) + 10;
-                break;
-            case 2:
-                speed = generator.nextInt(6) + 12;
-                break;
-            case 3:
-                speed = generator.nextInt(6) + 14;
-        }*/
-        //Random generator = new Random();
         speed = generator.nextInt(6) + 10;
 
-        /*
-        Aqui dizemos que o valor inicial de x igual ao tamanho da tela em seu eixo
-        X. Ou seja, a nave virá, neste caso, da direita para esqueda.
-         */
         x = screenX;
 
-        /*
-        Sua posição no eixo Y será o cálculo aletório do seu tamanho máximo no eixo
-        Y menos o tamanho do objeto bitmap. Caso o valor seja menor que 50, será colocado um
-        valor inicial fixo
-         */
+        // Take some value of y to don't let enemy ships pass over the score and shield draws
         y = generator.nextInt(maxY - 50) - bitmap.getHeight();
         if (y < 50) {
             y = 250;
         }
 
+        // Instantiate the object hitbox to calculate the collision
+
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
     }
 
-    // Da resize no tamanho do bitmap do inimigo
+    // Method resize bitmap
 
     public void scaleBitmap(int x) {
         if (x < 1000) {
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
         } else if (x < 1200) {
-            //bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 4 * 3, bitmap.getHeight() / 4 * 3, false);
         }
     }
 
-    // Retornamos o valor da variável bitmap
+    // Return the value of the variable bitmap
 
     public Bitmap getBitmap() {
         return bitmap;
     }
 
-    // Retornamos o valor da variável speed
+    // Return the value of the variable x
 
     public int getX() {
         return x;
     }
 
-    // Retornamos o valor da variável x
+    // Return the value of the variable y
 
     public int getY() {
         return y;
     }
 
-    // Retorna o valor da variável hitBox
+    // Return the value of the variable hitBox
 
     public Rect getHitBox() {
         return hitBox;
     }
 
-    // Seta o valor da variável hitBox
+    // Set the value of the variable x
 
     public void setX(int x) {
         this.x = x;
     }
 
-    /*
-    O método recebe como parametro a velocidade da nave do jogador. Com base nisso é feito um cálculo
-    de quão veloz a nave inimiga será. Perceba também que ela inicializa uma variável chamada hitBox,
-    que irá determinar o tamanho do nosso objeto para realizar o teste de colisão.
-     */
+    // This method will update the enemyShip position based on the player ship speed
 
     public void update(int playerSpeed) {
         x -= playerSpeed;
         x -= speed;
 
-        /*
-        O trecho abaixo são as velocidades aleatórias que a nave inimiga terá juntamente com sua
-        posição randomica no eixo Y caso X seja menor que minX menos a altura da imagem bitmap
-         */
+        // After the enemy is outside the screen, it will add a new speed based on game difficulty and score
 
         if (x < minX - bitmap.getWidth()) {
             Random generator = new Random();
@@ -209,8 +166,6 @@ public class EnemyShip {
                     }
                     break;
             }
-
-            //speed = generator.nextInt(10) + 10;
             x = maxX;
             y = generator.nextInt(maxY - 100) - bitmap.getHeight();
             if (y < 50) {
@@ -220,10 +175,7 @@ public class EnemyShip {
             this.aux = 0;
         }
 
-        /*
-        Abaixo, será passado o parametro de onde o objeto se encontra na tela para a variável
-        hitBox
-         */
+        // Give the parameters to hitBox variable
 
         hitBox.left = x;
         hitBox.top = y;
@@ -231,42 +183,52 @@ public class EnemyShip {
         hitBox.bottom = y + bitmap.getHeight();
     }
 
+    // Return the value of the variable noHit
+
     public boolean isNoHit() {
         return noHit;
     }
+
+    // Set the value of the variable noHit
 
     public void setNoHit(boolean noHit) {
         this.noHit = noHit;
     }
 
+    // Return the value of the variable aux
+
     public int getAux() {
         return aux;
     }
+
+    // Set the value of the variable aux
 
     public void setAux(int aux) {
         this.aux = this.aux + aux;
     }
 
-    // enemy1 será sempre escolhido
+    // Pick always enemy1 bitmap and scale it
 
     public void setEnemyOne(Context context) {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy1);
         scaleBitmap(x);
     }
 
+    // Pick always enemy2 bitmap and scale it
+
     public void setEnemyTwo(Context context) {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy2);
         scaleBitmap(x);
     }
+
+    // Pick always enemy3 bitmap and scale it
 
     public void setEnemyThree(Context context) {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy3);
         scaleBitmap(x);
     }
 
-    public int getScore() {
-        return score;
-    }
+    // Set the value of the variable score
 
     public void setScore(int score) {
         this.score = score;
