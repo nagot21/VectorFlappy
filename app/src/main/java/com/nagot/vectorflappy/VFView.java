@@ -607,6 +607,13 @@ public class VFView extends SurfaceView implements Runnable {
                     paint.setTypeface(font);
                     paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
                     canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
+                } else if (screenX >= 2560 && screenY >= 1400) {
+                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                    paint.setTextSize(150); // Tamanho do texto
+                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
+                    paint.setTypeface(font);
+                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
+                    canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
                 } else {
                     paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
                     paint.setTextSize(100); // Tamanho do texto
@@ -620,6 +627,15 @@ public class VFView extends SurfaceView implements Runnable {
                     paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
                     paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
                     paint.setTextSize(20); // Tamanho do texto
+                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
+                    paint.setTypeface(font);
+
+                    canvas.drawText("Shield: " + player.getShieldStrenght(), 10, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
+                    canvas.drawText("Score: " + score, screenX / 2, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
+                } else if (screenX >= 2560 && screenY >= 1400) {
+                    paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
+                    paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
+                    paint.setTextSize(60); // Tamanho do texto
                     Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
                     paint.setTypeface(font);
 
@@ -650,6 +666,21 @@ public class VFView extends SurfaceView implements Runnable {
                         paint.setTextSize(200); // Tamanho do texto
                         paint.setColor(Color.argb(255, 255, 140, 0)); // Dizemos que a cor do texto será amarela e sem alpha
                         canvas.drawText("Press back to title screen", screenX / 2, 1400, paint);
+                    }
+                } else if (screenX >= 2560 && screenY >= 1400) {
+                    if (player.getX() == -500) {
+                        paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                        paint.setTextSize(300); // Tamanho do texto
+                        canvas.drawText("Game Over", screenX / 2, 250, paint);
+                        paint.setTextSize(70);
+                        canvas.drawText("Score: " + score, screenX / 2, 400, paint);
+                        canvas.drawText("Max Score: " + maxScore, screenX / 2, 460, paint);
+                        paint.setTextSize(200); // Tamanho do texto
+                        paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        canvas.drawText("Tap to replay", screenX / 2, 680, paint);
+                        paint.setTextSize(100); // Tamanho do texto
+                        paint.setColor(Color.argb(255, 255, 140, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        canvas.drawText("Press back to title screen", screenX / 2, 900, paint);
                     }
                 } else if (screenX >= 1100 && screenX <= 1280) {
                     if (player.getX() == -500) {
