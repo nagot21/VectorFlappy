@@ -7,33 +7,23 @@ import java.util.Random;
  */
 
 /*
-Esta classe é responsável por definir o objeto SpaceDust
+Class responsible for object SpaceDust
  */
 public class SpaceDust {
     private int x, y;
     private int speed;
-
     private int maxX;
     private int maxY;
-    private int minX;
-    private int minY;
 
       /*
-    No construtor damos as cordenadas iniciais da space dust.
-    Repare que ele herda da primeira classe, a GameActivity, as coordenadas de X e Y da tela
-    do dispositivo
+    Pass screen coordinates to the constructor
      */
 
     public SpaceDust(int screenX, int screenY) {
         maxX = screenX;
         maxY = screenY;
-        minX = 0;
-        minY = 0;
 
-        /*
-        Repare no trecho abaixo que o valor do speed bem com X e Y são gerados inicialmente de
-        forma aleatória através da classe Random
-         */
+        // Creates a random generator
 
         Random generator = new Random();
         speed = generator.nextInt(10);
@@ -42,19 +32,11 @@ public class SpaceDust {
         y = generator.nextInt(maxY);
     }
 
-        /*
-    O método recebe como parametro a velocidade da nave do jogador. Com base nisso é feito um cálculo
-    de quão veloz a space dust será.
-     */
+    // Make the calculations of the dust speed based on the player speed
 
     public void update(int playerSpeed){
         x -= playerSpeed;
         x -= speed;
-
-         /*
-        O trecho abaixo são as velocidades aleatórias que o space dust terá juntamente com sua
-        posição randomica no eixo Y caso X seja menor que zero
-         */
 
         if(x < 0) {
             x = maxX;
@@ -64,12 +46,13 @@ public class SpaceDust {
         }
     }
 
-    // Retornamos o valor da variável x
+    // Return the value of the variable x
 
     public int getX() {
         return x;
     }
-    // Retornamos o valor da variável y
+
+    // Return the value of the variable y
 
     public int getY() {
         return y;
