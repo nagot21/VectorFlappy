@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
@@ -89,7 +90,7 @@ public class MainActivity extends Activity {
 
         // Change the value of the textView
 
-        textFastestTime.setText("Max Score: " + maxScore);
+        textFastestTime.setText(getText(R.string.max_score) + " " + maxScore);
 
         // Set buttons listeners
 
