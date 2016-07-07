@@ -55,7 +55,7 @@ public class VFView extends SurfaceView implements Runnable {
     private int auxBoost = 0;
     private int auxGetOut = 0;
     private final int EXPLOSION_FPS = 200;
-    private final float VOLUME = 0.3f;
+    private final float VOLUME = 0.2f;
     private Context context;
     private boolean gameEnded;
     private boolean isReady = false;
