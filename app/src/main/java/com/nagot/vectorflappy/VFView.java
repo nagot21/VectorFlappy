@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
@@ -17,7 +16,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.ImageView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ import java.util.ArrayList;
  */
 
 /*
-Esta classe desenha todos os elementos na tela e controla alguns outros elementos
+This class draw the elements on the screen and control the game
  */
 public class VFView extends SurfaceView implements Runnable {
 
@@ -36,18 +34,10 @@ public class VFView extends SurfaceView implements Runnable {
     Thread gameThread = null;
     private PlayerShip player;
     public EnemyShip enemy1, enemy2, enemy3, enemy4;
-
-    //Array abaixo foi criado para armazenar os diversos objetos SpaceDust
-
     public ArrayList<SpaceDust> dustList = new ArrayList<>();
     private Paint paint;
     private Canvas canvas;
     private SurfaceHolder ourHolder;
-
-    // Variáveis criadas para mostrar os valores no HUD
-
-    private float distanceRemaining;
-    private long timeTaken, timeStarted, fastestTime;
     private int screenX, screenY;
     private int score, maxScore;
     private int difficulty;
@@ -61,7 +51,7 @@ public class VFView extends SurfaceView implements Runnable {
     private boolean isReady = false;
     private boolean isFirst;
 
-    // Variáveis para colocar som no game
+    // SoundPool variables
 
     private SoundPool soundPool;
     int start = -1;
@@ -70,37 +60,23 @@ public class VFView extends SurfaceView implements Runnable {
     int destroyedStreamId = 0;
     int win = -1;
 
-    // Variáveis para persistir o high score
+    // Variables to persist the high score
 
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
 
-    /*
-    Neste construtor criamos um SurfaceHolder ourHolder para travar nossa canvas quando for desenha-la.
-    Criamos também um objeto paint para desenhar na tela.
-    Repare que os argumentos recebidos pelo construtor são além de seu contexto, os valores da dimensão do
-    smartphone obtidas na classe GameActivity.
-
-    Como se pode ver, logo após a variável screenY é chamado o método startGame(). Nele são inicializados
-    os objetos player, enemy*, spec e também as cordenadas, para que se possa posicionar de maneira correta
-    os objetos na tela.
-
-    Por fim, instanciamos o objeto SoundPool para colocar a trilha sonora do game
-     */
+    // In the constructor we pass a context, x and y coordinates and the difficulty of the game
 
     public VFView(Context context, int x, int y, int difficulty) {
         super(context);
         this.context = context;
         this.difficulty = difficulty;
 
-        Log.i("dificuldade", "dificuldade: " + difficulty);
+        // Instantiate soundPool
 
-        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0); // Instancia o objeto
+        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 
-        /*
-        Para o podermos especificar os arquivos que serão utilizados, precisamos colocá-los em um
-        try/catch para que o erro seja tratado caso o arquivo não seja encontrado
-         */
+        // Get soundPool assets
 
         try {
             AssetManager assetManager = context.getAssets();
@@ -127,27 +103,17 @@ public class VFView extends SurfaceView implements Runnable {
         screenX = x;
         screenY = y;
 
-        Log.i("tela", "screenX size: " + screenX);
-
-        /*
-         Na linha abaixo, o parâmetro pega as referência de um arquivo chamado HighScores. Caso ele
-         não exista será criado
-          */
+        // Check if the HighScores files exist. If not creates it.
 
         prefs = context.getSharedPreferences("HighScores", context.MODE_PRIVATE);
-
-        // Inicializa o editor
-
         editor = prefs.edit();
 
-        // Carrega o valor do arquivo HighScores. Caso não tenha nenhum valor, irá colocar o default de 1000000
-
-        //fastestTime = prefs.getLong("FastestTime", 1000000);
+        // Put the tag MaxScore in the file and in case it has no value attributes the value 20
         maxScore = prefs.getInt("MaxScore", 20);
 
         isFirst = true;
 
-        // Na linha abaixo são criados 40 objetos SpaceDust
+        // Instantiate 40 objects SpaceDust and add them to a ArrayList
 
         int numSpecs = 40;
 
@@ -156,13 +122,16 @@ public class VFView extends SurfaceView implements Runnable {
             dustList.add(spec);
         }
 
+        // Calls method startGame
+
         startGame();
     }
 
     /*
-    Aqui damos override no método run, que será executado toda vez que esta classe for chamada.
-    Quando ela for executada, chamará o método update(), draw() e control().
+    Control how the game will behave calling update() that calls the update method of other classes
+    Also, controls the score, draw and control
      */
+
     @Override
     public void run() {
         while (playing) {
@@ -193,31 +162,12 @@ public class VFView extends SurfaceView implements Runnable {
                     }
                 }
             }
-
-            /*if (screenX > 1200) {
-
-                if (enemy5.getAux() <= 1) {
-                    if (enemy5.isNoHit()) {
-                        score++;
-                    }
-                }
-            }*/
             draw();
             control();
         }
     }
 
-    /*
-     Chama o método update() da classe PlayerShip, EnemyShip e SpaceDust. Estes métodos irão ditar
-     os parametros de posição do objeto na tela e também sem comportamento quando colidirem
-      */
-
-    /*
-    Este método ira agir quase como o construtor. Porém, ele será chamado quando o game for recomeçar
-    para não termos que resetá-lo toda vez que quisermos jogar novamente.
-    Note que foi trocado x e y por screenX e screenY. Isso ocorre pois os valores de x e y estão no
-    construtor, impossibilitando assim de acessá-los.
-     */
+    //Instantiate theship and all te enemies. Also, set some variable attributes
 
     private void startGame() {
         setAuxGetOut(0);
@@ -236,27 +186,9 @@ public class VFView extends SurfaceView implements Runnable {
             enemy4 = new EnemyShip(context, screenX, screenY, difficulty);
         }
 
-        Log.i("screenX", "screenX: " + screenX);
+        // This variable controls if the game is over or not
 
-        /*if (screenX > 1200) {
-            enemy5 = new EnemyShip(context, screenX, screenY, difficulty);
-        }*/
-
-        //int numSpecs = 40;
-
-        // Na linha abaixo são criados 40 objetos SpaceDust
-
-       /* for (int i = 0; i < numSpecs; i++) {
-            SpaceDust spec = new SpaceDust(screenX, screenY);
-            dustList.add(spec);
-        } */
-
-        distanceRemaining = 10000; // Quanto teremos de percorrer para finalizar o game
-        timeTaken = 0; // O tempo que levamos finalizar
-        timeStarted = System.currentTimeMillis(); // Age com um cronometro para armazenar o relógio
-
-        gameEnded = false; // Variável checa se o game finalizou ou não
-
+        gameEnded = false;
 
         soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
@@ -270,15 +202,9 @@ public class VFView extends SurfaceView implements Runnable {
         }
     }
 
+    // This method will control all the update methods of other classes, sending them new values to their variables
+
     private void update() {
-
-        /*
-        Os 3 bloco de IF's abaixo fazem o teste de colisão dos objetos. Caso eles colidam, a nave
-        inimiga terá seu X mudado para -200. Isto é, será retirada automáticamente da tela.
-         */
-
-        // Caso o jogador passe o inimigo sem bater score ganha +1
-
         if (enemy1.getX() < player.getX()) {
             enemy1.setNoHit(true);
             enemy1.setAux(1);
@@ -301,78 +227,73 @@ public class VFView extends SurfaceView implements Runnable {
             }
         }
 
-        /*if (screenX > 1200) {
-            if (enemy5.getX() < player.getX()) {
-                enemy5.setNoHit(true);
-                enemy5.setAux(1);
-            }
-        }*/
+        // Variable controls if the player was hit or not
 
-        boolean hitDetected = false; // Variável criada para ver se o jogador foi atingido
+        boolean hitDetected = false;
 
-        // Caso o jogador tenha sido atingido, retira as naves de cena
+        // In case of hit the following will be executed and the enemy will be taken away of the screen and the variable will be assigned with a new value
 
         if (Rect.intersects(player.getHitBox(), enemy1.getHitBox())) {
-            hitDetected = true; // Caso atingido, a variável ganha o valor true
+            hitDetected = true;
             enemy1.setX(-400);
         }
 
         if (Rect.intersects(player.getHitBox(), enemy2.getHitBox())) {
-            hitDetected = true; // Caso atingido, a variável ganha o valor true
+            hitDetected = true;
             enemy2.setX(-400);
         }
 
         if (Rect.intersects(player.getHitBox(), enemy3.getHitBox())) {
-            hitDetected = true; // Caso atingido, a variável ganha o valor true
+            hitDetected = true;
             enemy3.setX(-400);
         }
 
         if (screenX > 1000) {
             if (Rect.intersects(player.getHitBox(), enemy4.getHitBox())) {
-                hitDetected = true; // Caso atingido, a variável ganha o valor true
+                hitDetected = true;
                 enemy4.setX(-400);
             }
         }
 
-        /*if (screenX > 1200) {
-            if (Rect.intersects(player.getHitBox(), enemy5.getHitBox())) {
-                hitDetected = true; // Caso atingido, a variável ganha o valor true
-                enemy5.setX(-400);
-            }
-        }*/
-
-        // Caso o valor de getShieldStrenght seja menor que zero o game finaliza
+        // If the player goes out of the lower part of the screen he/she will loose and the sound of destroyed will play
 
         if (player.getY() == player.getMaxY()) {
-            player.setAuxSound(1); // Esta variável serve de controle para que o som de explosão toque somente uma vez
+            player.setAuxSound(1);
             if ((player.getAuxSound() >= 1) && (player.getAuxSound() < 2)) {
                 gameEnded = true;
                 if (gameEnded) {
-                    destroyedStreamId = soundPool.play(destroyed, VOLUME, VOLUME, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
+                    destroyedStreamId = soundPool.play(destroyed, VOLUME, VOLUME, 0, 0, 1);
                     player.setX(-500);
                 }
             }
         }
 
+        // If the player gets a hit the hit bump sound will play
+        // If the player shields in < 0 then the game is over and the destroyed sound will play
+
         if (hitDetected) {
-            if (player.getAuxSound() < 1) { // Usa a variável de controle. Caso seja menor que 1 ira tocar o som de colisao
-                soundPool.play(bump, VOLUME, VOLUME, 0, 0, 1); // Se a nave bater, será tocado o som de bump
+            if (player.getAuxSound() < 1) {
+                soundPool.play(bump, VOLUME, VOLUME, 0, 0, 1);
                 player.reduceShieldStrenght();
             }
             if (player.getShieldStrenght() < 0) {
-                player.setAuxSound(1); // Esta variável serve de controle para que o som de explosão toque somente uma vez
+                player.setAuxSound(1);
                 if ((player.getAuxSound() >= 1) && (player.getAuxSound() < 2)) {
                     gameEnded = true;
                     if (gameEnded) {
-                        destroyedStreamId = soundPool.play(destroyed, VOLUME, VOLUME, 0, 0, 1); // Se a nave for destruida, tocará o som destroyed
+                        destroyedStreamId = soundPool.play(destroyed, VOLUME, VOLUME, 0, 0, 1);
                     }
                 }
             }
         }
 
+        // In case the game's already been played once the the variable will have a new value
+
         if (gameEnded) {
             isFirst = false;
         }
+
+        // If the player is not playing yet the ship will stand still in a fixed position
 
         if (!isReady && isFirst) {
             player.getY();
@@ -385,7 +306,7 @@ public class VFView extends SurfaceView implements Runnable {
             enemy3.update(player.getSpeed());
             enemy3.setScore(score);
 
-            // Caso a resolução da tela seja maior que 1000 no eixo x coloca mais um inimigo na tela
+            // If the screen resolution in the X axis is bigger then 1000 another enemyShip will be displayed
 
             if (screenX > 1000) {
                 enemy4.update(player.getSpeed());
@@ -393,48 +314,14 @@ public class VFView extends SurfaceView implements Runnable {
             }
         }
 
-        // Caso a resolução da tela seja maior que 1200 no eixo x coloca mais um inimigo na tela
-
-        /*if (screenX > 1200) {
-            enemy4.update(player.getSpeed());
-        }*/
-
-        /*
-        O enchanced FOR criado abaixo é utilizado pois com ele fica mais fácil percorer uma coleção
-        de itens. O que ele está fazendo é dar um update para cada objeto no array
-         */
+        // Update the spaceDust update method
 
         for (SpaceDust sd : dustList) {
             sd.update(player.getSpeed());
         }
 
-        /*
-        Checa se o game finalizou. Senão, retira valor da variável distanceRemaining baseado na
-        speed do jogador.
+        // If the game is ended and the score archived  is higher then the previous one change it in the file created in the beginning of the game
 
-        Retira também tempo do cronometro
-         */
-
-       /* if (!gameEnded) {
-            distanceRemaining -= player.getSpeed();
-            timeTaken = System.currentTimeMillis() - timeStarted;
-        }
-
-        /*
-        Caso o tempo que o jogador demorou para finalizar o game seja menor que o fastestTime, a
-        variável é atualizada e gameEnded setado como true
-         */
-
-        /*if (distanceRemaining < 0) {
-            soundPool.play(win, 1, 1, 0, 0, 1); // Se o jogador finalizar o game tocará a a música win
-            if (timeTaken < fastestTime) {
-                editor.putLong("fastestTime", timeTaken); // Coloca o novo valor no buffer
-                editor.commit(); // Joga o novo valor no arquivo
-                fastestTime = timeTaken;
-            }
-            distanceRemaining = 0;
-            gameEnded = true;
-        }*/
         if (gameEnded) {
             if (score > maxScore) {
                 editor.putInt("MaxScore", score);
@@ -444,61 +331,14 @@ public class VFView extends SurfaceView implements Runnable {
         }
     }
 
-    /*
-    Este método desenha os elementos na tela. Ele checa se o SurfaceHolder é válido. Se sim,
-    Ele irá travar o canvas para que possamos desenhar nele.
-
-    Chamamos o objeto canvas.drawColor e atribuimos uma cor a ele juntamente com seu alfa.
-    Por fim, chamamos o canvas.drawBitmap especificando a imagem .png pelo método player.getBitmap(),
-    pegando a posição x por player.getX(), de y por player.getY() e, por fim, desenhamos chamando paint.
-    Fazemos o mesmo com as naves inimigas.
-
-    Em seguida, fazemos um procedimento diferente com os objetos armazenados em dustList. Ao invés de usar
-    um bitmap, setamos a cor que queremos utilizar de fundo por intermédio do método paint.setColor()
-    e criamos o nosso desenho através do método canvas.drawPoint().
-
-    Por fim, desenhamos na tela o HUD do game.
-
-    Por último, destravamos o canvas por intermédio de nossa variável ourHolder
-
-     */
+    // Draw the objects on the screen by checking if the surface is valid. After that locks the canvas to draw and only unlocks at the end
 
     private void draw() {
         if (ourHolder.getSurface().isValid()) {
-
             canvas = ourHolder.lockCanvas();
-
+            Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
+            paint.setTypeface(font);
             canvas.drawColor(Color.argb(255, 0, 0, 0));
-
-            // Código abaixo é para fins de debug. Ele irá criar um retangulo branco atrás do bitmap
-
-           /* paint.setColor(Color.argb(255, 255, 255, 255));
-
-            canvas.drawRect(player.getHitBox().left,
-                    player.getHitBox().top,
-                    player.getHitBox().right,
-                    player.getHitBox().bottom,
-                    paint);
-
-            canvas.drawRect(enemy1.getHitBox().left,
-                    enemy1.getHitBox().top,
-                    enemy1.getHitBox().right,
-                    enemy1.getHitBox().bottom,
-                    paint);
-
-            canvas.drawRect(enemy2.getHitBox().left,
-                    enemy2.getHitBox().top,
-                    enemy2.getHitBox().right,
-                    enemy2.getHitBox().bottom,
-                    paint);
-
-            canvas.drawRect(enemy3.getHitBox().left,
-                    enemy3.getHitBox().top,
-                    enemy3.getHitBox().right,
-                    enemy3.getHitBox().bottom,
-                    paint);
-
-            // Fim do bloco de teste */
 
             if (gameEnded && player.getAuxExplosion() < 1) {
                 player.stopBoosting();
@@ -560,8 +400,6 @@ public class VFView extends SurfaceView implements Runnable {
                     enemy3.getY(),
                     paint);
 
-            // Caso a resolução da tela seja maior que 1000 em seu eixo x coloca mais um inimigo
-
             if (screenX > 1000) {
                 canvas.drawBitmap(
                         enemy4.getBitmap(),
@@ -570,188 +408,152 @@ public class VFView extends SurfaceView implements Runnable {
                         paint);
             }
 
-            // Caso a resolução da tela seja maior que 1200 em seu eixo x coloca mais um inimigo
-
-            /*if (screenX > 1200) {
-                canvas.drawBitmap(
-                        enemy5.getBitmap(),
-                        enemy5.getX(),
-                        enemy5.getY(),
-                        paint);
-            }*/
-
             paint.setColor(Color.argb(255, 255, 255, 255));
 
             for (SpaceDust sd : dustList) {
                 canvas.drawPoint(sd.getX(), sd.getY(), paint);
             }
 
-            /*
-             Aqui criamos o HUD do game.
-              */
+            // Here we create the game HUD. It has some if inside to adjust the draw to different types of screens
 
-            // HUD avisando que o game está para começar
+            // The following is draw on the screen when the player ship is waiting for the first tap
 
             if (!isReady && isFirst) {
                 if (screenX <= 800) {
-                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                    paint.setTextSize(50); // Tamanho do texto
-                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
-                    paint.setTypeface(font);
-                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
+                    paint.setTextAlign(Paint.Align.CENTER);
+                    paint.setTextSize(50);
+                    paint.setColor(Color.argb(255, 255, 255, 0));
                     canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
                 } else if (screenX >= 1100 && screenX <= 1280) {
-                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
+                    paint.setTextAlign(Paint.Align.CENTER);
                     paint.setTextSize(80); // Tamanho do texto
-                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
-                    paint.setTypeface(font);
-                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
+                    paint.setColor(Color.argb(255, 255, 255, 0));
                     canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
                 } else if (screenX >= 2560 && screenY >= 1400) {
-                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                    paint.setTextSize(150); // Tamanho do texto
-                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
-                    paint.setTypeface(font);
-                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
+                    paint.setTextAlign(Paint.Align.CENTER);
+                    paint.setTextSize(150);
+                    paint.setColor(Color.argb(255, 255, 255, 0));
                     canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
                 } else {
-                    paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                    paint.setTextSize(100); // Tamanho do texto
-                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
-                    paint.setTypeface(font);
-                    paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
+                    paint.setTextAlign(Paint.Align.CENTER);
+                    paint.setTextSize(100);
+                    paint.setColor(Color.argb(255, 255, 255, 0));
                     canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
                 }
+
+                // After the first tap, the game HUD is draw
+
             } else if (!gameEnded) {
                 if (screenX <= 800) {
-                    paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
-                    paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
-                    paint.setTextSize(20); // Tamanho do texto
-                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
-                    paint.setTypeface(font);
-
-                    canvas.drawText("Shield: " + player.getShieldStrenght(), 10, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
-                    canvas.drawText("Score: " + score, screenX / 2, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
+                    paint.setTextAlign(Paint.Align.LEFT);
+                    paint.setColor(Color.argb(255, 255, 255, 255));
+                    paint.setTextSize(20);
+                    canvas.drawText("Shield: " + player.getShieldStrenght(), 10, 40, paint);
+                    canvas.drawText("Score: " + score, screenX / 2, 40, paint);
                 } else if (screenX >= 2560 && screenY >= 1400) {
-                    paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
-                    paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
-                    paint.setTextSize(60); // Tamanho do texto
-                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
-                    paint.setTypeface(font);
-
-                    canvas.drawText("Shield: " + player.getShieldStrenght(), 10, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
-                    canvas.drawText("Score: " + score, screenX / 2, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
+                    paint.setTextAlign(Paint.Align.LEFT);
+                    paint.setColor(Color.argb(255, 255, 255, 255));
+                    paint.setTextSize(60);
+                    canvas.drawText("Shield: " + player.getShieldStrenght(), 10, 40, paint);
+                    canvas.drawText("Score: " + score, screenX / 2, 40, paint);
                 } else {
-                    paint.setTextAlign(Paint.Align.LEFT); // Alinhamos o texto a esquerda
-                    paint.setColor(Color.argb(255, 255, 255, 255)); // Dizemos que a cor do texto será branca e sem alpha
-                    paint.setTextSize(40); // Tamanho do texto
-                    Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
-                    paint.setTypeface(font);
-
-                    canvas.drawText("Shield: " + player.getShieldStrenght(), 10, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
-                    canvas.drawText("Score: " + score, screenX / 2, 40, paint); // Repete o mesmo procedimento mencionado anteriormente
+                    paint.setTextAlign(Paint.Align.LEFT);
+                    paint.setColor(Color.argb(255, 255, 255, 255));
+                    paint.setTextSize(40);
+                    canvas.drawText("Shield: " + player.getShieldStrenght(), 10, 40, paint);
+                    canvas.drawText("Score: " + score, screenX / 2, 40, paint);
                 }
+
+                // In case the game is over the following screen will be draw
+
             } else {
                 if ((screenX > 2500) && (screenY >= 1600)) {
                     if (player.getX() == -500) {
-                        paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                        paint.setTextSize(350); // Tamanho do texto
+                        paint.setTextAlign(Paint.Align.CENTER);
+                        paint.setTextSize(350);
                         canvas.drawText("Game Over", screenX / 2, 500, paint);
                         paint.setTextSize(100);
                         canvas.drawText("Score: " + score, screenX / 2, 700, paint);
                         canvas.drawText("Max Score: " + maxScore, screenX / 2, 800, paint);
-                        paint.setTextSize(220); // Tamanho do texto
-                        paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
+                        paint.setTextSize(220);
+                        paint.setColor(Color.argb(255, 255, 255, 0));
                         canvas.drawText("Tap to replay", screenX / 2, 1100, paint);
-                        paint.setTextSize(200); // Tamanho do texto
-                        paint.setColor(Color.argb(255, 255, 140, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        paint.setTextSize(200);
+                        paint.setColor(Color.argb(255, 255, 140, 0));
                         canvas.drawText("Press back to title screen", screenX / 2, 1400, paint);
                     }
                 } else if (screenX >= 2560 && screenY >= 1400) {
                     if (player.getX() == -500) {
-                        paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                        paint.setTextSize(300); // Tamanho do texto
+                        paint.setTextAlign(Paint.Align.CENTER);
+                        paint.setTextSize(300);
                         canvas.drawText("Game Over", screenX / 2, 250, paint);
                         paint.setTextSize(70);
                         canvas.drawText("Score: " + score, screenX / 2, 400, paint);
                         canvas.drawText("Max Score: " + maxScore, screenX / 2, 460, paint);
-                        paint.setTextSize(200); // Tamanho do texto
-                        paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        paint.setTextSize(200);
+                        paint.setColor(Color.argb(255, 255, 255, 0));
                         canvas.drawText("Tap to replay", screenX / 2, 680, paint);
-                        paint.setTextSize(100); // Tamanho do texto
-                        paint.setColor(Color.argb(255, 255, 140, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        paint.setTextSize(100);
+                        paint.setColor(Color.argb(255, 255, 140, 0));
                         canvas.drawText("Press back to title screen", screenX / 2, 900, paint);
                     }
                 } else if (screenX >= 1100 && screenX <= 1280) {
                     if (player.getX() == -500) {
-                        paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                        paint.setTextSize(180); // Tamanho do texto
+                        paint.setTextAlign(Paint.Align.CENTER);
+                        paint.setTextSize(180);
                         canvas.drawText("Game Over", screenX / 2, 220, paint);
                         paint.setTextSize(40);
                         canvas.drawText("Score: " + score, screenX / 2, 300, paint);
                         canvas.drawText("Max Score: " + maxScore, screenX / 2, 360, paint);
-                        paint.setTextSize(80); // Tamanho do texto
-                        paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        paint.setTextSize(80);
+                        paint.setColor(Color.argb(255, 255, 255, 0));
                         canvas.drawText("Tap to replay", screenX / 2, 460, paint);
-                        paint.setTextSize(60); // Tamanho do texto
-                        paint.setColor(Color.argb(255, 255, 140, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        paint.setTextSize(60);
+                        paint.setColor(Color.argb(255, 255, 140, 0));
                         canvas.drawText("Press back to title screen", screenX / 2, 560, paint);
                     }
                 } else if (screenX <= 800) {
                     if (player.getX() == -500) {
-                        paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                        paint.setTextSize(100); // Tamanho do texto
+                        paint.setTextAlign(Paint.Align.CENTER);
+                        paint.setTextSize(100);
                         canvas.drawText("Game Over", screenX / 2, 125, paint);
                         paint.setTextSize(25);
                         canvas.drawText("Score: " + score, screenX / 2, 175, paint);
                         canvas.drawText("Max Score: " + maxScore, screenX / 2, 205, paint);
-                        paint.setTextSize(50); // Tamanho do texto
-                        paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será branca e sem alpha
+                        paint.setTextSize(50);
+                        paint.setColor(Color.argb(255, 255, 255, 0));
                         canvas.drawText("Tap to replay", screenX / 2, 280, paint);
-                        paint.setTextSize(30); // Tamanho do texto
-                        paint.setColor(Color.argb(255, 255, 140, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        paint.setTextSize(30);
+                        paint.setColor(Color.argb(255, 255, 140, 0));
                         canvas.drawText("Press back to title screen", screenX / 2, 350, paint);
                     }
                 } else {
                     if (player.getX() == -500) {
-                        paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                        paint.setTextSize(200); // Tamanho do texto
+                        paint.setTextAlign(Paint.Align.CENTER);
+                        paint.setTextSize(200);
                         canvas.drawText("Game Over", screenX / 2, 250, paint);
                         paint.setTextSize(50);
                         canvas.drawText("Score: " + score, screenX / 2, 350, paint);
                         canvas.drawText("Max Score: " + maxScore, screenX / 2, 410, paint);
-                        paint.setTextSize(100); // Tamanho do texto
-                        paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        paint.setTextSize(100);
+                        paint.setColor(Color.argb(255, 255, 255, 0));
                         canvas.drawText("Tap to replay", screenX / 2, 560, paint);
-                        paint.setTextSize(80); // Tamanho do texto
-                        paint.setColor(Color.argb(255, 255, 140, 0)); // Dizemos que a cor do texto será amarela e sem alpha
+                        paint.setTextSize(80);
+                        paint.setColor(Color.argb(255, 255, 140, 0));
                         canvas.drawText("Press back to title screen", screenX / 2, 760, paint);
                     }
                 }
             }
+
+            // Now we've finished the draw the canvas can be unlocked
+
             ourHolder.unlockCanvasAndPost(canvas);
         }
     }
 
-    // Formata o tempo da variável timeTaken para ser legível por humanos METODO ABAIXO SERA INUTILIZADO
-
-    private String formatTime(long time) {
-        long seconds = (time) / 1000;
-        long thousandths = (time) - (seconds * 1000);
-        String strThousandths = "" + thousandths;
-        if (thousandths < 100) {
-            strThousandths = "0" + thousandths;
-        }
-        if (thousandths < 10) {
-            strThousandths = "0" + strThousandths;
-        }
-        String stringTime = "" + seconds + "." + strThousandths;
-        return stringTime;
-    }
-
     /*
-    Chama o método da classe Thread sleep(). Este método trabalha com milisegundos. Para dar a sensação de 60 FPS,
-     dividimos 1000/60 onde o resultado é aproximadamente 17.
+     This method will control the frame rate of the game. Since it works with milliseconds, to
+     have the sensation of 60 FPS we divide 1000/60 where the result will be approximately 17
      */
 
     private void control() {
@@ -762,9 +564,7 @@ public class VFView extends SurfaceView implements Runnable {
         }
     }
 
-    /*
-    Aqui pausamos a thread. Caso playing = false chamaremos a classe join(), que espera a thread morrer.
-     */
+    // Here we pause the thread. In case playing is false the class join() will be call to let the thread die.
 
     public void pause() {
         playing = false;
@@ -775,15 +575,16 @@ public class VFView extends SurfaceView implements Runnable {
         }
     }
 
-    /*
-    Caso playing = true, a thread é começa a rodar novamente.
-     */
+
+    // Case playing is true the thread is resumed
 
     public void resume() {
         playing = true;
         gameThread = new Thread(this);
         gameThread.start();
     }
+
+    // Here we controls the tap on the screen. If it's been pressed then a boost will occur
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
@@ -794,11 +595,7 @@ public class VFView extends SurfaceView implements Runnable {
             case MotionEvent.ACTION_DOWN:
                 isReady = true;
                 player.setBoosting();
-                /*if (player.isBoosting()) {
-                    player.getBitmapTurbo();
-                } else {
-                    player.setBitmap(context);
-                } */
+
                 if (gameEnded && player.getX() == -500) {
                     stopExplosionSoundPool();
                     startGame();
@@ -808,27 +605,35 @@ public class VFView extends SurfaceView implements Runnable {
         return true;
     }
 
+    // In case the game is interrupted all the sound concerning it will be ceased
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         soundPool.stop(destroyedStreamId);
         return false;
     }
 
+    // Stop the explosion sound
+
     public void stopExplosionSoundPool() {
         soundPool.stop(destroyedStreamId);
     }
+
+    // Return the value of the variable gameEnded
 
     public boolean isGameEnded() {
         return gameEnded;
     }
 
+    // Return the value of the variable auxGetOut
+
     public int getAuxGetOut() {
         return auxGetOut;
     }
+
+    // Set the value of the variable auxGetOut
 
     public void setAuxGetOut(int auxGetOut) {
         this.auxGetOut = auxGetOut;
     }
 }
-
-
