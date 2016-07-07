@@ -1,14 +1,10 @@
 package com.nagot.vectorflappy;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.BitmapDrawable;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -16,48 +12,43 @@ import java.util.ArrayList;
  */
 
 /*
-Esta classe é responsável por definir o objeto Ship
+Class responsible to define Ship object
  */
 public class PlayerShip {
     private Bitmap bitmap;
     private ArrayList<Bitmap> bitmapExplosionArray;
     private ArrayList<Bitmap> bitmapTurbo;
     private int x, y;
-    private int auxScreenX;
     private int speed = 0;
     private boolean boosting;
-    //private final int GRAVITY = -12;
     private final int GRAVITY = -16;
+    private final int MIN_SPEED = 1;
+    private final int MAX_SPEED = 25;
     private int maxY;
     private int minY;
     private int auxSound = 0;
     private int auxExplosion = 0;
-    private final int MIN_SPEED = 1;
-    private final int MAX_SPEED = 25; // era 20
-    private int shieldStrenght; // Responsável pelo shield da nave
-    private Rect hitBox; // Esta variável é a responsável pelo teste de colisão
+    private int shieldStrenght;
+    private Rect hitBox;
 
     /*
-    No construtor damos as cordenadas iniciais da nave, seu speed inicial e seu sprite.
-    Repare que ele herda da primeira classe, a GameActivity, as coordenadas de X e Y da tela
-    do dispositivo. Perceba também que ela inicializa uma variável chamada hitBox, que irá determinar
-    o tamanho do nosso objeto para realizar o teste de colisão.
-     */
+    In the constructor we pass a context and x and y coordinates of the game
+    */
 
     public PlayerShip(Context context, int screenX, int screenY) {
         x = 50;
         y = 50;
-        auxScreenX = screenX;
         speed = 1;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
         boosting = false;
-        // O valor abaixo determina o máximo que o eixo Y pode chegar baseado nas dimensões do dispositivo
+
+        // Value will set the maximum value in the Y axis based in the device dimension
         maxY = screenY - bitmap.getHeight() + 40;
         minY = 50;
         hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
         shieldStrenght = 2;
 
-        //scaleBitmap(screenX);
+        // Put the explosion bitmap in a ArrayList
 
         bitmapExplosionArray = new ArrayList<Bitmap>();
         for (int resId : new int[]{
@@ -73,6 +64,8 @@ public class PlayerShip {
             bitmapExplosionArray.add(BitmapFactory.decodeResource(context.getResources(), resId));
         }
 
+        // Put the turbo bitmap in a ArrayList
+
         bitmapTurbo = new ArrayList<Bitmap>();
         for (int resId : new int[]{
                 R.drawable.ship_turbo,
@@ -81,16 +74,15 @@ public class PlayerShip {
             bitmapTurbo.add(BitmapFactory.decodeResource(context.getResources(), resId));
         }
 
+        // Scale the bitmaps to fit on smaller screens
+
         scaleBitmap(screenX);
     }
 
-    /*
-    No método update() especificamos os parametros da nave, como seu boost, hitBox, etc.
-     */
+    // This method will update the ship position
 
     public void update() {
         if (boosting) {
-            //speed += 2;
             speed += 5;
         } else {
             speed -= 5;
@@ -114,15 +106,15 @@ public class PlayerShip {
             y = maxY;
         }
 
-        /*
-        Abaixo, será passado o parametro de onde o objeto se encontra na tela para a variável
-        hitBox
-         */
+        // Give the parameters to hitBox variable
+
         hitBox.left = x;
         hitBox.top = y;
         hitBox.right = x + bitmap.getWidth();
         hitBox.bottom = y + bitmap.getHeight();
     }
+
+    // Method resize bitmap
 
     public void scaleBitmap(int x) {
         Bitmap auxBitmapOne, auxBitmapTwo;
@@ -146,95 +138,109 @@ public class PlayerShip {
         }
     }
 
-    // Retornamos o valor da variável bitmap
+    // Return the value of the variable bitmap
 
     public Bitmap getBitmap() {
         return bitmap;
     }
 
-    // Retornamos o valor da variável speed
+    // Return the value of the variable speed
 
     public int getSpeed() {
         return speed;
     }
 
-    // Coloca um valor para variável x
+    // Set the value of the variable x
 
     public void setX(int x) {
         this.x = x;
     }
 
-    // Retornamos o valor da variável x
+    // Return the value of the variable x
 
     public int getX() {
         return x;
     }
 
-    // Retornamos o valor da variável y
+    // Return the value of the variable y
 
     public int getY() {
         return y;
     }
 
+    // Return the value of the variable maxY
+
     public int getMaxY() {
         return maxY;
     }
 
-    // Retorna o valor da variável hitBox
+    // Return the value of the variable hitBox
 
     public Rect getHitBox() {
         return hitBox;
     }
 
-    // Seta o valor da variável boosting = true
+    // Set the value of the variable boosting
 
     public void setBoosting() {
         boosting = true;
     }
 
-    // Retorna o valor da variável boosting
+    // Return the value of the variable boosting
 
     public boolean isBoosting() {
         return boosting;
     }
 
-    // Retorna o valor da variável shieldStrenght
+    // Return the value of the variable shieldStrenght
 
     public int getShieldStrenght() {
         return shieldStrenght;
     }
 
-    // Reduz o valor da variável shieldStrenght
+    // Reduce the value of the variable shieldStrenght
 
     public void reduceShieldStrenght() {
         shieldStrenght--;
     }
 
-    // Seta o valor da variável boosting = false
+    // Set the value of the variable boosting to false
 
     public void stopBoosting() {
         boosting = false;
     }
 
+    // Set the value of the variable auxSound
+
     public void setAuxSound(int auxSound) {
         this.auxSound = this.auxSound + auxSound;
     }
+
+    // Return the value of the variable auxSound
 
     public int getAuxSound() {
         return auxSound;
     }
 
+    // Return the value of the variable auxExplosion
+
     public int getAuxExplosion() {
         return auxExplosion;
     }
+
+    // Set the value of the variable auxExplosion
 
     public void setAuxExplosion(int auxExplosion) {
         this.auxExplosion = auxExplosion;
     }
 
+    // Return the value of the variable bitmapExplosionArray
+
     public ArrayList<Bitmap> getExplosion() {
         return bitmapExplosionArray;
     }
+
+    // Return the value of the variable bitmapTurbo
 
     public ArrayList<Bitmap> getBitmapTurbo() {
         return bitmapTurbo;
