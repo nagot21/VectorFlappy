@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -13,8 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /*
-Esta atividade controla o que será mostrado no game. Não existe um layout mostrando esta activity. Ela
-é totalmente gerenciada pela VFView.java que mostra os elementos na tela.
+Activity controls what will be shown in the game. There is no layout in this activity since VFView.java will draw all objects on the screen
  */
 
 public class GameActivity extends Activity {
@@ -38,27 +35,17 @@ public class GameActivity extends Activity {
 
         difficulty = Integer.parseInt(auxDifficulty);
 
-        /*
-         Na linha abaixo utilizamos a classe Display para pegar as dimensões da tela do smartphone.
-         O display.getSize retorna as cordenadas x e y da tela e, para ser guardada precisa de um
-         objeto do tipo Point. É justamente por isto que estamos instanciando um.
-          */
+        // Get device x and y coordinates
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
 
-        /*
-        Ao criarmos o objeto gameView, passamos além de seu contexto as variáveis da posição x e y
-        obtidas através do método display.getSize.
-         */
+        // Instantiate VFView class and set it as the contentView
         gameView = new VFView(this, size.x, size.y, difficulty);
         setContentView(gameView);
     }
 
-    /*
-    No onPause chamamos o método pause() da classe VGView. Este método pausa a thread caso
-    o jogador pause ou caso algo de maior prioridade seja invocado, como uma ligação, por exemplo
-     */
+    // Pause the thread in case there is a phone call, for instance
 
     @Override
     protected void onPause() {
@@ -66,9 +53,7 @@ public class GameActivity extends Activity {
         gameView.pause();
     }
 
-    /*
-    No onResume chamamos o método resume() da classe VGView. Este método despausa a thread
-     */
+    // Resume the thread
 
     @Override
     protected void onResume() {
@@ -76,7 +61,8 @@ public class GameActivity extends Activity {
         gameView.resume();
     }
 
-    // Caso o jogador aperte o botão back do smartphone o game será finalizado
+    // If the back button is pressed in game a message will be shown and the player will have to press it again to exit the game
+    // Case the back button is pressed when the game over screen is appearing, player will get back to title screen
 
     @Override
     public void onBackPressed() {
@@ -95,6 +81,8 @@ public class GameActivity extends Activity {
             toastFormat(toast);
         }
     }
+
+    // Method created to format toast
 
     public void toastFormat(Toast toast) {
         LinearLayout layout = (LinearLayout) toast.getView();
