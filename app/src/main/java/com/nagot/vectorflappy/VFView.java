@@ -127,6 +127,8 @@ public class VFView extends SurfaceView implements Runnable {
         screenX = x;
         screenY = y;
 
+        Log.i("tela", "screenX size: " + screenX);
+
         /*
          Na linha abaixo, o parâmetro pega as referência de um arquivo chamado HighScores. Caso ele
          não exista será criado
@@ -598,9 +600,9 @@ public class VFView extends SurfaceView implements Runnable {
                     paint.setTypeface(font);
                     paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
                     canvas.drawText("GET READY AND TAP TO FLY!", screenX / 2, screenY / 2, paint);
-                } else if (screenX == 1280) {
+                } else if (screenX >= 1100 && screenX <= 1280) {
                     paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
-                    paint.setTextSize(85); // Tamanho do texto
+                    paint.setTextSize(80); // Tamanho do texto
                     Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/spaceranger.otf");
                     paint.setTypeface(font);
                     paint.setColor(Color.argb(255, 255, 255, 0)); // Dizemos que a cor do texto será amarelo e sem alpha
@@ -649,7 +651,7 @@ public class VFView extends SurfaceView implements Runnable {
                         paint.setColor(Color.argb(255, 255, 140, 0)); // Dizemos que a cor do texto será amarela e sem alpha
                         canvas.drawText("Press back to title screen", screenX / 2, 1400, paint);
                     }
-                } else if (screenX == 1280) {
+                } else if (screenX >= 1100 && screenX <= 1280) {
                     if (player.getX() == -500) {
                         paint.setTextAlign(Paint.Align.CENTER); // Alinhamos o texto no centro
                         paint.setTextSize(180); // Tamanho do texto
