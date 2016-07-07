@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -83,11 +85,12 @@ public class GameActivity extends Activity {
             startActivity(i);
             gameView.stopExplosionSoundPool();
             finish();
-        } else if (gettingOut) {
+        } else if (gettingOut && gameView.getAuxGetOut() == 1) {
             super.onBackPressed();
             finish();
         } else {
             gettingOut = true;
+            gameView.setAuxGetOut(1);
             Toast toast = Toast.makeText(getBaseContext(), getText(R.string.get_out), Toast.LENGTH_SHORT);
             toastFormat(toast);
         }

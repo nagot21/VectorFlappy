@@ -53,6 +53,7 @@ public class VFView extends SurfaceView implements Runnable {
     private int difficulty;
     private int auxExplosion = 0;
     private int auxBoost = 0;
+    private int auxGetOut = 0;
     private final int EXPLOSION_FPS = 200;
     private final float VOLUME = 0.3f;
     private Context context;
@@ -217,6 +218,7 @@ public class VFView extends SurfaceView implements Runnable {
      */
 
     private void startGame() {
+        setAuxGetOut(0);
         isReady = false;
         player = new PlayerShip(context, screenX, screenY);
         enemy1 = new EnemyShip(context, screenX, screenY, difficulty);
@@ -785,6 +787,14 @@ public class VFView extends SurfaceView implements Runnable {
 
     public boolean isGameEnded() {
         return gameEnded;
+    }
+
+    public int getAuxGetOut() {
+        return auxGetOut;
+    }
+
+    public void setAuxGetOut(int auxGetOut) {
+        this.auxGetOut = auxGetOut;
     }
 }
 
