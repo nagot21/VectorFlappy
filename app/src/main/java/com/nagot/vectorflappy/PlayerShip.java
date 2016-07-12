@@ -56,6 +56,7 @@ public class PlayerShip {
 
         bitmapExplosionArray = new ArrayList<Bitmap>();
         for (int resId : new int[]{
+                R.drawable.ship,
                 R.drawable.explosion1,
                 R.drawable.explosion2,
                 R.drawable.explosion3,
@@ -147,18 +148,22 @@ public class PlayerShip {
     // Method resize bitmap
 
     public void scaleBitmap(int x) {
-        Bitmap auxBitmapOne, auxBitmapTwo;
+        Bitmap auxBitmapOne, auxBitmapTwo, auxBitmapExplosionZero, auxBitmapExplosionOne, auxBitmapExplosionTwo, auxBitmapExplosionThree, auxBitmapExplosionFour, auxBitmapExplosionFive, auxBitmapExplosionSix, auxBitmapExplosionSeven, auxBitmapExplosionEight;
         if (x < 1000) {
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
+            bitmapExplosionArray.add(0, bitmap);
+
             auxBitmapOne = bitmapTurbo.get(0);
             auxBitmapOne = Bitmap.createScaledBitmap(auxBitmapOne, auxBitmapOne.getWidth() / 2, auxBitmapOne.getHeight() / 2, false);
             bitmapTurbo.add(0, auxBitmapOne);
+
             auxBitmapTwo = bitmapTurbo.get(1);
             auxBitmapTwo = Bitmap.createScaledBitmap(auxBitmapTwo, auxBitmapTwo.getWidth() / 2, auxBitmapTwo.getHeight() / 2, false);
             bitmapTurbo.add(1, auxBitmapTwo);
 
         } else if (x < 1200) {
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 4 * 3, bitmap.getHeight() / 4 * 3, false);
+            bitmapExplosionArray.add(0, bitmap);
             auxBitmapOne = bitmapTurbo.get(0);
             auxBitmapOne = Bitmap.createScaledBitmap(auxBitmapOne, auxBitmapOne.getWidth() / 4 * 3, auxBitmapOne.getHeight() / 4 * 3, false);
             bitmapTurbo.add(0, auxBitmapOne);

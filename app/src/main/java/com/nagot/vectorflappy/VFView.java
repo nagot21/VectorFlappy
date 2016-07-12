@@ -355,7 +355,7 @@ public class VFView extends SurfaceView implements Runnable {
                 }
                 auxExplosion++;
 
-                if (auxExplosion == 7) {
+                if (auxExplosion == 8) {
                     auxExplosion = 0;
                     player.setX(-500);
                     player.setAuxExplosion(1);
