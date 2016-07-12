@@ -28,6 +28,7 @@ public class PlayerShip {
     private final int MAX_SPEED_LOWY = 12;
     private int maxY;
     private int minY;
+    private int screenY;
     private int auxSound = 0;
     private int auxExplosion = 0;
     private int shieldStrenght;
@@ -38,6 +39,7 @@ public class PlayerShip {
     */
 
     public PlayerShip(Context context, int screenX, int screenY) {
+        this.screenY = screenY;
         x = 50;
         y = 50;
         speed = 1;
@@ -84,7 +86,7 @@ public class PlayerShip {
     // This method will update the ship position
 
     public void update() {
-        if (y < 500) {
+        if (screenY < 500) {
             if (boosting) {
                 speed += 5;
             } else {
