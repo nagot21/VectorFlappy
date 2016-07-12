@@ -471,16 +471,16 @@ public class VFView extends SurfaceView implements Runnable {
                     if (player.getX() == -500) {
                         paint.setTextAlign(Paint.Align.CENTER);
                         paint.setTextSize(350);
-                        canvas.drawText("Game Over", screenX / 2, 500, paint);
+                        canvas.drawText("Game Over", screenX / 2, 400, paint);
                         paint.setTextSize(100);
-                        canvas.drawText("Score: " + score, screenX / 2, 700, paint);
-                        canvas.drawText("Max Score: " + maxScore, screenX / 2, 800, paint);
+                        canvas.drawText("Score: " + score, screenX / 2, 600, paint);
+                        canvas.drawText("Max Score: " + maxScore, screenX / 2, 700, paint);
                         paint.setTextSize(220);
                         paint.setColor(Color.argb(255, 255, 255, 0));
-                        canvas.drawText("Tap to replay", screenX / 2, 1100, paint);
-                        paint.setTextSize(200);
+                        canvas.drawText("Tap to replay", screenX / 2, 1000, paint);
+                        paint.setTextSize(100);
                         paint.setColor(Color.argb(255, 255, 140, 0));
-                        canvas.drawText("Press back to title screen", screenX / 2, 1400, paint);
+                        canvas.drawText("Press back to title screen", screenX / 2, 1300, paint);
                     }
                 } else if (screenX >= 2560 && screenY >= 1400) {
                     if (player.getX() == -500) {
