@@ -16,6 +16,7 @@ Class responsible to define Ship object
  */
 public class PlayerShip {
     private Bitmap bitmap;
+    private Bitmap fZero, fOne, fTwo, fThree, fFour, fFive, fSix, fSeven, fEight;
     private ArrayList<Bitmap> bitmapExplosionArray;
     private ArrayList<Bitmap> bitmapTurbo;
     private int x, y;
@@ -43,7 +44,24 @@ public class PlayerShip {
         x = 50;
         y = 50;
         speed = 1;
+
+        // Variables concerning the bitmap sprites
+
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
+        fZero = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
+        fOne = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion1);
+        fTwo = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion2);
+        fThree = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion3);
+        fFour = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion4);
+        fFive = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion5);
+        fSix = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion6);
+        fSeven = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion7);
+        fEight = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion8);
+
+        // The method below resize the explosion bitmap case the screenX < 1000
+
+        scaleBitmapExplosion(screenX);
+
         boosting = false;
 
         // Value will set the maximum value in the Y axis based in the device dimension
@@ -55,19 +73,15 @@ public class PlayerShip {
         // Put the explosion bitmap in a ArrayList
 
         bitmapExplosionArray = new ArrayList<Bitmap>();
-        for (int resId : new int[]{
-                R.drawable.ship,
-                R.drawable.explosion1,
-                R.drawable.explosion2,
-                R.drawable.explosion3,
-                R.drawable.explosion4,
-                R.drawable.explosion5,
-                R.drawable.explosion6,
-                R.drawable.explosion7,
-                R.drawable.explosion8
-        }) {
-            bitmapExplosionArray.add(BitmapFactory.decodeResource(context.getResources(), resId));
-        }
+        bitmapExplosionArray.add(0, fZero);
+        bitmapExplosionArray.add(1, fOne);
+        bitmapExplosionArray.add(2, fTwo);
+        bitmapExplosionArray.add(3, fThree);
+        bitmapExplosionArray.add(4, fFour);
+        bitmapExplosionArray.add(5, fFive);
+        bitmapExplosionArray.add(6, fSix);
+        bitmapExplosionArray.add(7, fSeven);
+        bitmapExplosionArray.add(8, fEight);
 
         // Put the turbo bitmap in a ArrayList
 
@@ -145,25 +159,46 @@ public class PlayerShip {
         hitBox.bottom = y + bitmap.getHeight();
     }
 
+    // Method resize bitmap for the explosion
+
+    public void scaleBitmapExplosion(int x) {
+        if (x < 1000) {
+            fZero = Bitmap.createScaledBitmap(fZero, fZero.getWidth() / 2, fZero.getHeight() / 2, false);
+            fOne = Bitmap.createScaledBitmap(fOne, fOne.getWidth() / 2, fOne.getHeight() / 2, false);
+            fTwo = Bitmap.createScaledBitmap(fTwo, fTwo.getWidth() / 2, fTwo.getHeight() / 2, false);
+            fThree = Bitmap.createScaledBitmap(fThree, fThree.getWidth() / 2, fThree.getHeight() / 2, false);
+            fFour = Bitmap.createScaledBitmap(fFour, fFour.getWidth() / 2, fFour.getHeight() / 2, false);
+            fFive = Bitmap.createScaledBitmap(fFive, fFive.getWidth() / 2, fFive.getHeight() / 2, false);
+            fSix = Bitmap.createScaledBitmap(fSix, fSix.getWidth() / 2, fSix.getHeight() / 2, false);
+            fSeven = Bitmap.createScaledBitmap(fSeven, fSeven.getWidth() / 2, fSeven.getHeight() / 2, false);
+            fEight = Bitmap.createScaledBitmap(fEight, fEight.getWidth() / 2, fEight.getHeight() / 2, false);
+        } else if (x < 1200) {
+            fZero = Bitmap.createScaledBitmap(fZero, fZero.getWidth() / 4 * 3, fZero.getHeight() / 4 * 3, false);
+            fOne = Bitmap.createScaledBitmap(fOne, fOne.getWidth() / 4 * 3, fOne.getHeight() / 4 * 3, false);
+            fTwo = Bitmap.createScaledBitmap(fTwo, fTwo.getWidth() / 4 * 3, fTwo.getHeight() / 4 * 3, false);
+            fThree = Bitmap.createScaledBitmap(fThree, fThree.getWidth() / 4 * 3, fThree.getHeight() / 4 * 3, false);
+            fFour = Bitmap.createScaledBitmap(fFour, fFour.getWidth() / 4 * 3, fFour.getHeight() / 4 * 3, false);
+            fFive = Bitmap.createScaledBitmap(fFive, fFive.getWidth() / 4 * 3, fFive.getHeight() / 4 * 3, false);
+            fSix = Bitmap.createScaledBitmap(fSix, fSix.getWidth() / 4 * 3, fSix.getHeight() / 4 * 3, false);
+            fSeven = Bitmap.createScaledBitmap(fSeven, fSeven.getWidth() / 4 * 3, fSeven.getHeight() / 4 * 3, false);
+            fEight = Bitmap.createScaledBitmap(fEight, fEight.getWidth() / 4 * 3, fEight.getHeight() / 4 * 3, false);
+        }
+    }
+
     // Method resize bitmap
 
     public void scaleBitmap(int x) {
-        Bitmap auxBitmapOne, auxBitmapTwo, auxBitmapExplosionZero, auxBitmapExplosionOne, auxBitmapExplosionTwo, auxBitmapExplosionThree, auxBitmapExplosionFour, auxBitmapExplosionFive, auxBitmapExplosionSix, auxBitmapExplosionSeven, auxBitmapExplosionEight;
+        Bitmap auxBitmapOne, auxBitmapTwo;
         if (x < 1000) {
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
-            bitmapExplosionArray.add(0, bitmap);
-
             auxBitmapOne = bitmapTurbo.get(0);
             auxBitmapOne = Bitmap.createScaledBitmap(auxBitmapOne, auxBitmapOne.getWidth() / 2, auxBitmapOne.getHeight() / 2, false);
             bitmapTurbo.add(0, auxBitmapOne);
-
             auxBitmapTwo = bitmapTurbo.get(1);
             auxBitmapTwo = Bitmap.createScaledBitmap(auxBitmapTwo, auxBitmapTwo.getWidth() / 2, auxBitmapTwo.getHeight() / 2, false);
             bitmapTurbo.add(1, auxBitmapTwo);
-
         } else if (x < 1200) {
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 4 * 3, bitmap.getHeight() / 4 * 3, false);
-            bitmapExplosionArray.add(0, bitmap);
             auxBitmapOne = bitmapTurbo.get(0);
             auxBitmapOne = Bitmap.createScaledBitmap(auxBitmapOne, auxBitmapOne.getWidth() / 4 * 3, auxBitmapOne.getHeight() / 4 * 3, false);
             bitmapTurbo.add(0, auxBitmapOne);
