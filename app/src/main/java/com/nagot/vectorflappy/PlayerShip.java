@@ -22,8 +22,10 @@ public class PlayerShip {
     private int speed = 0;
     private boolean boosting;
     private final int GRAVITY = -16;
+    private final int GRAVITY_LOWY = -7;
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 25;
+    private final int MAX_SPEED_LOWY = 12;
     private int maxY;
     private int minY;
     private int auxSound = 0;
@@ -82,30 +84,56 @@ public class PlayerShip {
     // This method will update the ship position
 
     public void update() {
-        if (boosting) {
-            speed += 5;
+        if (y < 500) {
+            if (boosting) {
+                speed += 5;
+            } else {
+                speed -= 5;
+            }
+
+            if (speed > MAX_SPEED_LOWY) {
+                speed = MAX_SPEED_LOWY;
+            }
+
+            if (speed < MIN_SPEED) {
+                speed = MIN_SPEED;
+            }
+
+            y -= speed + GRAVITY_LOWY;
+
+
+            if (y < minY) {
+                y = minY;
+            }
+
+            if (y > maxY) {
+                y = maxY;
+            }
         } else {
-            speed -= 5;
+            if (boosting) {
+                speed += 5;
+            } else {
+                speed -= 5;
+            }
+
+            if (speed > MAX_SPEED) {
+                speed = MAX_SPEED;
+            }
+
+            if (speed < MIN_SPEED) {
+                speed = MIN_SPEED;
+            }
+
+            y -= speed + GRAVITY;
+
+            if (y < minY) {
+                y = minY;
+            }
+
+            if (y > maxY) {
+                y = maxY;
+            }
         }
-
-        if (speed > MAX_SPEED) {
-            speed = MAX_SPEED;
-        }
-
-        if (speed < MIN_SPEED) {
-            speed = MIN_SPEED;
-        }
-
-        y -= speed + GRAVITY;
-
-        if (y < minY) {
-            y = minY;
-        }
-
-        if (y > maxY) {
-            y = maxY;
-        }
-
         // Give the parameters to hitBox variable
 
         hitBox.left = x;
